@@ -1,6 +1,41 @@
-# Utils
+use serde::Serialize;
 
-a compilation of utility scripts for every day use in building applications and using certain features on my laptop
+#[derive(clap::Args, Debug, Serialize)]
+pub struct ReadmeCommands {
+    #[clap(short, long, value_parser)]
+    ///path to the directory where the application will be created
+    pub path: String, //path to create the readme
+    #[clap(short, long, value_parser)]
+    ///the name of the application
+    pub name: String, //name of the application
+    #[clap(short, long, value_parser)]
+    ///the description of the application
+    pub description: String, //description of the application
+    #[clap(short, long, value_parser)]
+    /// overwrite existing readme
+    pub force: bool,
+    #[clap(short, long, value_parser)]
+    /// backup existing readme
+    pub backup: bool,
+}
+
+impl ReadmeCommands {
+    pub fn new() -> Self {
+        Self {
+            path: String::new(),
+            name: String::new(),
+            description: String::new(),
+            force: false,
+            backup: false,
+        }
+    }
+
+  
+
+    fn get_template() -> &'static str {
+        r#" ## Title 
+
+## Description 
 
 - [Description](#description)
 - [Getting Started](#getting-started)
@@ -73,3 +108,6 @@ This project is licensed under the [NAME HERE] License - see the LICENSE.md file
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
+        "#
+    }
+}
