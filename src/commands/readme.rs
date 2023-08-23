@@ -1,41 +1,75 @@
 use serde::Serialize;
-
+use std::fs::{self, File};
+use std::io::Write;
+use std::path::Path;
 #[derive(clap::Args, Debug, Serialize)]
 pub struct ReadmeCommands {
-    #[clap(short, long, value_parser)]
-    ///path to the directory where the application will be created
-    pub path: String, //path to create the readme
-    #[clap(short, long, value_parser)]
-    ///the name of the application
-    pub name: String, //name of the application
-    #[clap(short, long, value_parser)]
-    ///the description of the application
-    pub description: String, //description of the application
-    #[clap(short, long, value_parser)]
+    ///path to the directory where the readme will be created
+    #[clap(short, long, value_parser, default_value = ".")]
+    pub path: String,
+    /// the project title
+    #[clap(short, long, value_parser, default_value = "Title")]
+    pub title: String,
+    /// the project description
+    #[clap(short, long, value_parser, default_value = "Description")]
+    pub description: String,
     /// overwrite existing readme
-    pub force: bool,
     #[clap(short, long, value_parser)]
+    pub force: bool,
     /// backup existing readme
+    #[clap(short, long, value_parser)]
     pub backup: bool,
 }
 
 impl ReadmeCommands {
-    pub fn new() -> Self {
-        Self {
-            path: String::new(),
-            name: String::new(),
-            description: String::new(),
-            force: false,
-            backup: false,
+    /// parse the commands parameters
+    ///  create a  new readme in the provide path,
+    /// if the path is not provided the readme should be created in the current working directory
+    ///
+    /// ### Example
+    /// ```sh
+    /// utils readme  -d "het" -t "hh" -p .
+    ///  ```
+    pub fn parse(&self) {
+        println!("the parameter are {:?}", &self);
+
+        // see if the readme already exist
+        let binding = Path::new(&self.path).join("README.md");
+        let path = binding.as_path();
+
+        if path.exists() {
+            // if the readme exist and the force flag is not set, exit
+            if !self.force {
+                // TODO use dialogues to get the value
+                println!("the readme already exist, use the --force flag to overwrite it");
+                return;
+            }
+            // ECS on fargate
+            // if the readme exist and the force flag is set, backup the existing readme
+            if self.backup {
+                // create a backup of the existing readme
+                let backup_path = Path::new(&self.path).join("README.md.bak");
+                fs::copy(path, backup_path).expect("failed to create backup");
+                // create the readme
+                ReadmeCommands::new(path, &self.title, &self.description);
+            }
+        } else {
+            // if the readme does not exist, create it
+            ReadmeCommands::new(path, &self.title, &self.description);
         }
     }
 
-  
+    ///  create a  new readem
+    fn new(path: &Path, title: &str, description: &str) {
+        let mut file = File::create(path).unwrap();
+        file.write_all(ReadmeCommands::get_template(title, description).as_bytes())
+            .unwrap();
+    }
 
-    fn get_template() -> &'static str {
-        r#" ## Title 
-
-## Description 
+    /// return the template as string
+    fn get_template(title: &str, description: &str) -> String {
+        format!(
+            r#" # {title}
 
 - [Description](#description)
 - [Getting Started](#getting-started)
@@ -51,7 +85,7 @@ impl ReadmeCommands {
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+{description}
 
 ## Getting Started
 
@@ -109,5 +143,6 @@ This project is licensed under the [NAME HERE] License - see the LICENSE.md file
 
 Inspiration, code snippets, etc.
         "#
+        )
     }
 }

@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 use commands::{
-    download::DownloadCommands, git::GitCommands, readme::ReadmeCommands, sms::SmsCommands, email::EmailCommands,
+    download::DownloadCommands, email::EmailCommands, git::GitCommands, readme::ReadmeCommands,
+    sms::SmsCommands,
 };
 
 mod commands;
@@ -29,11 +30,11 @@ enum Commands {
 fn main() {
     let utils = Utils::parse();
 
-    // You can check for the existence of subcommands, and if found use their
-    // matches just as you would the top level cmd
-    /*  match &cli.command {
-        Commands::Add { name } => {
-            println!("'myapp add' was used, name is: {name:?}")
-        }
-    } */
+    match utils.command {
+        // Commands::Download(download) => DownloadCommands::parse(),
+        // Commands::Email(email) => email.parse(),
+        // Commands::Git(git) => git.parse(),
+        Commands::Readme(readme) => readme.parse(),
+        _ => panic!(),
+    }
 }
