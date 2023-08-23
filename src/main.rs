@@ -5,6 +5,7 @@ use commands::{
 };
 
 mod commands;
+mod utils;
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 #[command(propagate_version = true)]
