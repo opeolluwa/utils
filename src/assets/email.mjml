@@ -1,0 +1,37 @@
+<mjml>
+  <mj-body background-color="#d7dde5">
+    <mj-section>
+      <mj-column width="100%">
+        <mj-image src="https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg" alt="header image" align="center" border="none" padding-bottom="0px" padding-top="0px" width="600px" />
+      </mj-column>
+    </mj-section>
+ 
+
+ 
+  
+  
+    <mj-section background-color="#FFF">
+      <mj-column width="100%">
+        <mj-text>
+          Hi {{recipient}}
+        </mj-text>
+
+        <mj-text>
+          This is a test email sent from the Mailjet API
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+
+    <mj-section full-width="full-width">
+      <mj-column width="100%" vertical-align="middle">
+        <mj-text align="center" font-size="11px" padding-bottom="0px" padding-top="0px">
+          <p style="font-size: 11px">[[DELIVERY_INFO]]</p>
+        </mj-text>
+        <mj-text align="center" font-size="11px" padding-bottom="0px" padding-top="0px">
+          <p style="font-size: 11px">[[POSTAL_ADDRESS]]</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
