@@ -1,6 +1,11 @@
+use std::{fs::File, io::Write, path::Path};
+
 use clap::{Args, Subcommand};
+use console::Style;
 use dialoguer::{console::Term, theme::ColorfulTheme, Select};
 use serde::{Deserialize, Serialize};
+
+use crate::utils::{FileExists, WriteContent};
 /// the git utils is used to for handling git operations
 /// this IncludeFile Includeing files such as readme, license and .ignore files to the repo.
 /// # Example
@@ -56,8 +61,6 @@ struct IncludeFileArgs {
 impl GitCommands {
     /// parse the commands
     pub fn parse(&self) {
-    
-
         match &self.command {
             GitSubCommands::Repo(repo) => {
                 println!("repo {:?}", repo);
@@ -76,10 +79,22 @@ impl GitCommands {
                         .unwrap();
 
                     if let Some(language) = selection {
+                        let binding = Path::new(&self.path);
+                        let gitignore_file_path = binding.join(".gitignore");
+                        let path = gitignore_file_path.as_path();
                         match language {
                             0 => {
                                 println!("C");
                                 let c_ignore = IncludeFileArgs::c_ignore_file();
+                                if IncludeFileArgs::file_exists(path) {
+                                    let error_style = Style::new().for_stderr().red();
+                                    println!(
+                                        "{}",
+                                        error_style
+                                            .apply_to("the .gitignore already exist, use the --force flag to overwrite it")
+                                    );
+                                    return;
+                                }
                                 println!("{:#?}", c_ignore);
                             }
                             1 => {
@@ -111,6 +126,19 @@ impl GitCommands {
     }
 }
 
+// impl WriteContent for IncludeFileArgs {
+//     fn write_content(path: &Path, content: &str) -> Result<(), std::io::Error> {
+//         let mut file = File::create(path).unwrap();
+//         file.write_all(content.as_bytes()).unwrap();
+//         Ok(())
+//     }
+// }
+
+impl FileExists for IncludeFileArgs {
+    fn file_exists(path: &Path) -> bool {
+        path.exists()
+    }
+}
 impl IncludeFileArgs {
     pub fn c_ignore_file() -> &'static str {
         r#"# Prerequisites
