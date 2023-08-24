@@ -11,7 +11,8 @@ version = "0.1.0"
 assert_cmd = "2.0.12"
 clap = {version = "4.3.23", features = ["derive"]}
 console = "0.15.7"
-dialoguer = "0.10.4"
+dialoguer = { version = "0.10.4", features = ["fuzzy-select", "completion"] }
+include_dir = "0.7.3"
 indicatif = "0.17.6"
 serde = {versio = "1.0.185", features = ["derive"]}
 
