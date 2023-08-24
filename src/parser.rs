@@ -36,8 +36,6 @@ pub enum Commands {
     Readme(ReadmeCommands),
     ///send SMS
     Sms(SmsCommands),
-    /// handle git operations
-    // Git(GitCommands),
     /// include .gitignore
     GitIgnore(GitIgnoreCommands),
 }
