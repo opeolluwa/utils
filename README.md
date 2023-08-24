@@ -1,6 +1,6 @@
 # Utils
 
-a compilation of utility scripts for every day use in building applications and using certain features on my laptop
+compilation of utility scripts for everyday use
 
 - [Description](#description)
 - [Getting Started](#getting-started)
@@ -8,68 +8,39 @@ a compilation of utility scripts for every day use in building applications and 
   - [Installing](#installing)
   - [Executing program](#executing-program)
 - [Documentation](#documentation)
-- [Help](#help)
-- [Authors](#authors)
-- [Version History](#version-history)
 - [License](#license)
-- [Acknowledgments](#acknowledgments)
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+This repository contains a collection of useful scripts that can be used in any software project and in a desktop environment. The main purpose is to provide abstract some common task such as adding readme to a project, sending email and SMS, e.t.c.
 
 ## Getting Started
 
 ### Dependencies
 
-- Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-- ex. Windows 10
+- [Rust](https://rust-lang.org) >= v1.70.0
 
 ### Installing
 
-- How/where to download your program
-- Any modifications needed to be made to files/folders
+Install from the [Cargo](https://crates.io) repository
+
+```sh
+cargo install utils
+```
 
 ### Executing program
 
-- How to run the program
-- Step-by-step bullets
+To run the application locally
 
-```
-code blocks for commands
+```sh
+cargo run -- --help
 ```
 
 ## Documentation
 
-Describe any special instructions that are necessary to install a software package on your computer (if applicable).
-
-## Help
-
-Any advise for common problems or issues.
-
-```
-command to run if program contains helper info
-```
-
-## Authors
-
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
-## Version History
-
-- 0.2
-  - Various bug fixes and optimizations
-  - See [commit change]() or See [release history]()
-- 0.1
-  - Initial Release
+see [https://opeolluwa/github.io/utils](https://opeolluwa.github.io)
 
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
+This project is licensed under the Apache License
+Version 2.0 License - see the [LICENSE](./LICENSE) file for details
