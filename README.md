@@ -1,6 +1,6 @@
 # Utils
 
-compilation of utility scripts for everyday use
+Compilation of utility scripts for everyday use
 
 - [Description](#description)
 - [Getting Started](#getting-started)
@@ -12,7 +12,7 @@ compilation of utility scripts for everyday use
 
 ## Description
 
-This repository contains a collection of useful scripts that can be used in any software project and in a desktop environment. The main purpose is to provide abstract some common task such as adding readme to a project, sending email and SMS, e.t.c.
+This repository contains a collection of useful scripts that can be used in any software project and in a desktop environment. The main purpose is to provide abstracts on some common tasks such as adding readme to a project, sending email and SMS, etc.
 
 ## Getting Started
 
