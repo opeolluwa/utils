@@ -1,10 +1,14 @@
 use clap::{Parser, Subcommand};
 use commands::{
-    download::DownloadCommands, email::EmailCommands, git::GitCommands, readme::ReadmeCommands,
-    sms::SmsCommands,
+    download::DownloadCommands, email::EmailCommands, gitignore::GitIgnoreCommands,
+    readme::ReadmeCommands, sms::SmsCommands,
 };
+use include_dir::{include_dir, Dir};
+
+pub const SOURCE_DIR: Dir = include_dir!("src/templates");
 
 mod commands;
+mod utils;
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 #[command(propagate_version = true)]
@@ -24,7 +28,9 @@ enum Commands {
     ///send SMS
     Sms(SmsCommands),
     /// handle git operations
-    Git(GitCommands),
+    // Git(GitCommands),
+    /// include .gitignore
+    GitIgnore(GitIgnoreCommands),
 }
 
 fn main() {
@@ -32,7 +38,7 @@ fn main() {
 
     match utils.command {
         // Commands::Download(download) => DownloadCommands::parse(),
-        // Commands::Email(email) => email.parse(),
+        Commands::GitIgnore(git_ignore) => git_ignore.parse(),
         // Commands::Git(git) => git.parse(),
         Commands::Readme(readme) => readme.parse(),
         _ => panic!(),

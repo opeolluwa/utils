@@ -1,7 +1,19 @@
+use console::Style;
+use dialoguer::Confirm;
 use serde::Serialize;
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
+/// the readme utils is used to for generating project readme
+/// # Example
+/// the basic examples are listed thus:
+/// ```sh
+///
+/// utils readme #generate readme in the current directory
+/// utils readme -p ~/Desktop # generate readme in the provide path
+/// utils readme --path ~/Desktop # generate readme in the provide path
+/// ```
+///
 #[derive(clap::Args, Debug, Serialize)]
 pub struct ReadmeCommands {
     ///path to the directory where the readme will be created
@@ -31,8 +43,6 @@ impl ReadmeCommands {
     /// utils readme  -d "het" -t "hh" -p .
     ///  ```
     pub fn parse(&self) {
-        println!("the parameter are {:?}", &self);
-
         // see if the readme already exist
         let binding = Path::new(&self.path).join("README.md");
         let path = binding.as_path();
@@ -40,11 +50,31 @@ impl ReadmeCommands {
         if path.exists() {
             // if the readme exist and the force flag is not set, exit
             if !self.force {
-                // TODO use dialogues to get the value
-                println!("the readme already exist, use the --force flag to overwrite it");
+                let error_style = Style::new().for_stderr().red();
+                println!(
+                    "{}",
+                    error_style
+                        .apply_to("the readme already exist, use the --force flag to overwrite it")
+                );
                 return;
             }
-            // ECS on fargate
+            if self.force && !self.backup {
+                // ask if the current readme should be over written
+                let override_readme = Confirm::new()
+                    .with_prompt(
+                        "The current readme would not be backed up, do you wish to continue? ",
+                    )
+                    .interact()
+                    .unwrap();
+
+                if !override_readme {
+                    return;
+                } else {
+                    // remove the current readme and create a new one
+                    fs::remove_file(path).unwrap();
+                    ReadmeCommands::new(path, &self.title, &self.description);
+                }
+            }
             // if the readme exist and the force flag is set, backup the existing readme
             if self.backup {
                 // create a backup of the existing readme
