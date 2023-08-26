@@ -20,6 +20,7 @@ impl Utils {
 
         match utils.command {
             Commands::GitIgnore(git_ignore) => git_ignore.parse(),
+            Commands::Email(email) => email.parse(),
             Commands::Readme(readme) => readme.parse(),
             _ => panic!(),
         }
@@ -30,7 +31,7 @@ impl Utils {
 pub enum Commands {
     /// download files, videos, etc
     Download(DownloadCommands),
-    /// send email
+    /// send email from the command line
     Email(EmailCommands),
     /// generate project readmes
     Readme(ReadmeCommands),
