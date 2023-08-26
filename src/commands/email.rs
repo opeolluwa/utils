@@ -1,11 +1,15 @@
-use std::{thread, time::Duration};
+use std::time::Duration;
 
 use clap::{Args, Subcommand};
 use dialoguer::Confirm;
 use indicatif::{ProgressBar, ProgressStyle};
 use serde::{Deserialize, Serialize};
 
+use crate::database::Database;
 use crate::style::PrintColoredText;
+use lettre::message::header::ContentType;
+use lettre::transport::smtp::authentication::Credentials;
+use lettre::{Message, SmtpTransport, Transport};
 
 #[derive(clap::Args, Debug, Serialize)]
 pub struct EmailCommands {
@@ -69,6 +73,8 @@ impl EmailCommands {
     }
 
     fn list(&self) {
+        let conn = Database::conn();
+
         println!("email listed");
     }
 
@@ -82,6 +88,11 @@ impl EmailCommands {
     }
 
     fn send(&self, data: &SendOptions) {
+        //TODO get the email credentials from the database
+
+        //TODO throw error if not found
+
+        // if found use the template to send email
         let prompt = format!("Proceed to send email to {email}?", email = data.email);
         if Confirm::new()
             .with_prompt(prompt)
@@ -98,8 +109,31 @@ impl EmailCommands {
                     .tick_strings(&["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏", "✓"]),
             );
             pb.set_message("Please wait...");
-            thread::sleep(Duration::from_secs(5));
-            pb.finish_with_message("Email successfully sent");
+            // send the email
+            let email = Message::builder()
+                .from("NoBody <nobody@domain.tld>".parse().unwrap())
+                .reply_to("Yuin <yuin@domain.tld>".parse().unwrap())
+                .to("Hei <hei@domain.tld>".parse().unwrap())
+                .subject("Happy new year")
+                .header(ContentType::TEXT_PLAIN)
+                .body(String::from("Be happy!"))
+                .unwrap();
+
+            let creds = Credentials::new("smtp_username".to_owned(), "smtp_password".to_owned());
+
+            // Open a remote connection to gmail
+            let mailer = SmtpTransport::relay("smtp.gmail.com")
+                .unwrap()
+                .credentials(creds)
+                .build();
+
+            // Send the email
+            match mailer.send(&email) {
+                //TODO Save the email if it saves successfully
+                Ok(_) => pb.finish_with_message("Email successfully sent"),
+                Err(e) => panic!("Could not send email: {e:?}"),
+            }
+            // thread::sleep(Duration::from_secs(5));
         } else {
             PrintColoredText::warning("termination...")
         }
