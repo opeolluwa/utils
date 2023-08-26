@@ -4,8 +4,8 @@ pub const SOURCE_DIR: Dir = include_dir!("src/templates");
 
 mod commands;
 mod parser;
+mod style;
 mod utils;
-
 fn main() {
     Utils::run();
 }
