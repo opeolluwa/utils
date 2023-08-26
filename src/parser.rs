@@ -4,7 +4,7 @@ use commands::{
     readme::ReadmeCommands, sms::SmsCommands,
 };
 
-use crate::commands;
+use crate::commands::{self, store::StoreCommands};
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -20,6 +20,7 @@ impl Utils {
 
         match utils.command {
             Commands::GitIgnore(git_ignore) => git_ignore.parse(),
+            Commands::Email(email) => email.parse(),
             Commands::Readme(readme) => readme.parse(),
             _ => panic!(),
         }
@@ -30,7 +31,7 @@ impl Utils {
 pub enum Commands {
     /// download files, videos, etc
     Download(DownloadCommands),
-    /// send email
+    /// send email from the command line
     Email(EmailCommands),
     /// generate project readmes
     Readme(ReadmeCommands),
@@ -38,4 +39,6 @@ pub enum Commands {
     Sms(SmsCommands),
     /// include .gitignore
     GitIgnore(GitIgnoreCommands),
+    /// store values
+    Store(StoreCommands),
 }
