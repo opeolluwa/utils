@@ -15,7 +15,7 @@ impl Database {
             "CREATE TABLE IF NOT EXISTS emails ( id VARCHAR PRIMARY KEY, name VARCHAR, email VARCHAR, message TEXT date TEXT)";
 
         let store_create_table =
-            "CREATE TABLE IF NOT EXIST store (id VARCHAR, key VARCHAR, value TEXT, date TEXT)";
+            "CREATE TABLE IF NOT EXISTS store (id VARCHAR, key VARCHAR, value TEXT, date TEXT)";
 
         connection.execute(email_create_table).unwrap();
         connection.execute(store_create_table).unwrap();
