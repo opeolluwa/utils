@@ -5,6 +5,7 @@ use sqlite::Connection;
 // }
 
 pub struct Database;
+#[allow(unused)]
 
 impl Database {
     pub fn init() -> Connection {
