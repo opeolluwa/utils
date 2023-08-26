@@ -20,9 +20,10 @@ impl Utils {
 
         match utils.command {
             Commands::GitIgnore(git_ignore) => git_ignore.parse(),
-            Commands::Email(email) => email.parse(),
+            Commands::Mailto(email) => email.parse(),
             Commands::Readme(readme) => readme.parse(),
-            _ => panic!(),
+            Commands::Store(store) => store.parse(),
+            _ => println!("not implemented"),
         }
     }
 }
@@ -32,13 +33,13 @@ pub enum Commands {
     /// download files, videos, etc
     Download(DownloadCommands),
     /// send email from the command line
-    Email(EmailCommands),
-    /// generate project readmes
+    Mailto(EmailCommands),
+    /// add readme to a git software project
     Readme(ReadmeCommands),
-    ///send SMS
+    ///send SMS to people from the command line
     Sms(SmsCommands),
-    /// include .gitignore
+    /// include .gitignore in a git repo
     GitIgnore(GitIgnoreCommands),
-    /// store values
+    /// store data in the database
     Store(StoreCommands),
 }
