@@ -9,6 +9,7 @@ version = "0.1.0"
 
 [dependencies]
 assert_cmd = "2.0.12"
+chrono = "0.4.26"
 clap = {version = "4.3.23", features = ["derive"]}
 console = "0.15.7"
 dialoguer = { version = "0.10.4", features = ["fuzzy-select", "completion"] }
@@ -16,4 +17,6 @@ include_dir = "0.7.3"
 indicatif = "0.17.6"
 lettre = "0.10.4"
 serde = {versio = "1.0.185", features = ["derive"]}
+sqlite = "0.31.1"
+uuid = "1.4.1"
 
