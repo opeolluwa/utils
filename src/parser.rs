@@ -4,7 +4,7 @@ use commands::{
     readme::ReadmeCommands, sms::SmsCommands,
 };
 
-use crate::commands;
+use crate::commands::{self, store::StoreCommands};
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -39,4 +39,6 @@ pub enum Commands {
     Sms(SmsCommands),
     /// include .gitignore
     GitIgnore(GitIgnoreCommands),
+    /// store values
+    Store(StoreCommands),
 }
