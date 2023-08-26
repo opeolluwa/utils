@@ -1,14 +1,20 @@
+use crate::style::PrintColoredText;
 use clap::{Args, Subcommand};
 use serde::{Deserialize, Serialize};
+use uuid::Uuid;
+// let id = Uuid::new_v4();
 
-use crate::{database::Database, style::PrintColoredText};
-
-// utils store k v
 #[derive(Args, Debug, Serialize)]
 pub struct StoreCommands {
     /// sub commands
     #[command(subcommand)]
     pub subcommands: StoreSubCommand,
+}
+
+pub struct StoreInterface {
+    pub id: String,
+    pub key: String,
+    pub value: String,
 }
 
 #[derive(Debug, Subcommand, Serialize, Deserialize, Clone)]
@@ -40,22 +46,9 @@ impl StoreCommands {
     }
 
     /*store the key value pair in the database after checking that the key does not exist, if the key exist prompt use to overwrite  */
-    fn add(key: &String, value: &String) {
-        let conn = Database::conn();
-        let query = format!("SELECT * FROM store WHERE key = '{}'", key);
-        let mut stmt = conn.prepare(&query).unwrap();
-        // let mut rows = stmt.query([]).unwrap();
-    }
+    fn add(key: &String, value: &String) {}
     /* accept a key and update the value of the key */
-    fn set(key: &String, value: &String) {
-        let conn = Database::conn();
-        let query = format!("SELECT * FROM store WHERE key = '{}'", key);
-        let mut stmt = conn.prepare(&query).unwrap();
-    }
+    fn set(key: &String, value: &String) {}
 
-    fn remove(key: &String) {
-        let conn = Database::conn();
-        let query = format!("SELECT * FROM store WHERE key = '{}'", key);
-        let mut stmt = conn.prepare(&query).unwrap();
-    }
+    fn remove(key: &String) {}
 }

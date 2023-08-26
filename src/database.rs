@@ -1,15 +1,18 @@
-use sqlite::Connection;
+use sqlx::{migrate::MigrateDatabase, Sqlite};
 
-// pub struct Database<'a> {
-//     path: &'a str,
-// }
-
+use crate::style::PrintColoredText;
+const DB_URL: &str = "sqlite://utils.db";
 pub struct Database;
 #[allow(unused)]
 
 impl Database {
-    pub fn init() -> Connection {
-        let connection = sqlite::open("./utils.db").unwrap();
+    pub async fn init() {
+        if !Sqlite::database_exists(DB_URL).await.unwrap_or(false) {
+            match Sqlite::create_database(DB_URL).await {
+                Ok(_) => PrintColoredText::success("Database initialized"),
+                Err(_error) => PrintColoredText::error("error creating utility store"),
+            }
+        }
 
         // create the email table
         let email_create_table =
@@ -18,14 +21,14 @@ impl Database {
         let store_create_table =
             "CREATE TABLE IF NOT EXISTS store (id VARCHAR, key VARCHAR, value TEXT, date TEXT)";
 
-        connection.execute(email_create_table).unwrap();
+        /*   connection.execute(email_create_table).unwrap();
         connection.execute(store_create_table).unwrap();
 
-        connection
+        connection */
     }
 
-    /// return connection to the database;
-    pub fn conn() -> Connection {
+    // return connection to the database;
+   /*  pub fn conn() -> Connection {
         Self::init()
-    }
+    } */
 }

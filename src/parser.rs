@@ -4,7 +4,10 @@ use commands::{
     readme::ReadmeCommands, sms::SmsCommands,
 };
 
-use crate::commands::{self, store::StoreCommands};
+use crate::{
+    commands::{self, store::StoreCommands},
+    style::PrintColoredText,
+};
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -23,7 +26,7 @@ impl Utils {
             Commands::Mailto(email) => email.parse(),
             Commands::Readme(readme) => readme.parse(),
             Commands::Store(store) => store.parse(),
-            _ => println!("not implemented"),
+            _ => PrintColoredText::error("invalid command"),
         }
     }
 }
