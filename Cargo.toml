@@ -14,5 +14,6 @@ console = "0.15.7"
 dialoguer = { version = "0.10.4", features = ["fuzzy-select", "completion"] }
 include_dir = "0.7.3"
 indicatif = "0.17.6"
+lettre = "0.10.4"
 serde = {versio = "1.0.185", features = ["derive"]}
 
