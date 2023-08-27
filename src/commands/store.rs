@@ -1,9 +1,8 @@
+use crate::database::StoreModel;
 use clap::{Args, Subcommand};
 use serde::{Deserialize, Serialize};
+// let id = Uuid::new_v4();
 
-use crate::{database::Database, style::PrintColoredText};
-
-// utils store k v
 #[derive(Args, Debug, Serialize)]
 pub struct StoreCommands {
     /// sub commands
@@ -13,49 +12,43 @@ pub struct StoreCommands {
 
 #[derive(Debug, Subcommand, Serialize, Deserialize, Clone)]
 pub enum StoreSubCommand {
+    /// list stored k-v pairs
+    List,
     /// update value
     Set { key: String, value: String },
     /// save new value
-    Add {
-        /// a unique key
-        #[clap(short, long, value_parser)]
-        key: String,
-        ///' value
-        #[clap(short, long, value_parser)]
-        value: String,
-    },
+    Add { key: String, value: String },
     /// remove value
     Remove { key: String },
 }
 
 impl StoreCommands {
-    pub fn parse(&self) {
+    pub async fn parse(&self) {
         match &self.subcommands {
-            // Some()
-            StoreSubCommand::Set { key, value } => println!("set {} {}", key, value),
-            StoreSubCommand::Remove { key } => println!("remove"),
-            StoreSubCommand::Add { key, value } => println!("add"),
-            _ => PrintColoredText::warning("invalid input"),
+            StoreSubCommand::List => Self::list().await,
+            StoreSubCommand::Set { key, value } => Self::set(key, value),
+            StoreSubCommand::Remove { key } => Self::remove(key).await,
+            StoreSubCommand::Add { key, value } => Self::add(key, value).await,
         }
     }
 
+    /* list all the stored k-v pairs */
+    async fn list() {
+        let data = StoreModel::find().await;
+        //TODO: render this in human readable TUI
+        println!("{:#?}", data);
+    }
     /*store the key value pair in the database after checking that the key does not exist, if the key exist prompt use to overwrite  */
-    fn add(key: &String, value: &String) {
-        let conn = Database::conn();
-        let query = format!("SELECT * FROM store WHERE key = '{}'", key);
-        let mut stmt = conn.prepare(&query).unwrap();
-        // let mut rows = stmt.query([]).unwrap();
+    async fn add(key: &String, value: &String) {
+        StoreModel::new(key, value).save().await.unwrap();
     }
     /* accept a key and update the value of the key */
     fn set(key: &String, value: &String) {
-        let conn = Database::conn();
-        let query = format!("SELECT * FROM store WHERE key = '{}'", key);
-        let mut stmt = conn.prepare(&query).unwrap();
+        StoreModel::set(key, value);
     }
 
-    fn remove(key: &String) {
-        let conn = Database::conn();
-        let query = format!("SELECT * FROM store WHERE key = '{}'", key);
-        let mut stmt = conn.prepare(&query).unwrap();
+    /// remove data
+    async fn remove(key: &String) {
+        StoreModel::remove(key).await;
     }
 }

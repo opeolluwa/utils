@@ -5,7 +5,7 @@ use dialoguer::Confirm;
 use indicatif::{ProgressBar, ProgressStyle};
 use serde::{Deserialize, Serialize};
 
-use crate::database::Database;
+// use crate::database::Database;
 use crate::style::PrintColoredText;
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;
@@ -73,8 +73,6 @@ impl EmailCommands {
     }
 
     fn list(&self) {
-        let conn = Database::conn();
-
         println!("email listed");
     }
 

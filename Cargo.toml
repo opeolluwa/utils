@@ -16,6 +16,11 @@ dialoguer = {version = "0.10.4", features = ["fuzzy-select", "completion"]}
 include_dir = "0.7.3"
 indicatif = "0.17.6"
 lettre = "0.10.4"
+# migration = {path = "migration"}# depends on your needs
 serde = {versio = "1.0.185", features = ["derive"]}
-sqlite = "0.31.1"
+sqlx = {version = "0.6.2", features = ["runtime-tokio-native-tls", "sqlite"]}
+tokio = {version = "1.20.0", features = ["macros"]}
 uuid = {version = "1.4.1", features = ["v4", "fast-rng", "macro-diagnostics"]}
+
+[workspace]
+members = ["migration"]
