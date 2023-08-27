@@ -164,9 +164,23 @@ impl StoreModel {
         Ok(Self { ..self.clone() })
     }
 
-    /// update the key
-    pub fn set(&self) {}
+    ///TODO: update the key
+    pub fn set(key: &str, value: &str) -> Self {
+        let data = Self {
+            key: key.to_string(),
+            value: value.to_string(),
+            ..Default::default()
+        };
+        Self { ..data }
+    }
 
     /// remove
-    pub fn remove(&self) {}
+    pub async fn remove(key: &str) {
+        let db = Database::conn().await;
+        let results = sqlx::query_as::<_, Self>("DELETE * FROM store WHERE key = ?")
+            .bind(key.clone())
+            .fetch_all(&db)
+            .await
+            .unwrap();
+    }
 }
