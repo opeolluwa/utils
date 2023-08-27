@@ -47,8 +47,8 @@ impl Database {
 
     // return connection to the database;
     pub async fn conn() -> Pool<Sqlite> {
-        let connection = SqlitePool::connect(DB_URL).await.unwrap();
-        connection
+        
+        SqlitePool::connect(DB_URL).await.unwrap()
     }
 
     pub async fn tables() -> HashMap<usize, String> {
@@ -121,11 +121,11 @@ impl StoreModel {
     /// find all
     pub async fn find() -> Vec<Self> {
         let db = Database::conn().await;
-        let result = sqlx::query_as::<_, Self>("SELECT * FROM store")
+        
+        sqlx::query_as::<_, Self>("SELECT * FROM store")
             .fetch_all(&db)
             .await
-            .unwrap();
-        result
+            .unwrap()
     }
     /// see if the record already exist
     async fn try_exist(key: &str) -> bool {
@@ -136,7 +136,7 @@ impl StoreModel {
             .fetch_all(&db)
             .await
             .unwrap();
-        results.len() >= 1 // true pr false
+        !results.is_empty() // true pr false
     }
 
     /// store the data to the database
@@ -178,7 +178,7 @@ impl StoreModel {
     pub async fn remove(key: &str) {
         let db = Database::conn().await;
         let _ = sqlx::query_as::<_, Self>("DELETE * FROM store WHERE key = ?")
-            .bind(key.clone())
+            .bind(key)
             .fetch_all(&db)
             .await
             .unwrap();

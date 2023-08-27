@@ -39,16 +39,16 @@ impl StoreCommands {
         println!("{:#?}", data);
     }
     /*store the key value pair in the database after checking that the key does not exist, if the key exist prompt use to overwrite  */
-    async fn add(key: &String, value: &String) {
+    async fn add(key: &str, value: &str) {
         StoreModel::new(key, value).save().await.unwrap();
     }
     /* accept a key and update the value of the key */
-    fn set(key: &String, value: &String) {
+    fn set(key: &str, value: &str) {
         StoreModel::set(key, value);
     }
 
     /// remove data
-    async fn remove(key: &String) {
+    async fn remove(key: &str) {
         StoreModel::remove(key).await;
     }
 }

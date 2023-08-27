@@ -209,10 +209,8 @@ impl GitIgnoreCommands {
                 let mut file = File::create(path).unwrap();
                 file.write_all(file_content.contents()).unwrap();
             } else {
-                return;
             }
         } else {
-            return;
         }
     }
 }
