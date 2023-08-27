@@ -1,9 +1,10 @@
-use console::Style;
 use dialoguer::Confirm;
 use serde::Serialize;
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
+
+use crate::style::PrintColoredText;
 /// the readme utils is used to for generating project readme
 /// # Example
 /// the basic examples are listed thus:
@@ -50,11 +51,8 @@ impl ReadmeCommands {
         if path.exists() {
             // if the readme exist and the force flag is not set, exit
             if !self.force {
-                let error_style = Style::new().for_stderr().red();
-                println!(
-                    "{}",
-                    error_style
-                        .apply_to("the readme already exist, use the --force flag to overwrite it")
+                PrintColoredText::error(
+                    "the readme already exist, use the --force flag to overwrite it",
                 );
                 return;
             }
@@ -62,7 +60,7 @@ impl ReadmeCommands {
                 // ask if the current readme should be over written
                 let override_readme = Confirm::new()
                     .with_prompt(
-                        "The current readme would not be backed up, do you wish to continue? ",
+                        "The current readme would not be backed up, do you wish to continue?",
                     )
                     .interact()
                     .unwrap();
