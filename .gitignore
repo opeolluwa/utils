@@ -2,3 +2,5 @@
 /sandbox
 /shell.js
 /utils.db
+utils.db-shm
+utils.db-wal

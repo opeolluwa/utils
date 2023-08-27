@@ -18,14 +18,14 @@ pub struct Utils {
 }
 
 impl Utils {
-    pub fn run() {
+    pub async fn run() {
         let utils = Utils::parse();
 
         match utils.command {
             Commands::GitIgnore(git_ignore) => git_ignore.parse(),
             Commands::Mailto(email) => email.parse(),
             Commands::Readme(readme) => readme.parse(),
-            Commands::Store(store) => store.parse(),
+            Commands::Store(store) => store.parse().await,
             _ => PrintColoredText::error("invalid command"),
         }
     }
