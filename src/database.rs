@@ -177,7 +177,7 @@ impl StoreModel {
     /// remove
     pub async fn remove(key: &str) {
         let db = Database::conn().await;
-        let results = sqlx::query_as::<_, Self>("DELETE * FROM store WHERE key = ?")
+        let _ = sqlx::query_as::<_, Self>("DELETE * FROM store WHERE key = ?")
             .bind(key.clone())
             .fetch_all(&db)
             .await

@@ -6,6 +6,7 @@ use commands::{
 
 use crate::{
     commands::{self, store::StoreCommands},
+    
     style::PrintColoredText,
 };
 
@@ -20,7 +21,6 @@ pub struct Utils {
 impl Utils {
     pub async fn run() {
         let utils = Utils::parse();
-
         match utils.command {
             Commands::GitIgnore(git_ignore) => git_ignore.parse(),
             Commands::Mailto(email) => email.parse(),

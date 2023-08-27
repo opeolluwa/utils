@@ -17,14 +17,7 @@ pub enum StoreSubCommand {
     /// update value
     Set { key: String, value: String },
     /// save new value
-    Add {
-        /// a unique key
-        #[clap(short, long, value_parser)]
-        key: String,
-        ///' value
-        #[clap(short, long, value_parser)]
-        value: String,
-    },
+    Add { key: String, value: String },
     /// remove value
     Remove { key: String },
 }
