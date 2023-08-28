@@ -1,7 +1,6 @@
-use crate::database::StoreModel;
+use crate::{database::StoreModel, style::PrintColoredText};
 use clap::{Args, Subcommand};
 use serde::{Deserialize, Serialize};
-// let id = Uuid::new_v4();
 
 #[derive(Args, Debug, Serialize)]
 pub struct StoreCommands {
@@ -41,6 +40,8 @@ impl StoreCommands {
     /*store the key value pair in the database after checking that the key does not exist, if the key exist prompt use to overwrite  */
     async fn add(key: &str, value: &str) {
         StoreModel::new(key, value).save().await.unwrap();
+        let message = format!("{key} successfully stored");
+        PrintColoredText::success(&message);
     }
     /* accept a key and update the value of the key */
     fn set(key: &str, value: &str) {
