@@ -13,8 +13,10 @@ chrono = "0.4.26"
 clap = {version = "4.3.23", features = ["derive"]}
 console = "0.15.7"
 dialoguer = {version = "0.10.4", features = ["fuzzy-select", "completion"]}
+dirs = "5.0.1"
 include_dir = "0.7.3"
 indicatif = "0.17.6"
+lazy_static = "1.4.0"
 lettre = "0.10.4"
 # migration = {path = "migration"}# depends on your needs
 serde = {versio = "1.0.185", features = ["derive"]}

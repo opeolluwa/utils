@@ -5,15 +5,14 @@ use serde::{Deserialize, Serialize};
 use sqlx::{migrate::MigrateDatabase, FromRow, Pool, Row, Sqlite, SqlitePool};
 use uuid::Uuid;
 
-use crate::style::PrintColoredText;
-const DB_URL: &str = "sqlite://utils.db";
+use crate::{style::PrintColoredText, DB_URL};
 pub struct Database;
 #[allow(unused)]
 
 impl Database {
     pub async fn init() {
-        if !Sqlite::database_exists(DB_URL).await.unwrap_or(false) {
-            match Sqlite::create_database(DB_URL).await {
+        if !Sqlite::database_exists(&DB_URL).await.unwrap_or(false) {
+            match Sqlite::create_database(&DB_URL).await {
                 Ok(_) => PrintColoredText::success("Database initialized"),
                 Err(_error) => PrintColoredText::error("error creating utility store"),
             }
@@ -26,7 +25,7 @@ impl Database {
         let store_create_table =
             "CREATE TABLE IF NOT EXISTS store (id VARCHAR, key VARCHAR, value TEXT, date_added TEXT, last_updated TEXT)";
 
-        let db = SqlitePool::connect(DB_URL).await.unwrap();
+        let db = SqlitePool::connect(&DB_URL).await.unwrap();
         let _ = sqlx::query(store_create_table).execute(&db).await.unwrap();
         let _ = sqlx::query(email_create_table).execute(&db).await.unwrap();
 
@@ -47,8 +46,7 @@ impl Database {
 
     // return connection to the database;
     pub async fn conn() -> Pool<Sqlite> {
-        
-        SqlitePool::connect(DB_URL).await.unwrap()
+        SqlitePool::connect(&DB_URL).await.unwrap()
     }
 
     pub async fn tables() -> HashMap<usize, String> {
@@ -121,7 +119,7 @@ impl StoreModel {
     /// find all
     pub async fn find() -> Vec<Self> {
         let db = Database::conn().await;
-        
+
         sqlx::query_as::<_, Self>("SELECT * FROM store")
             .fetch_all(&db)
             .await
