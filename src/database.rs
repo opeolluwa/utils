@@ -11,9 +11,7 @@ use crate::{style::PrintColoredText, DB_URL};
 pub struct Database(pub Vec<Store>);
 impl std::fmt::Display for Database {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.0.iter().fold(Ok(()), |result, data| {
-            result.and_then(|_| write!(f, "{}", data))
-        })
+        self.0.iter().try_fold((), |_, data| write!(f, "{}", data))
     }
 }
 #[allow(unused)]
