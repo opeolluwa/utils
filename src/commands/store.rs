@@ -1,4 +1,4 @@
-use crate::{database::StoreModel, style::PrintColoredText};
+use crate::{database::Store, style::PrintColoredText};
 use clap::{Args, Subcommand};
 use serde::{Deserialize, Serialize};
 
@@ -33,23 +33,23 @@ impl StoreCommands {
 
     /* list all the stored k-v pairs */
     async fn list() {
-        let data = StoreModel::find().await;
+        let data = Store::find().await;
         //TODO: render this in human readable TUI
         println!("{:#?}", data);
     }
     /*store the key value pair in the database after checking that the key does not exist, if the key exist prompt use to overwrite  */
     async fn add(key: &str, value: &str) {
-        StoreModel::new(key, value).save().await.unwrap();
+        Store::new(key, value).save().await.unwrap();
         let message = format!("{key} successfully stored");
         PrintColoredText::success(&message);
     }
     /* accept a key and update the value of the key */
     fn set(key: &str, value: &str) {
-        StoreModel::set(key, value);
+        Store::set(key, value);
     }
 
     /// remove data
     async fn remove(key: &str) {
-        StoreModel::remove(key).await;
+        Store::remove(key).await;
     }
 }

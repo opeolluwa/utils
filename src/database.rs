@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, fmt::Display};
 
 use chrono::Local;
 use serde::{Deserialize, Serialize};
@@ -6,7 +6,14 @@ use sqlx::{migrate::MigrateDatabase, FromRow, Pool, Row, Sqlite, SqlitePool};
 use uuid::Uuid;
 
 use crate::{style::PrintColoredText, DB_URL};
-pub struct Database;
+pub struct Database(pub Vec<Store>);
+impl std::fmt::Display for Database {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.0.iter().fold(Ok(()), |result, data| {
+            result.and_then(|_| write!(f, "{}", data))
+        })
+    }
+}
 #[allow(unused)]
 
 impl Database {
@@ -28,20 +35,6 @@ impl Database {
         let db = SqlitePool::connect(&DB_URL).await.unwrap();
         let _ = sqlx::query(store_create_table).execute(&db).await.unwrap();
         let _ = sqlx::query(email_create_table).execute(&db).await.unwrap();
-
-        /*   let result = sqlx::query("INSERT INTO store (id, key, value, date) VALUES (?,?,?,?)")
-            .bind("bobby")
-            .execute(&db)
-            .await
-            .unwrap();
-        println!("Query result: {:?}", result);
-        let user_results = sqlx::query_as::<_, User>("SELECT id, name FROM users")
-            .fetch_all(&db)
-            .await
-            .unwrap();
-        for user in user_results {
-            println!("[{}] name: {}", user.id, &user.name);
-        } */
     }
 
     // return connection to the database;
@@ -54,7 +47,7 @@ impl Database {
         // tell us the available tables
         let result = sqlx::query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, name VARCHAR(250) NOT NULL);").execute(&db).await.unwrap();
         println!("Create user table result: {:?}", result);
-        let result = sqlx::query(
+        let result: Vec<sqlx::sqlite::SqliteRow> = sqlx::query(
             "SELECT name
          FROM sqlite_schema
          WHERE type ='table' 
@@ -69,22 +62,15 @@ impl Database {
             let key = idx;
             let value = row.get::<String, &str>("name");
             tables.insert(key, value.to_owned());
-            // println!("[{}]: {:?}", idx, row.get::<String, &str>("name"));
         }
 
         tables
     }
 }
 
-#[derive(Clone, FromRow, Debug)]
-pub struct User {
-    pub id: i64,
-    pub name: String,
-}
-
 /// for deserializing data from the database
 #[derive(Clone, FromRow, Debug, Serialize, Deserialize)]
-pub struct StoreModel {
+pub struct Store {
     pub id: String,
     pub key: String,
     pub value: String,
@@ -93,7 +79,7 @@ pub struct StoreModel {
 }
 
 /// auto generate the date and Id
-impl Default for StoreModel {
+impl Default for Store {
     fn default() -> Self {
         Self {
             id: Uuid::new_v4().to_string(), //6971184f-7ae0-4bbf-ab3c-5ff6712eb8f9
@@ -104,8 +90,17 @@ impl Default for StoreModel {
         }
     }
 }
+impl Display for Store {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "\nKEY: {:30}\nVALUE: {}\nDATE ADDED: {}\nLAST UPDATED: {}\n",
+            self.key, self.value, self.date_added, self.last_updated
+        )
+    }
+}
 
-impl StoreModel {
+impl Store {
     /// create a new key-value pair
     pub fn new(key: &str, value: &str) -> Self {
         let data = Self {
