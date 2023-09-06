@@ -57,10 +57,6 @@ impl Utils {
 
 #[derive(Subcommand)]
 pub enum Commands {
-    /// include .gitignore in a git repo
-    Ignore(GitIgnoreCommands),
-    /// store data in the database
-    // Store(StoreCommands),
     /// list stored data
     List,
     /// remove remove stored data
@@ -69,6 +65,8 @@ pub enum Commands {
     Store { key: String, value: String },
     /// update data in the store
     Update { key: String, value: String },
+    /// include .gitignore in a git repo
+    Ignore(GitIgnoreCommands),
     /// download files, videos, etc
     Download(DownloadCommands),
     /// send email from the command line
