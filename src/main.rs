@@ -5,7 +5,6 @@ use include_dir::{include_dir, Dir};
 pub const SOURCE_DIR: Dir = include_dir!("src/templates");
 lazy_static! {
     pub static ref DB_URL: std::string::String = {
-          // create the database in the home directory of the system
         //create "utils" directory in the home dir and / save files to $HOME/utils;
         let os_default_home_dir = dirs::home_dir().unwrap();
         let db_path = format!(
