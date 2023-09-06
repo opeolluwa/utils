@@ -5,7 +5,8 @@ use commands::{
 };
 
 use crate::{
-    commands::{self, store::StoreCommands},
+    commands::{self},
+    database::Store,
     style::PrintColoredText,
 };
 
@@ -25,7 +26,12 @@ impl Utils {
             Commands::Ignore(git_ignore) => git_ignore.parse(),
             Commands::Mailto(email) => email.parse(),
             Commands::Readme(readme) => readme.parse(),
-            Commands::Store(store) => store.parse().await,
+            Commands::Store { key, value } => {
+                // TODO: handle conflict
+                Store::new(&key, &value).save().await.unwrap();
+                let message = format!("{key} successfully stored");
+                PrintColoredText::success(&message);
+            }
             Commands::List => {
                 let data = crate::database::Store::find().await;
                 if data.is_empty() {
@@ -38,6 +44,12 @@ impl Utils {
             Commands::Remove { key } => {
                 crate::database::Store::remove(&key).await;
             }
+            Commands::Update { key, value } => {
+                let _ = crate::database::Store::update(&key, &value).await.ok();
+
+                let message = format!("{key} successfully updated");
+                PrintColoredText::success(&message);
+            }
             _ => PrintColoredText::error("invalid command"),
         }
     }
@@ -48,11 +60,15 @@ pub enum Commands {
     /// include .gitignore in a git repo
     Ignore(GitIgnoreCommands),
     /// store data in the database
-    Store(StoreCommands),
+    // Store(StoreCommands),
     /// list stored data
     List,
     /// remove remove stored data
     Remove { key: String },
+    /// store data as key value pair
+    Store { key: String, value: String },
+    /// update data in the store
+    Update { key: String, value: String },
     /// download files, videos, etc
     Download(DownloadCommands),
     /// send email from the command line

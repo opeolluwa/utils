@@ -2,7 +2,9 @@ use std::{collections::HashMap, fmt::Display};
 
 use chrono::Local;
 use serde::{Deserialize, Serialize};
-use sqlx::{migrate::MigrateDatabase, FromRow, Pool, Row, Sqlite, SqlitePool};
+use sqlx::{
+    migrate::MigrateDatabase, sqlite::SqliteQueryResult, FromRow, Pool, Row, Sqlite, SqlitePool,
+};
 use uuid::Uuid;
 
 use crate::{style::PrintColoredText, DB_URL};
@@ -17,6 +19,10 @@ impl std::fmt::Display for Database {
 #[allow(unused)]
 
 impl Database {
+    /*
+    initialize the database connection
+    this will create a new sqlite database in the OS home directory
+     */
     pub async fn init() {
         if !Sqlite::database_exists(&DB_URL).await.unwrap_or(false) {
             match Sqlite::create_database(&DB_URL).await {
@@ -42,11 +48,9 @@ impl Database {
         SqlitePool::connect(&DB_URL).await.unwrap()
     }
 
+    // get the tables in the database
     pub async fn tables() -> HashMap<usize, String> {
         let db = Self::conn().await;
-        // tell us the available tables
-        let result = sqlx::query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, name VARCHAR(250) NOT NULL);").execute(&db).await.unwrap();
-        println!("Create user table result: {:?}", result);
         let result: Vec<sqlx::sqlite::SqliteRow> = sqlx::query(
             "SELECT name
          FROM sqlite_schema
@@ -157,23 +161,43 @@ impl Store {
         Ok(Self { ..self.clone() })
     }
 
-    ///TODO: update the key
-    pub fn set(key: &str, value: &str) -> Self {
-        let data = Self {
-            key: key.to_string(),
-            value: value.to_string(),
-            ..Default::default()
-        };
-        Self { ..data }
+    /// update the key value pair
+    pub async fn update(key: &str, value: &str) -> Result<SqliteQueryResult, ()> {
+        // see if the data exist
+        let exist = Self::try_exist(key).await;
+        if !exist {
+            PrintColoredText::error("the provided key does not exist or has been removed");
+            return Err(());
+        }
+
+        let db = Database::conn().await;
+        let last_updated = Local::now().to_rfc2822();
+        let data =
+            sqlx::query("UPDATE store SET value =?, last_updated =? WHERE key = ? RETURNING *")
+                .bind(value.clone())
+                .bind(last_updated.clone())
+                .bind(key.clone())
+                .execute(&db)
+                .await
+                .unwrap();
+
+        Ok(data)
     }
 
     /// remove
     pub async fn remove(key: &str) {
+        let key_exists = Self::try_exist(key).await;
+        if !key_exists {
+            PrintColoredText::error("the provided key does not exist or has been removed");
+            return;
+        }
         let db = Database::conn().await;
-        let _ = sqlx::query_as::<_, Self>("DELETE * FROM store WHERE key = ?")
+        let _ = sqlx::query_as::<_, Self>("DELETE FROM store WHERE key = ?")
             .bind(key)
             .fetch_all(&db)
             .await
             .unwrap();
+        let message = format!("{key} removed successfully");
+        PrintColoredText::success(&message);
     }
 }
