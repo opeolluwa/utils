@@ -36,9 +36,13 @@ impl Database {
         let store_create_table =
             "CREATE TABLE IF NOT EXISTS store (id VARCHAR, key VARCHAR, value TEXT, date_added TEXT, last_updated TEXT)";
 
+        let config_table =
+            "CREATE TABLE IF NOT EXISTS config ( id INTEGER PRIMARY KEY DEFAULT 1, smtp_username VARCHAR, smtp_password VARCHAR)";
+
         let db = SqlitePool::connect(&DB_URL).await.unwrap();
         let _ = sqlx::query(store_create_table).execute(&db).await.unwrap();
         let _ = sqlx::query(email_create_table).execute(&db).await.unwrap();
+        let _ = sqlx::query(config_table).execute(&db).await.unwrap();
     }
 
     // return connection to the database;
@@ -197,5 +201,78 @@ impl Store {
             .unwrap();
         let message = format!("{key} removed successfully");
         PrintColoredText::success(&message);
+    }
+}
+
+#[derive(Debug, Clone, Serialize, FromRow, Deserialize)]
+pub struct Email {
+    pub id: String,
+    pub name: String,
+    pub email: String,
+    pub message: String,
+    pub date: String,
+}
+
+impl Default for Email {
+    fn default() -> Self {
+        Self {
+            id: Uuid::new_v4().to_string(),
+            name: Default::default(),
+            email: Default::default(),
+            message: Default::default(),
+            date: Local::now().to_rfc2822(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, FromRow, Deserialize, Default)]
+pub struct SmtpCredentials {
+    pub smtp_username: String,
+    pub smtp_password: String,
+}
+
+impl SmtpCredentials {
+    pub async fn save(&self) -> Result<Self, ()> {
+        let db = Database::conn().await;
+        let _ = sqlx::query(
+            "INSERT OR REPLACE INTO config (id, smtp_username, smtp_password) VALUES (1,?,?)",
+        )
+        .bind(self.smtp_username.clone())
+        .bind(self.smtp_password.clone())
+        .execute(&db)
+        .await
+        .unwrap();
+
+        Ok(Self { ..self.clone() })
+    }
+
+    pub async fn fetch() -> Self {
+        let db = Database::conn().await;
+        let result = sqlx::query_as::<_, Self>("SELECT * FROM config")
+            .fetch_one(&db)
+            .await
+            .ok();
+
+        if result.is_none() {
+            let smtp_username = dialoguer::Input::new()
+                .with_prompt("SMTP Username?")
+                .interact_text()
+                .expect("error reading input");
+
+            let smtp_password = dialoguer::Input::new()
+                .with_prompt("SMTP Password?")
+                .interact_text()
+                .expect("error reading input");
+
+            let smtp_creds = SmtpCredentials {
+                smtp_username,
+                smtp_password,
+            };
+
+            smtp_creds.save().await.unwrap();
+            return smtp_creds;
+        }
+
+        result.unwrap()
     }
 }

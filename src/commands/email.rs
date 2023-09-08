@@ -7,10 +7,10 @@ use lettre::message::{header, MultiPart, SinglePart};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use crate::ASSETS_DIR;
+use crate::database::{self, SmtpCredentials};
 // use crate::database::Database;
 use crate::style::PrintColoredText;
-use lettre::message::header::ContentType;
+
 use lettre::transport::smtp::authentication::Credentials;
 use lettre::{Message, SmtpTransport, Transport};
 
@@ -18,16 +18,16 @@ use lettre::{Message, SmtpTransport, Transport};
 pub struct EmailCommands {
     /// the email recipient
     #[clap(short, long, value_parser)]
-    pub name: String,
+    pub name: Option<String>,
     /// the recipient email address
     #[clap(short, long, value_parser)]
-    pub email: String,
+    pub email: Option<String>,
     /// the message content
     #[clap(short, long, value_parser)]
-    pub subject: String,
+    pub subject: Option<String>,
     /// body/content of the message
     #[clap(short, long, value_parser)]
-    pub body: Vec<String>, //
+    pub body: Option<Vec<String>>, //
     /// the email history
     #[command(subcommand)]
     pub subcommands: Option<EmailSubCommands>,
@@ -70,12 +70,7 @@ pub struct ConfigOptions {
 /// utils email delete --id 76c310d6-2bda-58ae-8cc6-885df4fa2f99
 impl EmailCommands {
     /// parse the commands
-    pub fn parse(&self) {
-        println!("{:?}", self);
-
-        if self.subcommands.is_none() {
-            //send email
-        }
+    pub async fn parse(&self) {
         if let Some(command) = &self.subcommands {
             match command {
                 EmailSubCommands::History => self.list(),
@@ -83,12 +78,29 @@ impl EmailCommands {
                 EmailSubCommands::Config(config) => self.config(config),
             }
         } else {
+            macro_rules! check_required_field {
+                ($self:expr, $field:ident) => {
+                    if let Some($field) = $self.$field.clone() {
+                        $field
+                    } else {
+                        PrintColoredText::warning(&format!("{} is required", stringify!($field)));
+                        return;
+                    }
+                };
+            }
+
+            let name = check_required_field!(self, name);
+            let email = check_required_field!(self, email);
+            let subject = check_required_field!(self, subject);
+            let body = check_required_field!(self, body);
+
             self.send(&SendOptions {
-                name: self.name.clone(),
-                email: self.email.clone(),
-                subject: self.subject.clone(),
-                body: self.body.clone(),
+                name,
+                email,
+                subject,
+                body,
             })
+            .await
         }
     }
 
@@ -101,16 +113,19 @@ impl EmailCommands {
     }
 
     fn config(&self, config: &ConfigOptions) {
-        // dave config to database
+        // save config to database
         println!("{:?}", config)
     }
 
-    fn send(&self, data: &SendOptions) {
-        //TODO get the email credentials from the database
+    async fn send(&self, data: &SendOptions) {
+        /* get the email credentials from the database
+         * if not found, prompt the user to enter the credentials
+         */
+        let SmtpCredentials {
+            smtp_username,
+            smtp_password,
+        } = database::SmtpCredentials::fetch().await;
 
-        //TODO throw error if not found
-
-        // if found use the template to send email
         let prompt = format!("Proceed to send email to {email}?", email = data.email);
         if Confirm::new()
             .with_prompt(prompt)
@@ -131,8 +146,9 @@ impl EmailCommands {
 
             // build the template
             let mut email_body = handlebars::Handlebars::new();
+            let source = include_str!("../assets/email.hbs");
             email_body
-                .register_template_file("email", "./templates/email.hbs")
+                .register_template_string("email", source)
                 .expect("error reading template file");
             let  email_body = email_body.render(
                 "email",
@@ -161,7 +177,7 @@ impl EmailCommands {
                         .singlepart(
                             SinglePart::builder()
                                 .header(header::ContentType::TEXT_HTML)
-                                .body(String::from(html)),
+                                .body(html),
                         ),
                 ).ok();
 
@@ -172,10 +188,7 @@ impl EmailCommands {
                 return;
             };
 
-            let credentials = Credentials::new(
-                "hey@gmail.com".to_owned(),
-                "hey".to_owned(),
-            );
+            let credentials = Credentials::new(smtp_username, smtp_password);
 
             // Open a remote connection to gmail
             let mailer = SmtpTransport::relay("smtp.gmail.com")

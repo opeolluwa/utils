@@ -24,7 +24,7 @@ impl Utils {
         let utils = Utils::parse();
         match utils.command {
             Commands::Ignore(git_ignore) => git_ignore.parse(),
-            Commands::Mailto(email) => email.parse(),
+            Commands::Mailto(email) => email.parse().await,
             Commands::Readme(readme) => readme.parse(),
             Commands::Store { key, value } => {
                 // TODO: handle conflict

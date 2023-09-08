@@ -70,7 +70,7 @@ impl ReadmeCommands {
                 } else {
                     // remove the current readme and create a new one
                     fs::remove_file(path).unwrap();
-                    ReadmeCommands::new(path, &self.title, &self.description);
+                    ReadmeCommands::create_new(path, &self.title, &self.description);
                 }
             }
             // if the readme exist and the force flag is set, backup the existing readme
@@ -79,16 +79,16 @@ impl ReadmeCommands {
                 let backup_path = Path::new(&self.path).join("README.md.bak");
                 fs::copy(path, backup_path).expect("failed to create backup");
                 // create the readme
-                ReadmeCommands::new(path, &self.title, &self.description);
+                ReadmeCommands::create_new(path, &self.title, &self.description);
             }
         } else {
             // if the readme does not exist, create it
-            ReadmeCommands::new(path, &self.title, &self.description);
+            ReadmeCommands::create_new(path, &self.title, &self.description);
         }
     }
 
-    ///  create a  new readem
-    fn new(path: &Path, title: &str, description: &str) {
+    ///  create a  new readme
+    fn create_new(path: &Path, title: &str, description: &str) {
         let mut file = File::create(path).unwrap();
         file.write_all(ReadmeCommands::get_template(title, description).as_bytes())
             .unwrap();

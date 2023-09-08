@@ -12,7 +12,7 @@ lazy_static! {
         let db_path = format!(
             "{home_dir}/{upload_dir}",
             home_dir = os_default_home_dir.display(),
-            upload_dir = "utils"
+            upload_dir = ".utils"
         );
         // create the path if not exist path if not exist
         let _ = std::fs::create_dir_all(&db_path);
@@ -20,16 +20,12 @@ lazy_static! {
     };
 }
 mod commands;
-mod config;
 mod database;
 mod parser;
 mod style;
 mod utils;
 #[tokio::main]
 async fn main() {
-    // let src_path = "/email.hbs";
-    // let file_path = ASSETS_DIR.path();
-    // println!("{:?}", file_path);
     database::Database::init().await;
     parser::Utils::run().await;
 }
