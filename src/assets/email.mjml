@@ -1,16 +1,21 @@
 <mjml>
   <mj-body background-color="#fcfcfc">
-
+    <mj-wrapper background-color="#ffbb45">
+    </mj-wrapper>
 
     <mj-section background-color="#FFF">
       <mj-column width="100%">
+        <mj-image src="https://ik.imagekit.io/nethbooks/cdn/mailer_IIjJfa1vo.png?updatedAt=1694136384730" alt="opeolluwa::maier" />
         <mj-text font-size="16px" line-height="32px" font-family="Urbanist, arial, 'san-serif'" color="#0B0C14" padding-top="20px">
-          Hi <span>{{recipient}}</span>,
+          Hi <span style="text-transform:capitalize:font-weight:bold">{{recipient}}</span>,
         </mj-text>
 
-        <mj-text font-size="16px" line-height="32px" font-family="Urbanist, arial, 'san-serif'" color="#0B0C14" padding-top="10px">
-          {{content}}
-        </mj-text>
+        {{#each body}}
+          <mj-text font-size="16px" line-height="32px" font-family="Urbanist, arial, 'san-serif'" color="#0B0C14" padding-top="10px" padding-bottom="25px">
+            {{this}}
+          </mj-text>
+
+        {{/each}}
       </mj-column>
 
       <mj-column width="100%">
@@ -26,6 +31,8 @@
       </mj-column>
     </mj-section>
 
-
+    <!-- <mj-include path="./footer.mjml" /> -->
+    <mj-wrapper background-color="#ffbb45">
+    </mj-wrapper>
   </mj-body>
 </mjml>
