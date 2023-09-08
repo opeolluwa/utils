@@ -1,3 +1,4 @@
+use std::fs;
 use std::time::Duration;
 
 use clap::{Args, Subcommand};
@@ -131,8 +132,9 @@ impl EmailCommands {
 
             // build the template
             let mut email_body = handlebars::Handlebars::new();
+            let source = include_str!("../assets/email.hbs");
             email_body
-                .register_template_file("email", "./templates/email.hbs")
+                .register_template_string("email", source)
                 .expect("error reading template file");
             let  email_body = email_body.render(
                 "email",
@@ -172,10 +174,7 @@ impl EmailCommands {
                 return;
             };
 
-            let credentials = Credentials::new(
-                "hey@gmail.com".to_owned(),
-                "hey".to_owned(),
-            );
+            let credentials = Credentials::new("".to_owned(), "".to_owned());
 
             // Open a remote connection to gmail
             let mailer = SmtpTransport::relay("smtp.gmail.com")
