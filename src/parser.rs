@@ -59,13 +59,13 @@ impl Utils {
 pub enum Commands {
     /// list stored data
     List,
-    /// remove remove stored data
+    /// remove stored data
     Remove { key: String },
     /// store data as key value pair
     Store { key: String, value: String },
     /// update data in the store
     Update { key: String, value: String },
-    /// include .gitignore in a git repo
+    /// generate .gitignore
     Ignore(GitIgnoreCommands),
     /// download files, videos, etc
     Download(DownloadCommands),

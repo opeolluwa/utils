@@ -4,3 +4,4 @@
 /utils.db
 utils.db-shm
 utils.db-wal
+.env

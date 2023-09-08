@@ -208,8 +208,8 @@ impl GitIgnoreCommands {
             if let Some(file_content) = file_path {
                 let mut file = File::create(path).unwrap();
                 file.write_all(file_content.contents()).unwrap();
-            } 
-        } 
+            }
+        }
     }
 }
 

@@ -3,8 +3,11 @@ use std::time::Duration;
 use clap::{Args, Subcommand};
 use dialoguer::Confirm;
 use indicatif::{ProgressBar, ProgressStyle};
+use lettre::message::{header, MultiPart, SinglePart};
 use serde::{Deserialize, Serialize};
+use serde_json::json;
 
+use crate::ASSETS_DIR;
 // use crate::database::Database;
 use crate::style::PrintColoredText;
 use lettre::message::header::ContentType;
@@ -13,28 +16,6 @@ use lettre::{Message, SmtpTransport, Transport};
 
 #[derive(clap::Args, Debug, Serialize)]
 pub struct EmailCommands {
-    /// the email history
-    #[command(subcommand)]
-    pub subcommands: EmailSubCommands,
-}
-
-/// Email History sub commands  
-/// utils email
-#[derive(Debug, Subcommand, Serialize, Deserialize, Clone)]
-pub enum EmailSubCommands {
-    /// list all emails that have been sent
-    History,
-    /// delete email from history
-    Delete { id: String },
-    /// configure the SMTP parameters
-    Config(ConfigOptions),
-    /// send email
-    New(SendOptions),
-}
-
-/// utils email new
-#[derive(Serialize, Deserialize, Debug, Clone, Args)]
-pub struct SendOptions {
     /// the email recipient
     #[clap(short, long, value_parser)]
     pub name: String,
@@ -47,6 +28,32 @@ pub struct SendOptions {
     /// body/content of the message
     #[clap(short, long, value_parser)]
     pub body: Vec<String>, //
+    /// the email history
+    #[command(subcommand)]
+    pub subcommands: Option<EmailSubCommands>,
+}
+
+struct SendOptions {
+    /// the email recipient
+    pub name: String,
+    /// the recipient email address
+    pub email: String,
+    /// the message content
+    pub subject: String,
+    /// body/content of the message
+    pub body: Vec<String>, //
+}
+
+/// Email History sub commands  
+/// utils email
+#[derive(Debug, Subcommand, Serialize, Deserialize, Clone)]
+pub enum EmailSubCommands {
+    /// list all emails that have been sent
+    History,
+    /// delete email from history
+    Delete { id: String },
+    /// configure the SMTP parameters
+    Config(ConfigOptions),
 }
 
 /// utils email config
@@ -64,11 +71,24 @@ pub struct ConfigOptions {
 impl EmailCommands {
     /// parse the commands
     pub fn parse(&self) {
-        match &self.subcommands {
-            EmailSubCommands::History => self.list(),
-            EmailSubCommands::Delete { id } => self.delete(id),
-            EmailSubCommands::Config(config) => self.config(config),
-            EmailSubCommands::New(new) => self.send(new),
+        println!("{:?}", self);
+
+        if self.subcommands.is_none() {
+            //send email
+        }
+        if let Some(command) = &self.subcommands {
+            match command {
+                EmailSubCommands::History => self.list(),
+                EmailSubCommands::Delete { id } => self.delete(id),
+                EmailSubCommands::Config(config) => self.config(config),
+            }
+        } else {
+            self.send(&SendOptions {
+                name: self.name.clone(),
+                email: self.email.clone(),
+                subject: self.subject.clone(),
+                body: self.body.clone(),
+            })
         }
     }
 
@@ -107,22 +127,60 @@ impl EmailCommands {
                     .tick_strings(&["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏", "✓"]),
             );
             pb.set_message("Please wait...");
-            // send the email
-            let email = Message::builder()
-                .from("NoBody <nobody@domain.tld>".parse().unwrap())
-                .reply_to("Yuin <yuin@domain.tld>".parse().unwrap())
-                .to("Hei <hei@domain.tld>".parse().unwrap())
-                .subject("Happy new year")
-                .header(ContentType::TEXT_PLAIN)
-                .body(String::from("Be happy!"))
-                .unwrap();
+            let recipient = format!("{}<{}>", data.name, data.email);
 
-            let creds = Credentials::new("smtp_username".to_owned(), "smtp_password".to_owned());
+            // build the template
+            let mut email_body = handlebars::Handlebars::new();
+            email_body
+                .register_template_file("email", "./templates/email.hbs")
+                .expect("error reading template file");
+            let  email_body = email_body.render(
+                "email",
+                &json!({"email":data.email, "body": data.body, "subject":data.subject, "recipient":data.name}),
+            ).ok();
+
+            let Some(html) = email_body else {
+                pb.finish_with_message(
+                    "Oops! An error was encountered while rendering the email. PLease retry!",
+                );
+                return;
+            };
+
+            let email = Message::builder()
+                .from("Adeoye Adefemi <adefemiadeoye@yahoo.com>".parse().unwrap())
+                .reply_to("Adeoye Adefemi <adefemiadeoye@yahoo.com>".parse().unwrap())
+                .to(recipient.parse().unwrap())
+                .subject(&data.subject)
+                .multipart(
+                    MultiPart::alternative() // This is composed of two parts.
+                        .singlepart(
+                            SinglePart::builder()
+                                .header(header::ContentType::TEXT_PLAIN)
+                                .body(String::from("Oops! An error was encountered while rendering the email. PLease retry!")), // Every message should have a plain text fallback.
+                        )
+                        .singlepart(
+                            SinglePart::builder()
+                                .header(header::ContentType::TEXT_HTML)
+                                .body(String::from(html)),
+                        ),
+                ).ok();
+
+            let Some(email) = email else {
+                pb.finish_with_message(
+                    "Oops! An error was encountered while parsing the email. Please retry!",
+                );
+                return;
+            };
+
+            let credentials = Credentials::new(
+                "hey@gmail.com".to_owned(),
+                "hey".to_owned(),
+            );
 
             // Open a remote connection to gmail
             let mailer = SmtpTransport::relay("smtp.gmail.com")
                 .unwrap()
-                .credentials(creds)
+                .credentials(credentials)
                 .build();
 
             // Send the email
@@ -131,7 +189,6 @@ impl EmailCommands {
                 Ok(_) => pb.finish_with_message("Email successfully sent"),
                 Err(e) => panic!("Could not send email: {e:?}"),
             }
-            // thread::sleep(Duration::from_secs(5));
         } else {
             PrintColoredText::warning("termination...")
         }

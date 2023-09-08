@@ -1,10 +1,5 @@
 {
   "cSpell.words": [
     "sqlx"
-  ],
-  "workbench.colorCustomizations": {
-    "activityBar.background": "#462511",
-    "titleBar.activeBackground": "#613417",
-    "titleBar.activeForeground": "#FDFAF8"
-  }
+  ]
 }
