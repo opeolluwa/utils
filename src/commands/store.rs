@@ -1,7 +1,7 @@
 use clap::{Args, Subcommand};
 use serde::{Deserialize, Serialize};
 
-use crate::style::PrintColoredText;
+use crate::{database::Store, style::PrintColoredText};
 
 #[derive(Args, Debug, Serialize, Deserialize)]
 pub struct StoreCommands {
@@ -9,9 +9,6 @@ pub struct StoreCommands {
     pub key: Option<String>,
     #[clap(short, long, value_parser)]
     pub value: Option<String>,
-    /// overwrite existing key
-    #[clap(short, long, value_parser)]
-    pub overwrite: Option<bool>,
     #[command(subcommand)]
     pub subcommands: Option<SubCommands>,
 }
@@ -38,28 +35,19 @@ impl StoreCommands {
                 SubCommands::Update { key, value } => Self::update(key, value).await,
             }
         } else {
-            if self.overwrite {
-                println!("overwrite");
-            }
-            print!("some dangerous things");
-            // Self::store(&self.key, &self.value, &self.overwrite);
+            let Some(key) = &self.key else {
+                PrintColoredText::error("Invalid key");
+                return;
+            };
+            let Some(value) = &self.value else {
+                PrintColoredText::error("Invalid value");
+                return;
+            };
+            Store::new(&key, &value).save().await.unwrap();
+            let message = format!("{key} successfully stored");
+            PrintColoredText::success(&message);
         }
     }
-
-    async fn store(key: &Option<String>, value: &Option<String>, overwrite: &Option<bool>) {
-        if key.is_none() || value.is_none() {
-            PrintColoredText::error("Key, Value pair not specified!");
-            return;
-        }
-        let key = key.as_ref().unwrap();
-        let value = value.as_ref().unwrap();
-        let overwrite = overwrite.as_ref().unwrap_or(&false);
-        if *overwrite {
-            println!("overwriting {} with {}", key, value);
-        }
-        println!("storing {} with {}", key, value);
-    }
-
     async fn list() {
         let data = crate::database::Store::find().await;
         if data.is_empty() {
