@@ -1,0 +1,35 @@
+[package]
+authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
+description = "a compilation of utility scripts for every day use in building applications and using certain features on my laptop"
+edition = "2021"
+name = "utils"
+version = "0.5.22"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+assert_cmd = "2.0.12"
+chrono = "0.4.26"
+clap = {version = "4.3.23", features = ["derive"] }
+console = "0.15.7"
+dialoguer = {version = "0.10.4", features = ["fuzzy-select", "completion"] }
+dirs = "5.0.1"
+handlebars = "4.4.0"
+include_dir = "0.7.3"
+indicatif = "0.17.6"
+lazy_static = "1.4.0"
+lettre = {version = "0.10.4", features = ["tokio1", "tokio1-native-tls"] }
+serde = {versio = "1.0.185", features = ["derive"] }
+serde_json = "1.0.105"
+sqlx = {version = "0.6.2", features = ["runtime-tokio-native-tls", "sqlite"] }
+tauri = {version = "1.2", features = ["shell-open"] }
+tokio = {version = "1.20.0", features = ["macros"] }
+uuid = {version = "1.4.1", features = ["v4", "fast-rng", "macro-diagnostics"] }
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
+
+[build-dependencies]
+tauri-build = {version = "1.2", features = [] }
