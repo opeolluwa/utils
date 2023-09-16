@@ -110,13 +110,19 @@ impl Store {
     /// create a new key-value pair
     pub fn new(key: &str, value: &str) -> Self {
         let data = Self {
-            key: key.to_string(),
-            value: value.to_string(),
+            key: key.to_string().to_lowercase(),
+            value: value.to_string().to_lowercase(),
             ..Default::default()
         };
         Self { ..data }
     }
 
+    /// empty the content of the store
+    pub async fn clear() {
+        let db = Database::conn().await;
+        let _ = sqlx::query("DELETE FROM store").execute(&db).await.unwrap();
+        PrintColoredText::success("store cleared");
+    }
     /// find all
     pub async fn find() -> Vec<Self> {
         let db = Database::conn().await;
@@ -131,7 +137,7 @@ impl Store {
         let db = Database::conn().await;
 
         let results = sqlx::query_as::<_, Self>("SELECT * FROM store WHERE key = ?")
-            .bind(key)
+            .bind(key.to_lowercase())
             .fetch_all(&db)
             .await
             .unwrap();
@@ -176,9 +182,9 @@ impl Store {
         let last_updated = Local::now().to_rfc2822();
         let data =
             sqlx::query("UPDATE store SET value =?, last_updated =? WHERE key = ? RETURNING *")
-                .bind(value.clone())
+                .bind(value.clone().to_lowercase())
                 .bind(last_updated.clone())
-                .bind(key.clone())
+                .bind(key.clone().to_lowercase())
                 .execute(&db)
                 .await
                 .unwrap();
@@ -276,3 +282,4 @@ impl SmtpCredentials {
         result.unwrap()
     }
 }
+

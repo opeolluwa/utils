@@ -21,6 +21,7 @@ lazy_static = "1.4.0"
 lettre = { version = "0.10.4", features = ["tokio1", "tokio1-native-tls"] }
 serde = {versio = "1.0.185", features = ["derive"]}
 serde_json = "1.0.105"
+slint = "1.2.0"
 sqlx = {version = "0.6.2", features = ["runtime-tokio-native-tls", "sqlite"]}
 tokio = {version = "1.20.0", features = ["macros"]}
 uuid = {version = "1.4.1", features = ["v4", "fast-rng", "macro-diagnostics"]}
