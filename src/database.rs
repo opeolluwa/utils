@@ -117,6 +117,12 @@ impl Store {
         Self { ..data }
     }
 
+    /// empty the content of the store
+    pub async fn clear() {
+        let db = Database::conn().await;
+        let _ = sqlx::query("DELETE FROM store").execute(&db).await.unwrap();
+        PrintColoredText::success("store cleared");
+    }
     /// find all
     pub async fn find() -> Vec<Self> {
         let db = Database::conn().await;

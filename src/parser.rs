@@ -1,13 +1,13 @@
 use clap::{Parser, Subcommand};
 use commands::{
     download::DownloadCommands, email::EmailCommands, gitignore::GitIgnoreCommands,
-    readme::ReadmeCommands, sms::SmsCommands,
+    readme::ReadmeCommands, sms::SmsCommands, store::StoreCommands,
 };
 
 use crate::{
     commands::{self},
-    database::Store,
     style::PrintColoredText,
+    ui::Ui,
 };
 
 //acf
@@ -26,13 +26,9 @@ impl Utils {
             Commands::Ignore(git_ignore) => git_ignore.parse(),
             Commands::Mailto(email) => email.parse().await,
             Commands::Readme(readme) => readme.parse(),
-            Commands::Store { key, value } => {
-                // TODO: handle conflict
-                Store::new(&key, &value).save().await.unwrap();
-                let message = format!("{key} successfully stored");
-                PrintColoredText::success(&message);
-            }
-            Commands::List => {
+            Commands::Ui => Ui::render(),
+            Commands::Store(store) => store.parse().await,
+            /*  Commands::List => {
                 let data = crate::database::Store::find().await;
                 if data.is_empty() {
                     PrintColoredText::error("no data found");
@@ -49,7 +45,7 @@ impl Utils {
 
                 let message = format!("{key} successfully updated");
                 PrintColoredText::success(&message);
-            }
+            } */
             _ => PrintColoredText::error("invalid command"),
         }
     }
@@ -62,7 +58,7 @@ pub enum Commands {
     /// remove stored data
     Remove { key: String },
     /// store data as key value pair
-    Store { key: String, value: String },
+    Store(StoreCommands),
     /// update data in the store
     Update { key: String, value: String },
     /// generate .gitignore
@@ -75,4 +71,6 @@ pub enum Commands {
     Readme(ReadmeCommands),
     ///send SMS to people from the command line
     Sms(SmsCommands),
+    /// open a graphical interface
+    Ui,
 }

@@ -1,5 +1,5 @@
 use lazy_static::lazy_static;
-
+use crate::ui::Ui;
 use include_dir::{include_dir, Dir};
 
 pub const SOURCE_DIR: Dir = include_dir!("src/templates");
@@ -23,6 +23,7 @@ mod commands;
 mod database;
 mod parser;
 mod style;
+mod ui;
 mod utils;
 #[tokio::main]
 async fn main() {
