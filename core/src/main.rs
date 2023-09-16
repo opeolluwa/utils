@@ -35,11 +35,11 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
-
 fn main() {
-  // database::Database::init().await;
-  //  parser::Utils::run().await;
-  //    tauri::async_runtime::spawn(http_server::core_server());
+    // database::Database::init().await;
+    //  parser::Utils::run().await;
+    tauri::async_runtime::spawn(parser::Utils::run());
+    tauri::async_runtime::spawn(database::Database::init());
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
