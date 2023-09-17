@@ -17,7 +17,24 @@
       "longDescription": "a quicker way to do things",
       "subcommands": {
         "store": {
-          
+          "description": "store data as a key-value pair",
+          "longDescription": "store data as a key-value pair",
+          "args": [
+            {
+              "name": "key",
+              "short": "k",
+              "description": "the key to store the data under",
+              "longDescription": "the key to store the data under",
+              "required": true
+            },
+            {
+              "name": "value",
+              "short": "v",
+              "description": "the value to store",
+              "longDescription": "the value to store",
+              "required": true
+            }
+          ]
         }
       }
     },
