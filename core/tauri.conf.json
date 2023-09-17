@@ -6,11 +6,38 @@
     "distDir": "../dist",
     "withGlobalTauri": false
   },
+
   "package": {
-    "productName": "tauri-app",
+    "productName": "utills",
     "version": "0.0.0"
   },
   "tauri": {
+    "cli": {
+      "description": "utils",
+      "longDescription": "a quicker way to do things",
+      "subcommands": {
+        "store": {
+          "description": "store data as a key-value pair",
+          "longDescription": "store data as a key-value pair",
+          "args": [
+            {
+              "name": "key",
+              "short": "k",
+              "description": "the key to store the data under",
+              "longDescription": "the key to store the data under",
+              "required": true
+            },
+            {
+              "name": "value",
+              "short": "v",
+              "description": "the value to store",
+              "longDescription": "the value to store",
+              "required": true
+            }
+          ]
+        }
+      }
+    },
     "allowlist": {
       "all": false,
       "shell": {
@@ -27,7 +54,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.utills.dev",
       "targets": "all"
     },
     "security": {
@@ -40,7 +67,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "tauri-app",
+        "title": "utills",
         "width": 800,
         "height": 600
       }
