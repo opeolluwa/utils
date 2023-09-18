@@ -1,5 +1,6 @@
 # Utils
 
+![image](./app-icon.png)
 Compilation of utility scripts for everyday use
 
 - [Description](#description)
