@@ -24,13 +24,8 @@ mod parser;
 mod style;
 mod utils;
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
-fn main() {
-    // database::Database::init().await;
-    //  parser::Utils::run().await;
+#[tokio::main]
+async fn main() {
+    database::Database::init().await;
+    parser::Utils::run().await;
 }
