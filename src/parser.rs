@@ -6,7 +6,6 @@ use commands::{
 
 use crate::{
     commands::{self},
-    style::PrintColoredText,
 };
 
 //acf

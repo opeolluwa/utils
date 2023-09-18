@@ -43,7 +43,7 @@ impl StoreCommands {
                 PrintColoredText::error("Invalid value");
                 return;
             };
-            Store::new(&key, &value).save().await.unwrap();
+            Store::new(key, value).save().await.unwrap();
             let message = format!("{key} successfully stored");
             PrintColoredText::success(&message);
         }
@@ -59,11 +59,11 @@ impl StoreCommands {
     }
 
     async fn delete(key: &str) {
-        crate::database::Store::remove(&key).await;
+        crate::database::Store::remove(key).await;
     }
 
     async fn update(key: &str, value: &str) {
-        let _ = crate::database::Store::update(&key, &value).await.ok();
+        let _ = crate::database::Store::update(key, value).await.ok();
 
         let message = format!("{key} successfully updated");
         PrintColoredText::success(&message);
