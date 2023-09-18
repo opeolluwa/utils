@@ -282,4 +282,3 @@ impl SmtpCredentials {
         result.unwrap()
     }
 }
-
