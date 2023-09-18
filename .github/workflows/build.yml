@@ -1,38 +1,35 @@
-name: Build and Push Release
+name: Build and Release Rust Binary
+
 on:
   push:
     branches:
-      - master # You can change this to your main branch name
+      - master # Change to the default branch of your repository
 
 jobs:
-  build-and-push-release:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Check out code
         uses: actions/checkout@v2
 
       - name: Set up Rust
-        uses: actions/setup-rust@v2
+        uses: actions-rs/toolchain@v1
         with:
-          rust-version: stable
+          toolchain: stable # You can specify the Rust toolchain version
 
-      - name: Build binary
+      - name: Build Rust binary
         run: |
-          # Replace this with your build command for Rust or C
           cargo build --release
-        working-directory: path/to/your/project
+        env:
+          RUST_BACKTRACE: full # Optional, for better error messages
 
-      - name: Create release
+      - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            path/to/your/project/target/release/your_binary_name
+          files: target/release/your_binary_name # Replace with your binary's name
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish release
-        run: |
-          echo "Release URL: ${{ steps.create_release.outputs.html_url }}"
-        shell: bash
+      
