@@ -1,11 +1,8 @@
 # Utils
 
 <div style="display:flex; justify-content:center; align-items:center">
-  <img alt=app-icon src=./app-icon.png/>
+  <img alt=app-icon src=app-icon.png/>
 </div>
-
-
-
 
 Compilation of utility scripts for everyday use
 
