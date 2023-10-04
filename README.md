@@ -14,6 +14,10 @@ Compilation of utility scripts for everyday use
 - [Documentation](#documentation)
 - [License](#license)
 
+## Demo
+
+![Demo](./utils-demo.gif)
+
 ## Description
 
 This repository contains a collection of useful scripts that can be used in any software project and in a desktop environment. The main purpose is to provide abstracts on some common tasks such as adding readme to a project, sending email and SMS, etc.

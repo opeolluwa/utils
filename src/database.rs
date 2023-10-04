@@ -119,6 +119,16 @@ impl Store {
 
     /// empty the content of the store
     pub async fn clear() {
+        // prompt the user to confirm
+        let confirm = dialoguer::Confirm::new()
+            .with_prompt("Are you sure you want to clear the store?")
+            .interact()
+            .unwrap();
+        if !confirm {
+            PrintColoredText::error("operation aborted");
+            return;
+        }
+        
         let db = Database::conn().await;
         let _ = sqlx::query("DELETE FROM store").execute(&db).await.unwrap();
         PrintColoredText::success("store cleared");
