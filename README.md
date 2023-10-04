@@ -16,7 +16,7 @@ Compilation of utility scripts for everyday use
 
 ## Demo
 
-![Demo](./utils-demo.webm)
+<video src="./utils-demo.webm" alt="demo video"> </video>
 
 ## Description
 
