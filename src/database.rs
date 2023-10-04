@@ -8,6 +8,10 @@ use sqlx::{
 use uuid::Uuid;
 
 use crate::{style::PrintColoredText, DB_URL};
+/**
+ * the struct Database is a tuple store holding a vector of stores  (Store)
+ * the Store hold key-value pair and all the metadata
+ */
 pub struct Database(pub Vec<Store>);
 impl std::fmt::Display for Database {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -128,7 +132,7 @@ impl Store {
             PrintColoredText::error("operation aborted");
             return;
         }
-        
+
         let db = Database::conn().await;
         let _ = sqlx::query("DELETE FROM store").execute(&db).await.unwrap();
         PrintColoredText::success("store cleared");
