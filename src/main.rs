@@ -6,7 +6,9 @@ pub const ASSETS_DIR: Dir = include_dir!("src/assets");
 
 lazy_static! {
     pub static ref DB_URL: std::string::String = {
-        //create "utils" directory in the home dir and / save files to $HOME/utils;
+        /* create "utils" directory in the home dir and / save files to $HOME utils
+        * this would hold the sqlite database which would contain configuration and app data*/
+
         let os_default_home_dir = dirs::home_dir().unwrap();
         let db_path = format!(
             "{home_dir}/{upload_dir}",
