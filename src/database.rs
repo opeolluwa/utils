@@ -196,9 +196,9 @@ impl Store {
         let last_updated = Local::now().to_rfc2822();
         let data =
             sqlx::query("UPDATE store SET value =?, last_updated =? WHERE key = ? RETURNING *")
-                .bind(value.clone().to_lowercase())
+                .bind(value.to_lowercase())
                 .bind(last_updated.clone())
-                .bind(key.clone().to_lowercase())
+                .bind(key.to_lowercase())
                 .execute(&db)
                 .await
                 .unwrap();
