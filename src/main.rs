@@ -3,7 +3,6 @@ use lazy_static::lazy_static;
 
 pub const SOURCE_DIR: Dir = include_dir!("src/templates");
 
-
 lazy_static! {
     pub static ref DB_URL: std::string::String = {
         /* create "utils" directory in the home dir and / save files to $HOME utils

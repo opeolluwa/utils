@@ -1,12 +1,7 @@
 use clap::{Parser, Subcommand};
-use commands::{
-     gitignore::GitIgnoreCommands, readme::ReadmeCommands,
-    store::StoreCommands,
-};
+use commands::{gitignore::GitIgnoreCommands, readme::ReadmeCommands, store::StoreCommands};
 
-use crate::{
-    commands::{self},
-};
+use crate::commands::{self};
 
 //acf
 #[derive(Parser)]

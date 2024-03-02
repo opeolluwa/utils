@@ -223,4 +223,3 @@ impl Store {
         PrintColoredText::success(&message);
     }
 }
-
