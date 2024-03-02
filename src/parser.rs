@@ -1,6 +1,6 @@
 use clap::{Parser, Subcommand};
 use commands::{
-    email::EmailCommands, gitignore::GitIgnoreCommands, readme::ReadmeCommands,
+     gitignore::GitIgnoreCommands, readme::ReadmeCommands,
     store::StoreCommands,
 };
 
@@ -22,7 +22,6 @@ impl Utils {
         let utils = Utils::parse();
         match utils.command {
             Commands::Ignore(git_ignore) => git_ignore.parse(),
-            Commands::Mailto(email) => email.parse().await,
             Commands::Readme(readme) => readme.parse(),
             Commands::Store(store) => store.parse().await,
             // _ => PrintColoredText::error("invalid command"),
@@ -36,8 +35,6 @@ pub enum Commands {
     Store(StoreCommands),
     /// generate .gitignore
     Ignore(GitIgnoreCommands),
-    /// send email from the command line
-    Mailto(EmailCommands),
     /// add readme to a git software project
     Readme(ReadmeCommands),
 }
