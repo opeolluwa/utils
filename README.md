@@ -30,11 +30,26 @@ This repository contains a collection of useful scripts that can be used in any 
 
 ### Installing
 
-Install from the [Cargo](https://crates.io) repository
+- Install from the [Cargo](https://crates.io) repository
 
-```sh
-cargo install utils
-```
+  ```sh
+  cargo install utils
+  ```
+
+- Clone the repository and build the application
+
+  ```sh
+  git clone https://github.com/opeolluwa/utils.git
+  cd utils
+  cargo build --release
+  cargo install --path .
+  ```
+
+- Install from NPM
+  
+  ```sh
+  npm install -g @opeolluwa/utils
+  ```
 
 ### Executing program
 
@@ -44,9 +59,6 @@ To run the application locally
 cargo run -- --help
 ```
 
-## Documentation
-
-see [https://opeolluwa/github.io/utils](https://opeolluwa.github.io)
 
 ## License
 
