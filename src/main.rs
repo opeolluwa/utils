@@ -2,7 +2,6 @@ use include_dir::{include_dir, Dir};
 use lazy_static::lazy_static;
 
 pub const SOURCE_DIR: Dir = include_dir!("src/templates");
-pub const ASSETS_DIR: Dir = include_dir!("src/assets");
 
 lazy_static! {
     pub static ref DB_URL: std::string::String = {
