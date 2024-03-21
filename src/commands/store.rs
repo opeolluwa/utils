@@ -80,18 +80,19 @@ impl StoreCommands {
             PrintColoredText::error("no data found");
             std::process::exit(0)
         }
-        // TODO: impl display
-        println!("{:?}", data);
+
+        for item in data.iter() {
+            println!("KEY: {key}\nVALUE: {value}\nDATE ADDED: {date_added}\nLAST UPDATED AT: {date_updated}\n", key=item.key, value=item.value, date_added=item.date_added, date_updated=item.last_updated)
+        }
         Ok(())
     }
 
     /// remove record from the store  
     async fn delete(key: &str) -> Result<()> {
-        
         Ok(())
     }
 
-    /// update recoird n the store 
+    /// update recoird n the store
     async fn update(key: &str, value: &str) -> Result<()> {
         // let _ = crate::database::Store::update(key, value).await.ok();
 

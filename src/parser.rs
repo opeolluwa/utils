@@ -20,7 +20,7 @@ impl Utils {
             Commands::Ignore(git_ignore) => git_ignore.parse(),
             Commands::Readme(readme) => readme.parse(),
             Commands::Store(store) => store.parse().await.unwrap(), //TODO: improve error handling
-            // _ => PrintColoredText::error("invalid command"),
+                                                                    // _ => PrintColoredText::error("invalid command"),
         }
     }
 }
