@@ -1,6 +1,6 @@
 use clap::{Parser, Subcommand};
-use commands::{gitignore::GitIgnoreCommands, readme::ReadmeCommands};
-// use commands::{gitignore::GitIgnoreCommands, readme::ReadmeCommands, store::StoreCommands};
+// use commands::{gitignore::GitIgnoreCommands, readme::ReadmeCommands};
+use commands::{gitignore::GitIgnoreCommands, readme::ReadmeCommands, store::StoreCommands};
 
 use crate::commands::{self};
 
@@ -19,7 +19,7 @@ impl Utils {
         match utils.command {
             Commands::Ignore(git_ignore) => git_ignore.parse(),
             Commands::Readme(readme) => readme.parse(),
-            // Commands::Store(store) => store.parse().await,
+            Commands::Store(store) => store.parse().await.unwrap(), //TODO: improve error handling
             // _ => PrintColoredText::error("invalid command"),
         }
     }
@@ -28,7 +28,7 @@ impl Utils {
 #[derive(Subcommand)]
 pub enum Commands {
     /// store data as key value pair
-    // Store(StoreCommands),
+    Store(StoreCommands),
     /// generate .gitignore
     Ignore(GitIgnoreCommands),
     /// add readme to a git software project

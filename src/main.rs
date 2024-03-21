@@ -3,7 +3,7 @@ use include_dir::{include_dir, Dir};
 use lazy_static::lazy_static;
 use migration::{Migrator, MigratorTrait};
 use sea_orm::{ConnectOptions, Database};
-use std::time::Duration;
+use std::{env, time::Duration};
 
 pub const SOURCE_DIR: Dir = include_dir!("src/templates");
 
@@ -28,7 +28,7 @@ lazy_static! {
     };
 }
 mod commands;
-mod database;
+pub mod database;
 mod parser;
 mod style;
 mod utils;
@@ -54,13 +54,18 @@ async fn main() -> Result<()> {
     // this would create the necessary tables
     let connection = db;
     Migrator::up(&connection, None).await?;
-    // run the cli parser
-    // parser::Utils::run().await;
 
-    println!("migration completed, {}", DB_URL.as_str());
     // check for pending migrations
-    let migrations = Migrator::get_pending_migrations(&connection).await?;
-    println!(" migrations length {}", migrations.len());
+    let env = env::var("ENV").unwrap_or("production".to_string());
+    if env == "development" {
+        let migrations = Migrator::get_pending_migrations(&connection).await?;
+        println!("{} pending migrations", migrations.len());
+
+        println!("databse live at  {}", DB_URL.as_str());
+    }
+
+    // run the cli parser
+    parser::Utils::run().await;
 
     Ok(())
 }
