@@ -163,7 +163,11 @@ impl StoreCommands {
                         r#"DELETE FROM store"#,
                     ))
                     .await?;
+                LogMessage::success("Stored successfully flushed");
+            } else {
+                LogMessage::error("Incorrect password");
             }
+            std::process::exit(1)
         }
 
         // if no password
@@ -180,8 +184,10 @@ impl StoreCommands {
                     r#"DELETE FROM store"#,
                 ))
                 .await?;
+            LogMessage::success("Stored successfully flushed");
+        } else {
+            LogMessage::neutral("Action terminated");
         }
-        LogMessage::success("Stored successfully flushed");
 
         Ok(())
     }
