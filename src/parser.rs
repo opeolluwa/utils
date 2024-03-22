@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+// use commands::{gitignore::GitIgnoreCommands, readme::ReadmeCommands};
 use commands::{gitignore::GitIgnoreCommands, readme::ReadmeCommands, store::StoreCommands};
 
 use crate::commands::{self};
@@ -18,8 +19,8 @@ impl Utils {
         match utils.command {
             Commands::Ignore(git_ignore) => git_ignore.parse(),
             Commands::Readme(readme) => readme.parse(),
-            Commands::Store(store) => store.parse().await,
-            // _ => PrintColoredText::error("invalid command"),
+            Commands::Store(store) => store.parse().await.unwrap(), //TODO: improve error handling
+                                                                    // _ => LogMessage::error("invalid command"),
         }
     }
 }
