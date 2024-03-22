@@ -155,7 +155,7 @@ impl StoreCommands {
 
             // validate the password
             let saved_password = saved_password.unwrap().answer_hash;
-            if verify(raw_password, &saved_password)? {
+            if verify(raw_password.trim().to_lowercase(), &saved_password)? {
                 let _: ExecResult = Self::db_connection()
                     .await?
                     .execute(Statement::from_string(
@@ -209,7 +209,7 @@ impl StoreCommands {
                     .interact_text()
                     .unwrap();
 
-                let hashed_answer = hash(answer.trim(), DEFAULT_COST)?;
+                let hashed_answer = hash(answer.trim().to_lowercase(), DEFAULT_COST)?;
 
                 let record = entity::password::ActiveModel {
                     id: Set(1),
