@@ -26,9 +26,8 @@ dirs = "5.0.1"
 include_dir = "0.7.3"
 indicatif = "0.17.6"
 lazy_static = "1.4.0"
-serde = {versio = "1.0.185", features = ["derive"] }
+serde = {version = "1.0.185", features = ["derive"] }
 serde_json = "1.0.105"
-# sqlx = {version = "0.6.2", features = ["runtime-tokio-native-tls", "sqlite"] }
 tokio = {version = "1.20.0", features = ["macros", "rt-multi-thread"] }
 uuid = {version = "1.4.1", features = ["v4", "fast-rng", "macro-diagnostics"] }
 sea-orm = { version = "0.12", features = [ "sqlx-sqlite",  "runtime-tokio-native-tls", "macros" , "with-uuid", "with-time"] }
