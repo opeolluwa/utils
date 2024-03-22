@@ -12,7 +12,8 @@ use clap::{Args, Subcommand};
 use dialoguer::{Confirm, Password as PassPhrase};
 use entity::store::{self, Entity as Store};
 use sea_orm::{
-    ActiveModelTrait, ColumnTrait, ConnectionTrait, DatabaseBackend, ExecResult, Statement,
+    ActiveModelTrait, ColumnTrait, ConnectionTrait, DatabaseBackend, DbBackend, ExecResult,
+    Statement,
 };
 use sea_orm::{
     ActiveValue::Set, Condition, ConnectOptions, Database, DatabaseConnection, EntityTrait,
@@ -116,7 +117,7 @@ impl StoreCommands {
         let mut record: entity::store::ActiveModel = Self::find_one(key).await?.into();
         record.value = Set(value.to_owned());
 
-        let _: entity::store::Model = record.update(&Self::db_connection().await?).await?.into();
+        let _: entity::store::Model = record.update(&Self::db_connection().await?).await?;
 
         let message = format!("{key} successfully updated");
         LogMessage::success(&message);
@@ -126,26 +127,52 @@ impl StoreCommands {
 
     /// delte all record in the database
     async fn clear() -> Result<()> {
+        // fetch the password
+        let saved_password = entity::password::Entity::find()
+            .from_raw_sql(Statement::from_sql_and_values(
+                DbBackend::Sqlite,
+                r#"SELECT * FROM password WHERE id = $1"#,
+                [1.into()],
+            ))
+            .one(&Self::db_connection().await?)
+            .await?;
+
         // prompt for confirmation and Password if the user choose to continue
-        if Confirm::with_theme(&ColorfulTheme::default())
+        let confirm_delete = Confirm::with_theme(&ColorfulTheme::default())
             .with_prompt(
                 "The action will remove all the stored data\nDo you really want to continue?",
             )
             .default(true)
             .interact()
-            .unwrap()
-        {
-            let password = PassPhrase::with_theme(&ColorfulTheme::default())
+            .unwrap();
+
+        // exec 2FA for password protected account
+        if confirm_delete && saved_password.is_some() {
+            let raw_password = PassPhrase::with_theme(&ColorfulTheme::default())
                 .with_prompt("Password")
                 .interact()
                 .unwrap();
 
             // validate the password
-            if password != "opeolluwa" {
-                LogMessage::error("Incorrect password! Exciting...");
-                std::process::exit(1);
+            let saved_password = saved_password.unwrap().answer_hash;
+            if verify(raw_password, &saved_password)? {
+                let _: ExecResult = Self::db_connection()
+                    .await?
+                    .execute(Statement::from_string(
+                        DatabaseBackend::Sqlite,
+                        r#"DELETE FROM store"#,
+                    ))
+                    .await?;
             }
-            // clear the database
+        }
+
+        // if no password
+        if Confirm::with_theme(&ColorfulTheme::default())
+            .with_prompt("The action is irreversible! Do you really want to continue?")
+            .default(true)
+            .interact()
+            .unwrap()
+        {
             let _: ExecResult = Self::db_connection()
                 .await?
                 .execute(Statement::from_string(
@@ -153,11 +180,7 @@ impl StoreCommands {
                     r#"DELETE FROM store"#,
                 ))
                 .await?;
-        } else {
-            println!("nevermind then :(");
-            std::process::exit(1)
         }
-
         LogMessage::success("Stored successfully flushed");
 
         Ok(())
@@ -224,15 +247,14 @@ impl StoreCommands {
     async fn find_one(key: &str) -> Result<entity::store::Model> {
         let record = entity::store::Entity::find()
             .filter(
-                Condition::all()
-                    .add(entity::store::Column::Key.like(format!("%{}%", key.trim().to_string()))),
+                Condition::all().add(entity::store::Column::Key.like(format!("%{}%", key.trim()))),
             )
             .order_by_asc(entity::store::Column::DateAdded)
             .all(&Self::db_connection().await?)
             .await?;
 
         // exit if no record
-        if record.len() == 0 {
+        if record.is_empty() {
             let message = format!("{key} not found");
             LogMessage::error(&message);
             std::process::exit(1);
