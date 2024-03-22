@@ -4,7 +4,6 @@ use lazy_static::lazy_static;
 use migration::{Migrator, MigratorTrait};
 use sea_orm::{ConnectOptions, Database};
 use std::{env, time::Duration};
-
 pub const SOURCE_DIR: Dir = include_dir!("src/templates");
 
 lazy_static! {
@@ -28,8 +27,8 @@ lazy_static! {
     };
 }
 mod commands;
-pub mod database;
 mod parser;
+mod security_questions;
 mod style;
 mod utils;
 
@@ -65,6 +64,7 @@ async fn main() -> Result<()> {
     }
 
     // run the cli parser
+
     parser::Utils::run().await;
 
     Ok(())
