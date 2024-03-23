@@ -23,7 +23,7 @@ impl Utils {
             Commands::Store(store) => store.parse().await.unwrap(),
             Commands::Upgrade => CliCommands::upgrade().await,
             Commands::Uninstall => CliCommands::uninstall().await,
-            Commands::Sync => CliCommands::sync().await
+            Commands::Sync => CliCommands::sync().await,
         }
     }
 }
@@ -36,7 +36,7 @@ pub enum Commands {
     Ignore(GitIgnoreCommands),
     /// add readme to a git software project
     Readme(ReadmeCommands),
-    /// Upgrade  the CLI
+   /// Upgrade  the CLI
     Upgrade,
     /// uninstall the cli
     Uninstall,
