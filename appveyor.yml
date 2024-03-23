@@ -8,7 +8,7 @@ environment:
     RUST_VERSION: stable
 
     # TODO Update this to match the name of your project.
-    CRATE_NAME: trust
+    CRATE_NAME: utils
 
   # TODO These are all the build jobs. Adjust as necessary. Comment out what you
   # don't need
@@ -64,7 +64,7 @@ deploy:
   # - Encrypt it. Go to https://ci.appveyor.com/tools/encrypt
   # - Paste the output down here
   auth_token:
-    secure: t3puM/2hOig26EHhAodcZBc61NywF7/PFEpimR6SwGaCiqS07KR5i7iAhSABmBp7
+    secure: U5no3cL/rhf06UhofbomtrXHJNQrEYn/TH6iB2m3migzWdYFI7Y1dkP74YfjDT7c
   description: ''
   on:
     # TODO Here you can pick which targets will generate binary releases
@@ -87,7 +87,7 @@ branches:
 
 notifications:
   - provider: Email
-    on_build_success: false
+    on_build_success: true
 
 # Building is done in the test phase, so we disable Appveyor's build phase.
 build: false
