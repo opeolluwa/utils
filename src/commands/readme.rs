@@ -4,7 +4,7 @@ use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
 
-use crate::style::PrintColoredText;
+use crate::style::LogMessage;
 /// the readme utils is used to for generating project readme
 /// # Example
 /// the basic examples are listed thus:
@@ -51,9 +51,7 @@ impl ReadmeCommands {
         if path.exists() {
             // if the readme exist and the force flag is not set, exit
             if !self.force {
-                PrintColoredText::error(
-                    "the readme already exist, use the --force flag to overwrite it",
-                );
+                LogMessage::error("the readme already exist, use the --force flag to overwrite it");
                 return;
             }
             if self.force && !self.backup {

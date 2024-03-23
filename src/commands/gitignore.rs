@@ -9,7 +9,7 @@ use console::Style;
 use serde::Serialize;
 
 use crate::{
-    style::PrintColoredText,
+    style::LogMessage,
     utils::{FileExists, WriteContent},
     SOURCE_DIR,
 };
@@ -229,9 +229,7 @@ impl WriteContent for GitIgnoreCommands {
         let binding = path_binding.join(".gitignore");
         let path = binding.as_path();
         if self.file_exists() {
-            PrintColoredText::error(
-                "the .gitignore already exist, use the --force flag to overwrite it",
-            );
+            LogMessage::error("the .gitignore already exist, use the --force flag to overwrite it");
             return Ok(());
         }
         if self.file_exists() && self.force {

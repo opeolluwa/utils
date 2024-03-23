@@ -1,6 +1,9 @@
+use anyhow::Result;
 use include_dir::{include_dir, Dir};
 use lazy_static::lazy_static;
-
+use migration::{Migrator, MigratorTrait};
+use sea_orm::{ConnectOptions, Database};
+use std::{env, time::Duration};
 pub const SOURCE_DIR: Dir = include_dir!("src/templates");
 
 lazy_static! {
@@ -8,25 +11,61 @@ lazy_static! {
         /* create "utils" directory in the home dir and / save files to $HOME utils
         * this would hold the sqlite database which would contain configuration and app data*/
 
+    //TODO: preserve the data in the database, during upgrade
+
         let os_default_home_dir = dirs::home_dir().unwrap();
         let db_path = format!(
             "{home_dir}/{upload_dir}",
             home_dir = os_default_home_dir.display(),
             upload_dir = ".utils"
         );
+
+        // sea-orm-cli generate entity -u sqlite:///Users/USER/.utils/utils.db -o entity/src
         // create the path if not exist path if not exist
         let _ = std::fs::create_dir_all(&db_path);
     format!("sqlite://{db_path}/utils.db")
     };
 }
 mod commands;
-mod database;
 mod parser;
+mod security_questions;
 mod style;
 mod utils;
 
 #[tokio::main]
-async fn main() {
-    database::Database::init().await;
+async fn main() -> Result<()> {
+    // the databse connection options/configuration
+    let mut opt = ConnectOptions::new(DB_URL.as_str());
+    opt.max_connections(100)
+        .min_connections(5)
+        .connect_timeout(Duration::from_secs(8))
+        .acquire_timeout(Duration::from_secs(8))
+        .idle_timeout(Duration::from_secs(8))
+        .max_lifetime(Duration::from_secs(8))
+        .sqlx_logging(true);
+
+    // the database instance
+    let db = Database::connect(opt).await?;
+
+    // database::Database::init().await;
+
+    // run the migration programmatically during app startup
+    // this would create the necessary tables
+    let connection = db;
+    Migrator::up(&connection, None).await?;
+
+    // check for pending migrations
+    let env = env::var("ENV").unwrap_or("production".to_string());
+    if env == "development" {
+        let migrations = Migrator::get_pending_migrations(&connection).await?;
+        println!("{} pending migrations", migrations.len());
+
+        println!("databse live at  {}", DB_URL.as_str());
+    }
+
+    // run the cli parser
+
     parser::Utils::run().await;
+
+    Ok(())
 }

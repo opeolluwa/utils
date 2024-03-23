@@ -1,9 +1,9 @@
 use console::Style;
 
-pub struct PrintColoredText;
+pub struct LogMessage;
 #[allow(unused)]
 /// return colored text to stdout or std err
-impl PrintColoredText {
+impl LogMessage {
     pub fn error(message: &str) {
         let error_style = Style::new().for_stderr().red();
         println!("{}", error_style.apply_to(message));
