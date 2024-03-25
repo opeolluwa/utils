@@ -281,7 +281,6 @@ impl StoreCommands {
 
             let _ = record.insert(&Self::db_connection().await?).await?;
             LogMessage::success("Store secured successfully");
-            std::process::exit(0);
         }
         Ok(())
     }
