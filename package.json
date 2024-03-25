@@ -1,6 +1,6 @@
 {
   "name": "@opeolluwa/utils",
-  "version": "0.5.22",
+  "version": "1.0.8",
   "description": "a compilation of utility scripts for every day use in building applications and using certain features on my laptop",
   "main": "start.js",
   "directories": {

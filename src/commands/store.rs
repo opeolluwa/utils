@@ -1,5 +1,6 @@
 use crate::security_questions::{self, security_questions};
 use dialoguer::{theme::ColorfulTheme, Input, Select};
+use utils_cli_entity as entity;
 use entity::password;
 use password::Entity as Password;
 use std::time::Duration;

@@ -27,18 +27,18 @@ if (fs.existsSync(cargoDir)) {
   );
 }
     
-const binp = path.join(cargoDir, "bin", "utils");
+const binp = path.join(cargoDir, "bin", "utils-cli");
 
 if (fs.existsSync(binp)) {
-  console.log("Uninstalling utils...");
-  exec(`cargo uninstall utils`, (error, stdout, stderr) => {
+  console.log("Uninstalling utils-cli...");
+  exec(`cargo uninstall utils-cli`, (error, stdout, stderr) => {
     console.log(stdout);
     if (error || stderr) {
       console.log(error || stderr);
     }
   });
 } else {
-  console.log("utils not found skipping!");
+  console.log("utils-cli not found skipping!");
 }
     
     
