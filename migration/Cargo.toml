@@ -1,6 +1,6 @@
 [package]
 name = "utils-cli-migration"
-version = "1.0.0"
+version = "1.0.9"
 edition = "2021"
 authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
 description = "util-cli migrations relation"
