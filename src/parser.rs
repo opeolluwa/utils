@@ -43,6 +43,6 @@ pub enum Commands {
     Uninstall,
     /// synchronize the data
     Sync,
-    /// configure the cli behaviour 
-    Config 
+    /// configure the cli behaviour via a config file at $HOME/.utils/utils.conf
+    Config,
 }
