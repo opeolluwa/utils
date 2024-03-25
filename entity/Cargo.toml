@@ -1,5 +1,5 @@
 [package]
-name = "entity"
+name = "utils-cli-entity"
 version = "1.0.5"
 edition = "2021"
 authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
