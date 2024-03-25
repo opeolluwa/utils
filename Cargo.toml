@@ -8,6 +8,10 @@ version = "0.5.23"
 license = "Apache-2.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+# [[lib]]
+# name="migration"
+# path="./migration/src/lib"
+
 [[bin]]
 name = "utils"
 path = "src/main.rs"
