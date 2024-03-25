@@ -1,7 +1,10 @@
 [package]
 name = "entity"
-version = "1.0.4"
+version = "1.0.5"
 edition = "2021"
+authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
+description = "util-cli entity relation"
+license = "Apache-2.0"
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

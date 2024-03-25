@@ -3,6 +3,9 @@ name = "utils-cli-migration"
 version = "1.0.0"
 edition = "2021"
 publish = false
+authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
+description = "util-cli migrations relation"
+license = "Apache-2.0"
 
 [lib]
 name = "migration"
