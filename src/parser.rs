@@ -24,6 +24,7 @@ impl Utils {
             Commands::Upgrade => CliCommands::upgrade().await,
             Commands::Uninstall => CliCommands::uninstall().await,
             Commands::Sync => CliCommands::sync().await,
+            Commands::Config => todo!(),
         }
     }
 }
@@ -36,10 +37,12 @@ pub enum Commands {
     Ignore(GitIgnoreCommands),
     /// add readme to a git software project
     Readme(ReadmeCommands),
-   /// Upgrade  the CLI
+    /// Upgrade  the CLI
     Upgrade,
     /// uninstall the cli
     Uninstall,
-    /// synchronuze the data
+    /// synchronize the data
     Sync,
+    /// configure the cli behaviour 
+    Config 
 }

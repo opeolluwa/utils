@@ -3,15 +3,22 @@
 authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
 description = "a compilation of utility scripts for every day use in building applications and using certain features on my laptop"
 edition = "2021"
-name = "utils"
+name = "utils-cli"
 version = "0.5.23"
 license = "Apache-2.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+# [[lib]]
+# name="migration"
+# path="./migration/src/lib"
 
+[[bin]]
+name = "utils"
+path = "src/main.rs"
 
 [workspace]
 members = [".", "entity", "migration"]
+
 
 
 
@@ -32,7 +39,7 @@ tokio = {version = "1.20.0", features = ["macros", "rt-multi-thread"] }
 uuid = {version = "1.4.1", features = ["v4", "fast-rng", "macro-diagnostics"] }
 sea-orm = { version = "0.12", features = [ "sqlx-sqlite",  "runtime-tokio-native-tls", "macros" , "with-uuid", "with-time"] }
 anyhow = "1.0.81"
-entity = { path = "entity" }
-migration = { path = "migration" } # depends on your needs
+entity = { path = "./entity", version = "*"}
+migration = { path = "./migration", version = "*"} # depends on your needs
 
 
