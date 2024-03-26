@@ -79,9 +79,6 @@ async fn main() -> Result<()> {
     config::Config::init()?;
     // run the cli parser
     parser::Utils::run().await;
-
-    let rr: Option<String> = config::Config::parse_key("port", "server")?;
-    print!("{:?}", rr);
-
+    
     Ok(())
 }
