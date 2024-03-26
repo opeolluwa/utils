@@ -4,7 +4,7 @@ authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
 description = "a compilation of utility scripts for every day use in building applications and using certain features on my laptop"
 edition = "2021"
 name = "utils-cli"
-version = "1.1.0"
+version = "1.1.1"
 license = "Apache-2.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
