@@ -6,6 +6,7 @@ use std::{fs::OpenOptions, io::BufReader};
 use crate::{CONFIG_FILE, SOURCE_DIR};
 pub struct Config;
 
+#[allow(dead_code)]
 impl Config {
     /// return the config path
     pub fn path() -> Result<String> {
