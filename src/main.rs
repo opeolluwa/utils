@@ -3,15 +3,15 @@ use include_dir::{include_dir, Dir};
 use lazy_static::lazy_static;
 use migration::{Migrator, MigratorTrait};
 use sea_orm::{ConnectOptions, Database};
+
 use std::{env, time::Duration};
+
 pub const SOURCE_DIR: Dir = include_dir!("src/templates");
 
 lazy_static! {
     pub static ref DB_URL: std::string::String = {
         /* create "utils" directory in the home dir and / save files to $HOME utils
         * this would hold the sqlite database which would contain configuration and app data*/
-
-    //TODO: preserve the data in the database, during upgrade
 
         let os_default_home_dir = dirs::home_dir().unwrap();
         let db_path = format!(
@@ -25,8 +25,23 @@ lazy_static! {
         let _ = std::fs::create_dir_all(&db_path);
     format!("sqlite://{db_path}/utils.db")
     };
+
+    // the path to the config file
+    pub static ref CONFIG_FILE: std::string::String = {
+        let os_default_home_dir = dirs::home_dir().unwrap();
+        let config_path = format!(
+            "{home_dir}/{upload_dir}",
+            home_dir = os_default_home_dir.display(),
+            upload_dir = ".utils"
+        );
+
+        // create the path if not exist path if not exist
+        let _ = std::fs::create_dir_all(&config_path);
+        format!("{config_path}/utils.conf")
+    };
 }
 mod commands;
+mod config;
 mod parser;
 mod security_questions;
 mod style;
@@ -47,8 +62,6 @@ async fn main() -> Result<()> {
     // the database instance
     let db = Database::connect(opt).await?;
 
-    // database::Database::init().await;
-
     // run the migration programmatically during app startup
     // this would create the necessary tables
     let connection = db;
@@ -59,13 +72,16 @@ async fn main() -> Result<()> {
     if env == "development" {
         let migrations = Migrator::get_pending_migrations(&connection).await?;
         println!("{} pending migrations", migrations.len());
-
         println!("databse live at  {}", DB_URL.as_str());
     }
 
+    // init the config file
+    config::Config::init()?;
     // run the cli parser
-
     parser::Utils::run().await;
+
+    let rr: Option<String> = config::Config::parse_key("port", "server")?;
+    print!("{:?}", rr);
 
     Ok(())
 }
