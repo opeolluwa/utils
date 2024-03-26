@@ -10,6 +10,7 @@ const cargoDir = path.join(homedir(), ".cargo");
 // check if directory exists
 if (fs.existsSync(cargoDir)) {
   //   console.log("Cargo found.");
+  // 
 } else {
   const setCargo = 'PATH="/$HOME/.cargo/bin:${PATH}"';
   console.log("Installing deps [cargo].");
