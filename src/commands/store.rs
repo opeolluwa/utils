@@ -13,7 +13,7 @@ use clap::{Args, Subcommand};
 use dialoguer::{Confirm, Password as PassPhrase};
 use entity::store::{self, Entity as Store};
 use sea_orm::{
-    ActiveModelTrait,  ColumnTrait, ConnectionTrait, DatabaseBackend, DbBackend, ExecResult,
+    ActiveModelTrait, ColumnTrait, ConnectionTrait, DatabaseBackend, DbBackend, ExecResult,
     Statement,
 };
 use sea_orm::{
@@ -210,9 +210,8 @@ impl StoreCommands {
             .interact()
             .unwrap()
         {
-           let _ = Self::update_security_question().await;
-        }
-        else {
+            let _ = Self::update_security_question().await;
+        } else {
             LogMessage::neutral("Exciting...")
         }
 
