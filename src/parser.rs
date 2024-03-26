@@ -3,7 +3,7 @@ use commands::{
     cli::CliCommands, gitignore::GitIgnoreCommands, readme::ReadmeCommands, store::StoreCommands,
 };
 
-use crate::commands::{self};
+use crate::{commands, config, style::LogMessage};
 
 //acf
 #[derive(Parser)]
@@ -24,7 +24,16 @@ impl Utils {
             Commands::Upgrade => CliCommands::upgrade().await.unwrap(),
             Commands::Uninstall => CliCommands::uninstall().await.unwrap(),
             Commands::Sync => CliCommands::sync().await,
-            Commands::Config => todo!(),
+            Commands::Config => {
+                // tell us the config path
+                let config_path = config::Config::path().ok();
+                if config_path.is_some() {
+                    LogMessage::neutral(&format!(
+                        "Modify the config file available at {}",
+                        config_path.unwrap()
+                    ));
+                }
+            }
         }
     }
 }
