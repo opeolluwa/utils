@@ -22,7 +22,7 @@ impl Utils {
             Commands::Readme(readme) => readme.parse(),
             Commands::Store(store) => store.parse().await.unwrap(),
             Commands::Upgrade => CliCommands::upgrade().await.unwrap(),
-            Commands::Uninstall => CliCommands::uninstall().await,
+            Commands::Uninstall => CliCommands::uninstall().await.unwrap(),
             Commands::Sync => CliCommands::sync().await,
             Commands::Config => todo!(),
         }

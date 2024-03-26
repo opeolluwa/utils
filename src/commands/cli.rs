@@ -1,10 +1,13 @@
-
+use crate::style::LogMessage;
+use ::std::io::BufRead;
+use anyhow::Result;
 use online::check;
 use std::env;
 use std::fs;
-use std::io::Stdout;
+use std::io::BufReader;
 use std::process::Command;
-use crate::style::LogMessage;
+use std::process::Stdio;
+use std::str;
 pub struct CliCommands;
 
 impl CliCommands {
@@ -33,30 +36,60 @@ impl CliCommands {
 
         if !cargo_exist && !npm_exists {
             LogMessage::error("Cargo or NPM is required");
-                    std::process::exit(1)
-
+            std::process::exit(1)
         }
 
         // upgrade with cargo
-  let stdout =   Command::new("cargo")
+        //https://stackoverflow.com/questions/72750736/run-command-stream-stdout-stderr-and-capture-results
+
+        let mut output = Command::new("cargo")
             .args(["install", "utils-cli"])
-            .output();
+            .stdout(Stdio::piped())
+            .spawn()
+            .unwrap();
 
-        println!("{:#?}", stdout);
-        // if stdout.is_err() {
-        //     println!("{:?}",&stdout.clone().unwrap().stderr);
-        // }
+        let stream_output = output.stdout.take().unwrap();
 
-        let stdout = stdout.unwrap();
-        println!("{:?}", stdout.stderr);
+        // Stream output.
+        let lines = BufReader::new(stream_output).lines();
+        for line in lines {
+            println!("{}", line.unwrap());
+        }
+
         Ok(())
 
         // upgrade with npm
     }
 
     /// self destruct the cli
-    pub async fn uninstall() {
-        println!("uninstalling")
+    pub async fn uninstall() -> Result<()> {
+        // internet exist, see if cargo or npm exist
+        let cargo_exist = is_program_in_path("cargo");
+        let npm_exists = is_program_in_path("npm");
+
+        if !cargo_exist && !npm_exists {
+            LogMessage::error("Cargo or NPM is required");
+            std::process::exit(1)
+        }
+
+        // upgrade with cargo
+        //https://stackoverflow.com/questions/72750736/run-command-stream-stdout-stderr-and-capture-results
+
+        let mut output = Command::new("cargo")
+            .args(["uninstall", "utils-cli"])
+            .stdout(Stdio::piped())
+            .spawn()
+            .unwrap();
+
+        let stream_output = output.stdout.take().unwrap();
+
+        // Stream output.
+        let lines = BufReader::new(stream_output).lines();
+        for line in lines {
+            println!("{}", line.unwrap());
+        }
+
+        Ok(())
     }
 
     /// back up the data in the store to a remote server
