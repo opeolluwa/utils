@@ -33,7 +33,13 @@ This repository contains a collection of useful scripts that can be used in any 
 - Install from the [Cargo](https://crates.io) repository
 
   ```sh
-  cargo install utils
+  cargo install utils-cli
+  ```
+
+  - Install from [npm](https://npmjs.com)
+
+  ```sh
+  npm install -g @opeolluwa/utils
   ```
 
 - Clone the repository and build the application
@@ -45,11 +51,7 @@ This repository contains a collection of useful scripts that can be used in any 
   cargo install --path .
   ```
 
-- Install from NPM
-  
-  ```sh
-  npm install -g @opeolluwa/utils
-  ```
+
 
 ### Executing program
 

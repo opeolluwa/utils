@@ -21,8 +21,8 @@ impl Utils {
             Commands::Ignore(git_ignore) => git_ignore.parse(),
             Commands::Readme(readme) => readme.parse(),
             Commands::Store(store) => store.parse().await.unwrap(),
-            Commands::Upgrade => CliCommands::upgrade().await,
-            Commands::Uninstall => CliCommands::uninstall().await,
+            Commands::Upgrade => CliCommands::upgrade().await.unwrap(),
+            Commands::Uninstall => CliCommands::uninstall().await.unwrap(),
             Commands::Sync => CliCommands::sync().await,
             Commands::Config => todo!(),
         }
@@ -43,6 +43,6 @@ pub enum Commands {
     Uninstall,
     /// synchronize the data
     Sync,
-    /// configure the cli behaviour 
-    Config 
+    /// configure the cli behaviour via a config file at $HOME/.utils/utils.conf
+    Config,
 }

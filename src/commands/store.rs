@@ -3,6 +3,7 @@ use dialoguer::{theme::ColorfulTheme, Input, Select};
 use entity::password;
 use password::Entity as Password;
 use std::time::Duration;
+use utils_cli_entity as entity;
 
 use crate::{style::LogMessage, DB_URL};
 use anyhow::{Ok, Result};
@@ -144,7 +145,7 @@ impl StoreCommands {
         // exec 2FA for password protected account
         if confirm_delete && saved_password.is_some() {
             let raw_password = PassPhrase::with_theme(&ColorfulTheme::default())
-                .with_prompt("Password")
+                .with_prompt(&saved_password.clone().unwrap().sequrity_question)
                 .interact()
                 .unwrap();
 
@@ -209,9 +210,9 @@ impl StoreCommands {
             .interact()
             .unwrap()
         {
-            let _ = Self::add_authorization().await;
+            let _ = Self::update_security_question().await;
         } else {
-            LogMessage::neutral("Exciting...");
+            LogMessage::neutral("Exciting...")
         }
 
         Ok(())
@@ -256,9 +257,52 @@ impl StoreCommands {
         Ok(record.to_owned())
     }
 
+    // udate authorization
+    async fn update_security_question() -> Result<()> {
+        // fetch the auth creds
+        let authorization_creds: Option<entity::password::Model> = Password::find_by_id(1)
+            .one(&Self::db_connection().await?)
+            .await?;
+
+        //coerce into the active model type
+        let mut authorization_creds: entity::password::ActiveModel =
+            authorization_creds.unwrap().into();
+
+        // get the updated security question
+        let question_index = Select::with_theme(&ColorfulTheme::default())
+            .with_prompt("choose a security question to proceed")
+            .default(0)
+            .items(&security_questions::security_questions()[..])
+            .interact()
+            .ok();
+
+        if let Some(security_question_index) = question_index {
+            let selected_question = security_questions()[security_question_index];
+            let answer: String = Input::with_theme(&ColorfulTheme::default())
+                .with_prompt("Answer the security question")
+                .interact_text()
+                .unwrap();
+
+            let hashed_answer = hash(answer.trim().to_lowercase(), DEFAULT_COST)?;
+
+            // update the record
+            authorization_creds.sequrity_question = Set(selected_question.to_owned());
+            authorization_creds.answer_hash = Set(hashed_answer);
+
+            // execute the update
+            let _: entity::password::Model = authorization_creds
+                .update(&Self::db_connection().await?)
+                .await?;
+
+            LogMessage::success("Store secured successfully");
+        }
+        Ok(())
+    }
+
+    // add autorization
     async fn add_authorization() -> Result<()> {
         let question_index = Select::with_theme(&ColorfulTheme::default())
-            .with_prompt("Provide a passphrase to proceed")
+            .with_prompt("choose a security question to proceed")
             .default(0)
             .items(&security_questions::security_questions()[..])
             .interact()
@@ -279,13 +323,14 @@ impl StoreCommands {
                 answer_hash: Set(hashed_answer),
             };
 
-            let _ = record.insert(&Self::db_connection().await?).await?;
+            let record = record.insert(&Self::db_connection().await?).await?;
+            println!("{:#?}", record);
             LogMessage::success("Store secured successfully");
         }
         Ok(())
     }
 
-    async fn require_authorization(raw_password: &str) -> Result<bool> {
+    async fn _require_authorization(raw_password: &str) -> Result<bool> {
         let saved_password = entity::password::Entity::find()
             .from_raw_sql(Statement::from_sql_and_values(
                 DbBackend::Sqlite,
@@ -296,8 +341,8 @@ impl StoreCommands {
             .await?;
 
         let saved_password = saved_password.unwrap().answer_hash;
-       let valid_password=  verify(raw_password.trim().to_lowercase(), &saved_password)?;
+        let valid_password = verify(raw_password.trim().to_lowercase(), &saved_password)?;
 
-       Ok(valid_password)
+        Ok(valid_password)
     }
 }
