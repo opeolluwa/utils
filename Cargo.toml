@@ -15,7 +15,8 @@ name = "utils"
 path = "src/main.rs"
 
 [workspace]
-members = [".", "entity", "migration"]
+members = [".", "entity", "migration",]
+exclude = ["sandbox"]
 
 
 
@@ -39,5 +40,6 @@ sea-orm = { version = "0.12", features = [ "sqlx-sqlite",  "runtime-tokio-native
 anyhow = "1.0.81"
 utils-cli-entity = { path = "entity", version = "1.0.5"}
 utils-cli-migration = { path = "migration", version = "1.0.0"} # depends on your needs
+online = "4.0.2"
 
 
