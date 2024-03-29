@@ -2,10 +2,10 @@ use std::net::{Ipv4Addr, SocketAddrV4};
 
 use tonic::transport::Server;
 
-use crate::proto::utils_auth::utils_auth_server::UtilsAuthServer;
+use utils_auth::utils_auth_server::UtilsAuthServer;
 
-pub mod proto;
 mod server;
+mod  utils_auth;
 
 const SERVER_PORT: u16 = 10785;
 

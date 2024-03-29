@@ -94,8 +94,8 @@ impl RequestStatus {
 /// Generated client implementations.
 pub mod utils_auth_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::http::Uri;
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
     pub struct UtilsAuthClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -139,8 +139,9 @@ pub mod utils_auth_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
         {
             UtilsAuthClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -179,14 +180,19 @@ pub mod utils_auth_client {
             &mut self,
             request: impl tonic::IntoRequest<super::LoginRequest>,
         ) -> std::result::Result<tonic::Response<super::LoginResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/utils_auth.UtilsAuth/Login");
+            let path = http::uri::PathAndQuery::from_static(
+                "/utils_auth.UtilsAuth/Login",
+            );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("utils_auth.UtilsAuth", "Login"));
@@ -195,15 +201,23 @@ pub mod utils_auth_client {
         pub async fn authorize(
             &mut self,
             request: impl tonic::IntoRequest<super::AuthorizeRequest>,
-        ) -> std::result::Result<tonic::Response<super::AuthorizeResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> std::result::Result<
+            tonic::Response<super::AuthorizeResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/utils_auth.UtilsAuth/Authorize");
+            let path = http::uri::PathAndQuery::from_static(
+                "/utils_auth.UtilsAuth/Authorize",
+            );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("utils_auth.UtilsAuth", "Authorize"));
@@ -212,15 +226,23 @@ pub mod utils_auth_client {
         pub async fn signup(
             &mut self,
             request: impl tonic::IntoRequest<super::SignupRequest>,
-        ) -> std::result::Result<tonic::Response<super::AuthorizeResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+        ) -> std::result::Result<
+            tonic::Response<super::AuthorizeResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/utils_auth.UtilsAuth/Signup");
+            let path = http::uri::PathAndQuery::from_static(
+                "/utils_auth.UtilsAuth/Signup",
+            );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("utils_auth.UtilsAuth", "Signup"));
@@ -242,11 +264,17 @@ pub mod utils_auth_server {
         async fn authorize(
             &self,
             request: tonic::Request<super::AuthorizeRequest>,
-        ) -> std::result::Result<tonic::Response<super::AuthorizeResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::AuthorizeResponse>,
+            tonic::Status,
+        >;
         async fn signup(
             &self,
             request: tonic::Request<super::SignupRequest>,
-        ) -> std::result::Result<tonic::Response<super::AuthorizeResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::AuthorizeResponse>,
+            tonic::Status,
+        >;
     }
     #[derive(Debug)]
     pub struct UtilsAuthServer<T: UtilsAuth> {
@@ -271,7 +299,10 @@ pub mod utils_auth_server {
                 max_encoding_message_size: None,
             }
         }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -327,15 +358,21 @@ pub mod utils_auth_server {
                 "/utils_auth.UtilsAuth/Login" => {
                     #[allow(non_camel_case_types)]
                     struct LoginSvc<T: UtilsAuth>(pub Arc<T>);
-                    impl<T: UtilsAuth> tonic::server::UnaryService<super::LoginRequest> for LoginSvc<T> {
+                    impl<T: UtilsAuth> tonic::server::UnaryService<super::LoginRequest>
+                    for LoginSvc<T> {
                         type Response = super::LoginResponse;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::LoginRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { <T as UtilsAuth>::login(&inner, request).await };
+                            let fut = async move {
+                                <T as UtilsAuth>::login(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -365,16 +402,23 @@ pub mod utils_auth_server {
                 "/utils_auth.UtilsAuth/Authorize" => {
                     #[allow(non_camel_case_types)]
                     struct AuthorizeSvc<T: UtilsAuth>(pub Arc<T>);
-                    impl<T: UtilsAuth> tonic::server::UnaryService<super::AuthorizeRequest> for AuthorizeSvc<T> {
+                    impl<
+                        T: UtilsAuth,
+                    > tonic::server::UnaryService<super::AuthorizeRequest>
+                    for AuthorizeSvc<T> {
                         type Response = super::AuthorizeResponse;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::AuthorizeRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut =
-                                async move { <T as UtilsAuth>::authorize(&inner, request).await };
+                            let fut = async move {
+                                <T as UtilsAuth>::authorize(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -404,16 +448,21 @@ pub mod utils_auth_server {
                 "/utils_auth.UtilsAuth/Signup" => {
                     #[allow(non_camel_case_types)]
                     struct SignupSvc<T: UtilsAuth>(pub Arc<T>);
-                    impl<T: UtilsAuth> tonic::server::UnaryService<super::SignupRequest> for SignupSvc<T> {
+                    impl<T: UtilsAuth> tonic::server::UnaryService<super::SignupRequest>
+                    for SignupSvc<T> {
                         type Response = super::AuthorizeResponse;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::SignupRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut =
-                                async move { <T as UtilsAuth>::signup(&inner, request).await };
+                            let fut = async move {
+                                <T as UtilsAuth>::signup(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -440,14 +489,18 @@ pub mod utils_auth_server {
                     };
                     Box::pin(fut)
                 }
-                _ => Box::pin(async move {
-                    Ok(http::Response::builder()
-                        .status(200)
-                        .header("grpc-status", "12")
-                        .header("content-type", "application/grpc")
-                        .body(empty_body())
-                        .unwrap())
-                }),
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
             }
         }
     }
