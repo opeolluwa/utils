@@ -43,5 +43,10 @@ utils-cli-migration = { path = "migration", version = "1.0.0"} # depends on your
 online = "4.0.2"
 configparser = "3.0.4"
 reqwest = "0.12.2"
+tonic = "0.11.0"
+prost = "0.12.3"
+
+[build-dependencies]
+tonic-build = "0.11.0"
 
 
