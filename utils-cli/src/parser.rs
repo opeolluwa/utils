@@ -25,6 +25,7 @@ impl Utils {
             Commands::Upgrade => CliCommands::upgrade().await.unwrap(),
             Commands::Uninstall => CliCommands::uninstall().await.unwrap(),
             Commands::Sync => CliCommands::sync().await,
+            Commands::Auth(auth) => AuthCommands::parser(auth),
             Commands::Config => {
                 // tell us the config path
                 let config_path = config::Config::path().ok();
@@ -35,7 +36,6 @@ impl Utils {
                     ));
                 }
             }
-            Commands::Auth(auth) => AuthCommands::parser(auth),
         }
     }
 }
