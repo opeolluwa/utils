@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 use commands::{
-    cli::CliCommands, gitignore::GitIgnoreCommands, readme::ReadmeCommands, store::StoreCommands,
+    auth::AuthCommands, cli::CliCommands, gitignore::GitIgnoreCommands, readme::ReadmeCommands,
+    store::StoreCommands,
 };
 
 use crate::{commands, config, style::LogMessage};
@@ -34,6 +35,7 @@ impl Utils {
                     ));
                 }
             }
+            Commands::Auth(auth) => AuthCommands::parser(auth),
         }
     }
 }
@@ -46,6 +48,8 @@ pub enum Commands {
     Ignore(GitIgnoreCommands),
     /// add readme to a git software project
     Readme(ReadmeCommands),
+    /// authorization
+    Auth(AuthCommands),
     /// Upgrade  the CLI
     Upgrade,
     /// uninstall the cli
