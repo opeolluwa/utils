@@ -42,5 +42,6 @@ utils-cli-entity = { path = "entity", version = "1.0.5"}
 utils-cli-migration = { path = "migration", version = "1.0.0"} # depends on your needs
 online = "4.0.2"
 configparser = "3.0.4"
+reqwest = "0.12.2"
 
 
