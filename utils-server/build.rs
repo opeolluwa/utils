@@ -1,5 +1,3 @@
-
-
 use std::env;
 use std::path::PathBuf;
 
@@ -12,7 +10,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // .build_client(true) // don't compile the client code
         .build_server(true)
         .file_descriptor_set_path(out_dir.join("auth.bin"))
-        .out_dir("src/proto")
+        .out_dir("src")
         .compile(&[proto_file], &["proto"])?;
 
     Ok(())
