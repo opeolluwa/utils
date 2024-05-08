@@ -2,6 +2,8 @@ use serde::Deserialize;
 use serde::Serialize;
 use clap::Subcommand;
 use clap::Args;
+use crate::utils_auth;
+use crate::style::LogMessage;
 
 #[derive(Args, Debug, Deserialize, Serialize)]
 pub struct AuthCommands {
@@ -31,8 +33,16 @@ impl AuthCommands {
         }
     }
 
+
     pub fn login(email:String){
-        println!("login {}", email)
+        let is_valid_email = true;
+        if ! is_valid_email {
+            LogMessage::error("Incorrect email detected");
+
+        }
+        else{
+            
+        }
     }
 
     pub fn sign_up(email:String){
