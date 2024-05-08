@@ -46,6 +46,7 @@ mod parser;
 mod security_questions;
 mod style;
 mod utils;
+mod utils_auth;
 
 #[tokio::main]
 async fn main() -> Result<()> {
