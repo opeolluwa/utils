@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 use commands::{
-    cli::CliCommands, gitignore::GitIgnoreCommands, readme::ReadmeCommands, store::StoreCommands,
+    auth::AuthCommands, cli::CliCommands, gitignore::GitIgnoreCommands, readme::ReadmeCommands,
+    store::StoreCommands,
 };
 
 use crate::{commands, config, style::LogMessage};
@@ -24,6 +25,7 @@ impl Utils {
             Commands::Upgrade => CliCommands::upgrade().await.unwrap(),
             Commands::Uninstall => CliCommands::uninstall().await.unwrap(),
             Commands::Sync => CliCommands::sync().await,
+            Commands::Auth(auth) => AuthCommands::parser(auth),
             Commands::Config => {
                 // tell us the config path
                 let config_path = config::Config::path().ok();
@@ -46,6 +48,8 @@ pub enum Commands {
     Ignore(GitIgnoreCommands),
     /// add readme to a git software project
     Readme(ReadmeCommands),
+    /// authorization
+    Auth(AuthCommands),
     /// Upgrade  the CLI
     Upgrade,
     /// uninstall the cli

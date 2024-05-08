@@ -1,0 +1,38 @@
+# the application depends on the rust binary and the database for backup data 
+# the database is a postgresql database, version 15 instance, 
+
+version: '3'
+
+
+services:
+# the core application
+  utils_server:
+    build:
+      context: .
+      target: final
+    ports:
+      - 10785:10785
+    depends_on:
+      utils_server_database:
+        condition: service_healthy
+
+  # the database service
+  utils_server_database:
+    image: postgres:15
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=utils.server.db
+      - POSTGRES_PASSWORD=YgPJHM01eotVMiPcoCnHQxVByv2XfaFBLOcb
+    expose:
+      - 5439
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  db-data:
+
+

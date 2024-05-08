@@ -4,3 +4,4 @@ pub mod gitignore;
 pub mod readme;
 pub mod sms;
 pub mod store;
+pub mod auth;
