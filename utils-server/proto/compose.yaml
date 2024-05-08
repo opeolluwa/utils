@@ -6,37 +6,33 @@ version: '3'
 
 services:
 # the core application
-  utils_service:
+  utils_server:
     build:
       context: .
       target: final
     ports:
       - 10785:10785
     depends_on:
-      utils_service_db:
+      utils_server_database:
         condition: service_healthy
 
   # the database service
-  utils_service_db:
+  utils_server_database:
     image: postgres:15
     restart: always
     volumes:
-      - utils_service_db:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=utils.service.db
-      - POSTGRES_USER=raindrops
+      - POSTGRES_DB=utils.server.db
       - POSTGRES_PASSWORD=YgPJHM01eotVMiPcoCnHQxVByv2XfaFBLOcb
-    ports:
-      - '5435:10079'
+    expose:
+      - 5439
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 10s
       timeout: 5s
       retries: 5
-
-
-# the volume for the database
-
 volumes:
-  utils_service_db:
-    
+  db-data:
+
+
