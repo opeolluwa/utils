@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package utils_data_back_up;
+
+service UtilsDataBackUp {
+  rpc BackupData(BackupDataRequest) returns (BackupDataResponse);
+}
+
+message Error {
+  uint32 code = 1;
+  string description = 2;
+  optional string cause = 3;
+}
+
+enum RequestStatus {
+  UNKNOWN = 0;
+  SUCCESS = 1;
+  ERROR = 2;
+}
+
+// the structure of the data to be backed up
+message Data {
+  string key = 1;
+  string value = 2;
+  string date_created = 3;
+  string last_modified = 4;
+  string last_back_up = 5;
+}
+
+// the user/device identifier
+message Client {
+  string client_id = 3;
+  DeviceInformation device_infromation = 2;
+}
+
+// information about the device from which the request is made
+message DeviceInformation {
+  string name = 1;
+  string time_zone = 2;
+}
+
+// the request to back up data
+message BackupDataRequest {
+  Client client = 1;
+  repeated Data data = 2; // an array 
+}
+
+// the response to the backup request
+message BackupDataResponse {
+  RequestStatus status = 1;
+  Error error = 2;
+}
