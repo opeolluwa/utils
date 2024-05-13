@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package utils_data_back_up;
+package utils_storage;
 
 service UtilsDataBackUp {
   rpc BackupData(BackupDataRequest) returns (BackupDataResponse);
