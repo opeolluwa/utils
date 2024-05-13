@@ -192,13 +192,11 @@ pub mod utils_data_back_up_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/utils_data_back_up.UtilsDataBackUp/BackupData",
+                "/utils_storage.UtilsDataBackUp/BackupData",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(
-                    GrpcMethod::new("utils_data_back_up.UtilsDataBackUp", "BackupData"),
-                );
+                .insert(GrpcMethod::new("utils_storage.UtilsDataBackUp", "BackupData"));
             self.inner.unary(req, path, codec).await
         }
     }
@@ -297,7 +295,7 @@ pub mod utils_data_back_up_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/utils_data_back_up.UtilsDataBackUp/BackupData" => {
+                "/utils_storage.UtilsDataBackUp/BackupData" => {
                     #[allow(non_camel_case_types)]
                     struct BackupDataSvc<T: UtilsDataBackUp>(pub Arc<T>);
                     impl<
@@ -381,6 +379,6 @@ pub mod utils_data_back_up_server {
         }
     }
     impl<T: UtilsDataBackUp> tonic::server::NamedService for UtilsDataBackUpServer<T> {
-        const NAME: &'static str = "utils_data_back_up.UtilsDataBackUp";
+        const NAME: &'static str = "utils_storage.UtilsDataBackUp";
     }
 }

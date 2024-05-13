@@ -3,8 +3,7 @@ use std::path::PathBuf;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let auth_proto_file = "proto/auth.proto";
-    let backup_proto_file = "proto/backup-data.proto";
-
+    let backup_proto_file = "proto/storage.proto";
 
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
 
