@@ -16,7 +16,7 @@ services:
       utils_service_db:
         condition: service_healthy
 
-  # the database service
+  # the database services
   utils_service_db:
     image: postgres:15
     restart: always

@@ -1,10 +1,11 @@
 use crate::utils_auth::utils_auth_server::UtilsAuth;
 
+
 #[derive(Default)]
-pub struct AuthCliServer {}
+pub struct AuthService {}
 
 #[tonic::async_trait]
-impl UtilsAuth for AuthCliServer {
+impl UtilsAuth for AuthService {
     async fn login(
         &self,
         _request: tonic::Request<crate::utils_auth::LoginRequest>,
