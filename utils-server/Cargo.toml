@@ -3,6 +3,11 @@ name = "utils-server"
 version = "0.1.0"
 edition = "2021"
 
+
+[workspace]
+members = [".", "migration"]
+
+
 [dependencies]
 axum = "0.6.20"
 futures = "0.3.30"
@@ -16,6 +21,18 @@ tonic = "0.11.0"
 tower = { version = "0.4.13", features = ["full"] }
 tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+sea-orm = { version = "0.12", features = [
+    "sqlx-postgres",
+    "runtime-tokio-rustls",
+    "macros",
+    "with-uuid",
+    "with-chrono",
+    "debug-print"
+] }
+# entity = { path = "entity" }
+migration = { path = "migration" } # depends on your needs
+
+
 
 [build-dependencies]
 tonic-build = "0.11.0"
