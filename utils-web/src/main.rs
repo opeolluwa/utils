@@ -1,5 +1,17 @@
+mod app;
+mod components;
+mod pages;
+
+use app::*;
 use leptos::*;
 
-fn main() {
-    mount_to_body(|| view! { <p>"Hello, world!"</p> })
+pub fn main() {
+    _ = console_log::init_with_level(log::Level::Debug);
+    console_error_panic_hook::set_once();
+
+    logging::log!("csr mode - mounting to body");
+
+    mount_to_body(|| {
+        view! { <App /> }
+    });
 }

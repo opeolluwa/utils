@@ -14,3 +14,5 @@ Cargo.lock
 *.pdb
 
 dist
+
+node_modules
