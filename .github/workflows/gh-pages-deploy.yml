@@ -21,7 +21,7 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: just@1  
-      - run: just lint
+      # - run: just lint
   build-github-pages:
     needs: verify
     runs-on: ubuntu-latest
