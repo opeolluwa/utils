@@ -1,86 +1,66 @@
-name: Release to Github Pages
+name: Test and release web
 
 on:
   push:
-    branches: [master]
+    branches: [release]
   workflow_dispatch:
 
 permissions:
-  contents: write # for committing to gh-pages branch.
-  pages: write
-  id-token: write
+  contents: write # for committing to gh-pages branch.  
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+
+
+defaults:
+  run:
+    working-directory: utils-web
+
 
 jobs:
-  Github-Pages-Release:
-
+  verify:
     timeout-minutes: 10
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4 # repo checkout
-
-      # Install Rust Nightly Toolchain, with Clippy & Rustfmt
-      - name: Install nightly Rust
-        uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@nightly
         with:
           components: clippy, rustfmt
-
-      - name: Add WASM target
-        run: rustup target add wasm32-unknown-unknown
-
-      - name: lint
-        run: cargo clippy & cargo fmt
-
-
-      # If using tailwind...
-      # - name: Download and install tailwindcss binary
-      #   run: npm install -D tailwindcss && npx tailwindcss -i <INPUT/PATH.css> -o <OUTPUT/PATH.css>  # run tailwind
-
-
+      - uses: Swatinem/rust-cache@v2
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just@1  
+      # - run: just lint
+  build-github-pages:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # repo checkout
+      - uses: actions-rs/toolchain@v1 # get rust toolchain for wasm
+        with:
+          profile: minimal
+          toolchain: nightly
+          target: wasm32-unknown-unknown
+          override: true
+      - name: Rust Cache # cache the rust build artefacts
+        uses: Swatinem/rust-cache@v2
+      - name: Download and install tailwindcss binary
+        run: npm install -D tailwindcss
       - name: Download and install Trunk binary
-        run: wget -qO- https://github.com/trunk-rs/trunk/releases/download/v0.18.4/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
-
-      - name: Build with Trunk
+        run: wget -qO- https://github.com/thedodd/trunk/releases/latest/download/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
+      - name: install runst tool chain 
+        run: curl  -y --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
+      - name: add wasm32 target 
+        run: rustup target add wasm32-unknown-unknown
+      - name: Build # build
         # "${GITHUB_REPOSITORY#*/}" evaluates into the name of the repository
         # using --public-url something will allow trunk to modify all the href paths like from favicon.ico to repo_name/favicon.ico .
         # this is necessary for github pages where the site is deployed to username.github.io/repo_name and all files must be requested
         # relatively as favicon.ico. if we skip public-url option, the href paths will instead request username.github.io/favicon.ico which
         # will obviously return error 404 not found.
-        run: cd utils-web &&  ./trunk build --release --public-url "${GITHUB_REPOSITORY#*/}"
-
-
-      # Deploy to gh-pages branch
-      # - name: Deploy 🚀
-      #   uses: JamesIves/github-pages-deploy-action@v4
-      #   with:
-      #     folder: dist
-
-
-      # Deploy with Github Static Pages
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+        run: ./trunk build --release --public-url "${GITHUB_REPOSITORY#*/}"
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          enablement: true
-          # token:
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload dist dir
-          path: './dist'
-
-      - name: Deploy to GitHub Pages 🚀
-        id: deployment
-        uses: actions/deploy-pages@v3
+          folder: utils-web/dist
+          # this option will not maintain any history of your previous pages deployment
+          # set to false if you want all page build to be committed to your gh-pages branch history
+          single-commit: true   
