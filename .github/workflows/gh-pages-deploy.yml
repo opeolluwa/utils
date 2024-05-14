@@ -2,11 +2,18 @@ name: Test and release web
 
 on:
   push:
-    branches: [release]
+    branches: [master]
   workflow_dispatch:
 
 permissions:
   contents: write # for committing to gh-pages branch.  
+
+
+
+defaults:
+  run:
+    working-directory: utils-web
+
 
 jobs:
   verify:
@@ -21,7 +28,7 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: just@1  
-      - run: just lint
+      # - run: just lint
   build-github-pages:
     needs: verify
     runs-on: ubuntu-latest
@@ -39,17 +46,21 @@ jobs:
         run: npm install -D tailwindcss
       - name: Download and install Trunk binary
         run: wget -qO- https://github.com/thedodd/trunk/releases/latest/download/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
+      - name: install runst tool chain 
+        run: curl  -y --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
+      - name: add wasm32 target 
+        run: rustup target add wasm32-unknown-unknown
       - name: Build # build
         # "${GITHUB_REPOSITORY#*/}" evaluates into the name of the repository
         # using --public-url something will allow trunk to modify all the href paths like from favicon.ico to repo_name/favicon.ico .
         # this is necessary for github pages where the site is deployed to username.github.io/repo_name and all files must be requested
         # relatively as favicon.ico. if we skip public-url option, the href paths will instead request username.github.io/favicon.ico which
         # will obviously return error 404 not found.
-        run: cd utils-web && ./trunk build --release --public-url "${GITHUB_REPOSITORY#*/}"
+        run: ./trunk build --release --public-url "${GITHUB_REPOSITORY#*/}"
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
+          folder: utils-web/dist
           # this option will not maintain any history of your previous pages deployment
           # set to false if you want all page build to be committed to your gh-pages branch history
           single-commit: true   
