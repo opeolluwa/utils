@@ -8,6 +8,13 @@ on:
 permissions:
   contents: write # for committing to gh-pages branch.  
 
+
+
+defaults:
+  run:
+    working-directory: utils-web
+
+
 jobs:
   verify:
     timeout-minutes: 10
@@ -21,7 +28,7 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: just@1  
-      # - run: just lint
+      - run: just lint
   build-github-pages:
     needs: verify
     runs-on: ubuntu-latest
@@ -45,7 +52,7 @@ jobs:
         # this is necessary for github pages where the site is deployed to username.github.io/repo_name and all files must be requested
         # relatively as favicon.ico. if we skip public-url option, the href paths will instead request username.github.io/favicon.ico which
         # will obviously return error 404 not found.
-        run: cp trunk utils-web/trunk && ./trunk build --release --public-url "${GITHUB_REPOSITORY#*/}"
+        run: cd utils-web && ./trunk build --release --public-url "${GITHUB_REPOSITORY#*/}"
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
