@@ -2,7 +2,7 @@ name: Test and release web
 
 on:
   push:
-    branches: [release]
+    branches: [master]
   workflow_dispatch:
 
 permissions:
