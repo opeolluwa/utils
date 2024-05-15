@@ -83,16 +83,12 @@ pub fn Home() -> impl IntoView {
             </header>
             <section class="flex flex-col justify-between items-center">
 
-                <h2
-                    class="font-extrabold text-center capitalize text-3xl leading-tight mb-2 block sm:hidden"
-                >
+                <h2 class="font-extrabold text-center capitalize text-3xl leading-tight mb-2 block sm:hidden">
                     Powerful features to enhance your developer exprience
                 </h2>
 
-                <h2
-                    class="font-extrabold text-center capitalize text-5xl sm:text-5xl leading-1 mb-2 bg-gradient-to-r from-violet-800 to-[#FCB900]  via-red-500 from-25% inline-block text-transparent bg-clip-text hidden sm:block w-2/3"
+                <h2 class="font-extrabold text-center capitalize text-5xl sm:text-5xl leading-1 mb-2 bg-gradient-to-r from-violet-800 to-[#FCB900]  via-red-500 from-25% inline-block text-transparent bg-clip-text hidden sm:block w-2/3">
 
-                >
                     Powerful features to enhance your developer exprience
                 </h2>
 
