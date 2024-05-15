@@ -1,5 +1,5 @@
 use leptos::{component, view, IntoView};
-
+use crate::component::{button::Button},
 #[component]
 pub fn Home() -> impl IntoView {
     view! {
@@ -12,7 +12,8 @@ pub fn Home() -> impl IntoView {
                     </p>
                 </div>
                 <div>
-                    <img src="public/default-img.png" alt="utils web"/>
+                    <img src="public/app-icon.png" alt="utils web"/>
+                    <Button/>
                 </div>
             </header>
 
