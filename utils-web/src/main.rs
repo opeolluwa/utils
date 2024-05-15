@@ -1,6 +1,7 @@
 mod app;
 mod components;
 mod layouts;
+mod lib;
 mod pages;
 mod partials;
 

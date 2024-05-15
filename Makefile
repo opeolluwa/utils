@@ -17,6 +17,8 @@ watch-cli:
 
 build-cli:
 
-
-
-
+deploy-web:
+	cd utils-web
+	rm -rf dist\
+	trunk build --release
+	surge
