@@ -19,7 +19,8 @@ pub fn AppNavigation() -> impl IntoView {
     let routes: Vec<NavItem> = vec![
         NavItem::from("home", "/"),
         NavItem::from("docs", "/docs"),
-        NavItem::from("login", "/login"),
+        NavItem::from("pricing", "/pricing"),
+        NavItem::from("sign up", "/signup"),
     ];
 
     view! {
@@ -30,7 +31,7 @@ pub fn AppNavigation() -> impl IntoView {
                     .into_iter()
                     .map(|route| {
                         view! {
-                            <li class="capitalize">
+                            <li class="capitalize text-gray-500 :active:text=black :hover:text-black font-medium :first:text-black">
                                 <a href=route.path>{route.name}</a>
                             </li>
                         }
@@ -38,6 +39,9 @@ pub fn AppNavigation() -> impl IntoView {
                     .collect::<Vec<_>>()}
 
             </ul>
+            <a class="px-4 py-2 rounded bg-white rounded-lg text-black font-medium" href="/login">
+                Login
+            </a>
         </nav>
     }
 }
