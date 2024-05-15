@@ -1,5 +1,1 @@
-
-
-pub fn card(){
-    
-}
+pub fn card() {}

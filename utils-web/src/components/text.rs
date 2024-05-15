@@ -1,5 +1,1 @@
-
-
-pub fn text(){
-    
-}
+pub fn text() {}

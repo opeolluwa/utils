@@ -1,5 +1,1 @@
-
-
-pub fn input(){
-    
-}
+pub fn input() {}

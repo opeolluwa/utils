@@ -1,6 +1,8 @@
 mod app;
 mod components;
+mod layouts;
 mod pages;
+mod partials;
 
 use app::*;
 use leptos::*;
