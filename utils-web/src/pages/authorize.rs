@@ -6,11 +6,6 @@ pub fn SecurityQuestion() -> impl IntoView {
 }
 
 #[component]
-pub fn Login() -> impl IntoView {
-    view! { <div>Login</div> }
-}
-
-#[component]
 pub fn MultiFactorAuth() -> impl IntoView {
     view! { <div>MultiFactorAuth</div> }
 }
