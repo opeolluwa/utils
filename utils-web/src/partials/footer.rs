@@ -1,22 +1,15 @@
 use leptos::{component, view, IntoView};
-
+use crate::components::logo::Logo;
 /// the application footer
 #[component]
 pub fn AppFooter() -> impl IntoView {
     view! {
         <footer class="container pb-8">
 
-            <footer class="bg-white">
+            <footer>
                 <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                     <div class="md:flex md:justify-between">
-                        <div class="mb-6 md:mb-0">
-                            <a href="https://flowbite.com/" class="flex items-center">
-
-                                <span class="self-center text-2xl font-semibold whitespace-nowrap">
-                                    Utils
-                                </span>
-                            </a>
-                        </div>
+                        <Logo/>
                         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                             <div>
                                 <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase ">

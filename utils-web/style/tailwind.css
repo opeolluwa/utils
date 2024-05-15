@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+section {
+    @apply py-[40px] sm:py-[120px] ;
+}
