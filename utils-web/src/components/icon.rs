@@ -11,5 +11,5 @@ pub fn Icon(
     /// the remix icon identifier
     class: &'static str,
 ) -> impl IntoView {
-    view! { <i class=format!("{icon} {class}")></i> }
+    view! { <i class=format!("ri-{icon} {class}")></i> }
 }
