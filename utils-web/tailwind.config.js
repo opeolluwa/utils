@@ -6,7 +6,7 @@ module.exports = {
   },
 
   colors: {
-    "utils-amber": {
+    "amber": {
       DEFAULT: "#FCB900",
       50: "#FFEBB5",
       100: "#FFE6A0",
@@ -50,5 +50,8 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms"),
+    // ...
+  ],
 };
