@@ -8,5 +8,5 @@ pub fn Button(
     /// the element that goes into the button
     children: Children,
 ) -> impl IntoView {
-    view! { <button class=format!("px-4 py-2 rounded {class}")>{children()}</button> }
+    view! { <button class=format!("px-4 py-3 rounded {class}")>{children()}</button> }
 }

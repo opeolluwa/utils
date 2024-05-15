@@ -23,6 +23,8 @@ impl Feature {
 }
 
 // https://dribbble.com/shots/21248762-Crox-Encryption-Solutions-for-Developers
+//  https://dribbble.com/shots/17411928-Account-Creation
+// https://dribbble.com/shots/18976667-Website-Sign-In-Page
 #[component]
 pub fn Home() -> impl IntoView {
     let features: Vec<Feature> = vec![
@@ -69,21 +71,20 @@ pub fn Home() -> impl IntoView {
                     </div>
 
                 </div>
-                <div class="shadow-inner shadow-violet-600 rounded-xl hidden sm:block">
-                    <img
-                        src="https://ik.imagekit.io/nethbooks/cdn/Screenshot%202024-05-15%20at%2009.47.41_tZQ7Yh4mj.png?updatedAt=1715763698464"
-                        alt=""
-                    />
+                <div class="shadow-inner shadow-violet-600 rounded-xl hidden sm:block ">
+                    <img src="./public/snapshot.png" alt=""/>
                 </div>
             </header>
             <section class="flex flex-col justify-between items-center">
 
-                <h2 class="font-extrabold text-center capitalize text-3xl sm:text-5xl leading-1 mb-2 bg-gradient-to-r from-violet-800 to-[#FCB900]  via-red-500 from-25% inline-block text-transparent bg-clip-text">
-                    // data-aos="fade-up"
-                    // data-aos-offset="200"
-                    // data-aos-delay="50"
-                    // data-aos-duration="1000"
-                    // data-aos-easing="ease-in-out"
+                <h2
+                    class="font-extrabold text-center capitalize text-3xl sm:text-5xl leading-1 mb-2 bg-gradient-to-r from-violet-800 to-[#FCB900]  via-red-500 from-25% inline-block text-transparent bg-clip-text"
+                    data-aos="fade-up"
+                    data-aos-offset="200"
+                    data-aos-delay="50"
+                    data-aos-duration="1000"
+                    data-aos-easing="ease-in-out"
+                >
                     // data-aos-mirror="true"
                     Powerful features to enhance your developer exprience
                 </h2>

@@ -1,13 +1,13 @@
 use crate::pages::authorize::{MultiFactorAuth, ResetAccount, SecurityQuestion};
 use crate::pages::dashboard::Dashboard;
+use crate::pages::docs::Docs;
 use crate::pages::home::Home;
 use crate::pages::login::Login;
 use crate::pages::mfa::MultiFactorAuthorization;
-use crate::pages::docs::Docs;
+use crate::pages::signup::SignUp;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
-// use leptos_image::*;
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -20,6 +20,7 @@ pub fn App() -> impl IntoView {
             <Routes>
                 <Route path="" view=move || view! { <Home/> }/>
                 <Route path="/login" view=move || view! { <Login/> }/>
+                <Route path="/sign-up" view=move || view! { <SignUp/> }/>
                 <Route path="/sescurity-question" view=move || view! { <SecurityQuestion/> }/>
                 <Route path="/reset" view=move || view! { <ResetAccount/> }/>
                 <Route path="/mfa" view=move || view! { <MultiFactorAuthorization/> }/>

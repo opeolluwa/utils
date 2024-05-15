@@ -13,7 +13,7 @@ pub fn Layout(
 ) -> impl IntoView {
     view! {
         <AppNavigation/>
-        <main class="container my-8">{children()}</main>
+        <main class=format!("container my-8 {class}")>{children()}</main>
         <AppFooter/>
     }
 }
