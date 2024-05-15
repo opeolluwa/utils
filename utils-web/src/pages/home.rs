@@ -6,7 +6,7 @@ pub fn Home() -> impl IntoView {
         <div class="container bg-red">
             <header>
                 <div>
-                    <h1 class="text-5xl  hidden text-center">Everything that goes here goes here</h1>
+                    <h1 class="text-5xl text-center">Everything that goes here goes here</h1>
                     <p>
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo consectetur facilis, dicta, in magni incidunt esse neque, iste rem libero omnis asperiores earum? Eligendi magnam, ratione harum saepe fugiat similique?
                     </p>
