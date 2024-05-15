@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./style/output.css">
     
 <script type="module">
-import init, * as bindings from 'utils/utils-web-ff9734b1910aeef6.js';
+import init, * as bindings from './utils-web-ff9734b1910aeef6.js';
 const wasm = await init('utils/utils-web-ff9734b1910aeef6_bg.wasm');
 
 
@@ -39,8 +39,8 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
         }
     </style>
 
-<link rel="modulepreload" href="utils/utils-web-ff9734b1910aeef6.js" crossorigin=anonymous integrity="sha384-Gmv2V6EKPlMlZzwMjDbxWez1JMpa373Crf18EXBWM8EPXn3tucGMPBOzIIN5aK37">
-<link rel="preload" href="utils/utils-web-ff9734b1910aeef6_bg.wasm" crossorigin=anonymous integrity="sha384-jrqoEKRINUHMVqnlss39hDYw7klAABwwn43QsuDILDh0t8MF4mmjJSEX++swRszG" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./utils-web-ff9734b1910aeef6.js" crossorigin=anonymous integrity="sha384-Gmv2V6EKPlMlZzwMjDbxWez1JMpa373Crf18EXBWM8EPXn3tucGMPBOzIIN5aK37">
+<link rel="preload" href="./utils-web-ff9734b1910aeef6_bg.wasm" crossorigin=anonymous integrity="sha384-jrqoEKRINUHMVqnlss39hDYw7klAABwwn43QsuDILDh0t8MF4mmjJSEX++swRszG" as="fetch" type="application/wasm"></head>
 
 <body>
 
