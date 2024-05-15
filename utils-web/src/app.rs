@@ -4,6 +4,7 @@ use crate::pages::home::Home;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
+// use leptos_image::*;
 
 #[component]
 pub fn App() -> impl IntoView {

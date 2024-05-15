@@ -1,13 +1,12 @@
-use leptos::{component, view, IntoView, ReadSignal};
+use leptos::{component, view, Children, IntoView};
 
 /// the app button component
 #[component]
 pub fn Button(
-    #[prop(default = "")]
     /// additional tailwind or custom css classes
     class: &'static str,
-    /// the text content of the button
-    context: &'static str, // the text content
+    /// the element that goes into the button
+    children: Children,
 ) -> impl IntoView {
-    view! { <button class=format!("px-4 py-2 rounded {class}")>{context}</button> }
+    view! { <button class=format!("px-4 py-2 rounded {class}")>{children()}</button> }
 }
