@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utils Web </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style/output.css">
+    
+<script type="module">
+import init, * as bindings from 'utils/utils-web-ff9734b1910aeef6.js';
+const wasm = await init('utils/utils-web-ff9734b1910aeef6_bg.wasm');
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+    <link rel="icon" href="utils/favicon-e9cbd8f50cc65bf2.ico" integrity="sha384&#x2D;YobgLXwtz0GhXVUTHml49p32guapVFlEG8UpQdDVN3kekOqkQi&#x2B;qSXEpwp&#x2B;yM4BW"/>
+    <link rel="stylesheet" href="utils/tailwind-44805b7abcfd6d0c.css" integrity="sha384&#x2D;T1Yl4d8jWMiey9TTgH1X6QqVYDeN3wZVylIgvT6yyncyj0k8g7Ukoxc23spugsT2"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        body {
+            font-family: "Open Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+            font-variation-settings:
+                "wdth" 100;
+            background-color: #000 !important;
+            color: #fff;
+        }
+    </style>
+
+<link rel="modulepreload" href="utils/utils-web-ff9734b1910aeef6.js" crossorigin=anonymous integrity="sha384-Gmv2V6EKPlMlZzwMjDbxWez1JMpa373Crf18EXBWM8EPXn3tucGMPBOzIIN5aK37">
+<link rel="preload" href="utils/utils-web-ff9734b1910aeef6_bg.wasm" crossorigin=anonymous integrity="sha384-jrqoEKRINUHMVqnlss39hDYw7klAABwwn43QsuDILDh0t8MF4mmjJSEX++swRszG" as="fetch" type="application/wasm"></head>
+
+<body>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
