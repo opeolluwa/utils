@@ -1,3 +1,5 @@
+use crate::components::icon::Icon;
+use crate::components::logo::Logo;
 use leptos::{component, view, IntoView};
 use serde::{Deserialize, Serialize};
 
@@ -19,18 +21,20 @@ pub fn AppNavigation() -> impl IntoView {
     let routes: Vec<NavItem> = vec![
         NavItem::from("home", "/"),
         NavItem::from("docs", "/docs"),
-        NavItem::from("login", "/login"),
+        NavItem::from("download", "/download"),
+        // NavItem::from("sign up", "/signup"),
     ];
 
     view! {
         <nav class="container flex justify-between items-center mt-8">
-            <img src="app-icon.png" alt="Utils web"/>
-            <ul class="flex gap-4 items-center ">
+            <Logo/>
+            <Icon icon="menu-5-line" class="text-2xl block sm:hidden"/>
+            <ul class="hidden sm:flex gap-4 items-center ">
                 {routes
                     .into_iter()
                     .map(|route| {
                         view! {
-                            <li class="capitalize">
+                            <li class="capitalize text-gray-500 :active:text-black :hover:text-black font-medium :first:text-white">
                                 <a href=route.path>{route.name}</a>
                             </li>
                         }
@@ -38,6 +42,12 @@ pub fn AppNavigation() -> impl IntoView {
                     .collect::<Vec<_>>()}
 
             </ul>
+            <a
+                class=" hidden sm:block px-4 py-2 rounded bg-white rounded-lg text-black font-medium"
+                href="/login"
+            >
+                Login
+            </a>
         </nav>
     }
 }
