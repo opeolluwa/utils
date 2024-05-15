@@ -1,7 +1,7 @@
-use leptos::{component, view, IntoView};
-use serde::{Deserialize, Serialize};
 use crate::components::icon::Icon;
 use crate::components::logo::Logo;
+use leptos::{component, view, IntoView};
+use serde::{Deserialize, Serialize};
 
 /// the nav otems is going ot be an array of these
 #[derive(Debug, Serialize, Deserialize, Default)]
@@ -28,7 +28,7 @@ pub fn AppNavigation() -> impl IntoView {
     view! {
         <nav class="container flex justify-between items-center mt-8">
             <Logo/>
-            <Icon icon="ri-menu-5-line" class="text-2xl block sm:hidden"/>
+            <Icon icon="menu-5-line" class="text-2xl block sm:hidden"/>
             <ul class="hidden sm:flex gap-4 items-center ">
                 {routes
                     .into_iter()
