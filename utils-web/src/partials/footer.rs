@@ -9,7 +9,6 @@ pub fn AppFooter() -> impl IntoView {
             <footer>
                 <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                     <div class="md:flex md:justify-between">
-                        <Logo/>
                         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                             <div>
                                 <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase ">

@@ -104,7 +104,7 @@ pub fn Home() -> impl IntoView {
                         .into_iter()
                         .map(|feature| {
                             view! {
-                                <Card class="py-4 sm:py-20 flex flex-col justify-start items-start px-10 gap-6  rounded sm:w-1/4 bg-[#101010] cursor-pointer">
+                                <Card class="py-4 sm:py-20 flex flex-col justify-start items-start px-10 gap-6 hover:border-violet-800 border-2 border-transparent hover:border-2 ease-in-out bg-[#101010]      transition-all duration-500 hover:bg-gradient-to-t to-violet-800  from-10% via-black from-[#101010] bg-size-200 bg-pos-0 hover:bg-pos-100">
                                     <Icon icon=feature.icon class="text-4xl"/>
                                     <h2 class="text-2xl capitalize font-medium">{feature.title}</h2>
                                     <p class="text-gray-500 leading-1 my-1 text-xl :first-letter:capitalize">

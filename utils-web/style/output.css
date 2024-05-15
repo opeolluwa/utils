@@ -940,10 +940,6 @@ select {
   max-width: 1280px;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1016,6 +1012,14 @@ select {
   border-radius: 0.75rem;
 }
 
+.border-2 {
+  border-width: 2px;
+}
+
+.border-transparent {
+  border-color: transparent;
+}
+
 .bg-\[\#101010\] {
   --tw-bg-opacity: 1;
   background-color: rgb(16 16 16 / var(--tw-bg-opacity));
@@ -1040,14 +1044,29 @@ select {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
 
+.from-\[\#101010\] {
+  --tw-gradient-from: #101010 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(16 16 16 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-violet-800 {
   --tw-gradient-from: #5b21b6 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(91 33 182 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-10\% {
+  --tw-gradient-from-position: 10%;
+}
+
 .from-25\% {
   --tw-gradient-from-position: 25%;
+}
+
+.via-black {
+  --tw-gradient-to: rgb(0 0 0 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #000 var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
 .via-red-500 {
@@ -1057,6 +1076,10 @@ select {
 
 .to-\[\#FCB900\] {
   --tw-gradient-to: #FCB900 var(--tw-gradient-to-position);
+}
+
+.to-violet-800 {
+  --tw-gradient-to: #5b21b6 var(--tw-gradient-to-position);
 }
 
 .bg-clip-text {
@@ -1236,6 +1259,33 @@ select {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-500 {
+  transition-duration: 500ms;
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover\:border-2:hover {
+  border-width: 2px;
+}
+
+.hover\:border-violet-800:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(91 33 182 / var(--tw-border-opacity));
+}
+
+.hover\:bg-gradient-to-t:hover {
+  background-image: linear-gradient(to top, var(--tw-gradient-stops));
+}
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
@@ -1251,10 +1301,6 @@ select {
 
   .sm\:hidden {
     display: none;
-  }
-
-  .sm\:w-1\/4 {
-    width: 25%;
   }
 
   .sm\:grid-cols-3 {
