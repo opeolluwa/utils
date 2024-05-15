@@ -14,6 +14,7 @@ leptos_router = { version = "0.6.11", features = ["csr"] }
 leptos_meta = { version = "0.6.11", features = ["csr"] }
 gloo-net = { version = "0.2", features = ["http"] }
 log = "0.4.21"
+serde = { version = "1.0.201", features = ["derive"] }
 
 
 

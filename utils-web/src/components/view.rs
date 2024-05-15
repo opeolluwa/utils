@@ -1,5 +1,1 @@
-
-
-pub fn view(){
-    
-}
+pub fn view() {}

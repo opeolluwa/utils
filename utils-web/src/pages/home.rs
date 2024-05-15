@@ -1,10 +1,13 @@
+use crate::components::button::Button;
+use crate::layouts::default::Layout;
 use leptos::{component, view, IntoView};
-use crate::component::{button::Button},
+
 #[component]
 pub fn Home() -> impl IntoView {
     view! {
-        <div class="container bg-red">
-            <header>
+        <Layout>
+
+            <header class="">
                 <div>
                     <h1 class="text-5xl text-center">Everything that goes here goes here</h1>
                     <p>
@@ -13,10 +16,12 @@ pub fn Home() -> impl IntoView {
                 </div>
                 <div>
                     <img src="public/app-icon.png" alt="utils web"/>
-                    <Button/>
+                    <Button context="click me" class="bg-green-500 text-white"/>
+                    <Button context="click me"/>
+
                 </div>
             </header>
 
-        </div>
+        </Layout>
     }
 }
