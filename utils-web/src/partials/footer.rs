@@ -13,17 +13,17 @@ pub fn AppFooter() -> impl IntoView {
                         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                             <div>
                                 <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase ">
-                                    Resources
+                                    Account
                                 </h2>
                                 <ul class="text-gray-400 font-medium">
                                     <li class="mb-4">
-                                        <a href="https://flowbite.com/" class="hover:underline">
-                                            Docs
+                                        <a href="/login" class="hover:underline">
+                                            Login
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="https://tailwindcss.com/" class="hover:underline">
-                                            Download
+                                        <a href="/sign-up" class="hover:underline">
+                                            Sign up
                                         </a>
                                     </li>
                                 </ul>
@@ -63,7 +63,7 @@ pub fn AppFooter() -> impl IntoView {
                                     </li>
                                     <li>
                                         <a href="#" class="hover:underline">
-                                            Terms &amp; Conditions
+                                            Terms & Conditions
                                         </a>
                                     </li>
                                 </ul>

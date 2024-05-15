@@ -7,22 +7,22 @@ use serde::{Deserialize, Serialize};
 #[component]
 pub fn Login() -> impl IntoView {
     view! {
-        <Layout class="h-[75vh] flex items-center juistify-center">
-            <div class="flex items-center justify-between">
-                <div class="w-1/2 shadow-xl rounded-xl shadow-amber-600   shadow-[4px_20px_20px_27px_#FFEBB5] ">
+        <Layout class="py-20 flex  px-4 items-center juistify-center">
+            <div class="flex items-center justify-between ">
+                <div class="w-1/2 shadow-xl rounded-xl shadow-amber-600   shadow-[4px_20px_20px_27px_#FFEBB5]  hidden sm:block">
                     <img src="./public/snapshot.png" alt="login page illustration"/>
                 </div>
 
-                <div class="bg-[#101010] rounded-lg">
-                    <h2 class="text-4xl font-bold leading-1">Welcome Back!</h2>
-                    <p class="leading-2 text-xl mb-4 my-1 text-gray-400">
+                <div class="bg-[#101010] rounded-lg ">
+                    <h2 class="text-4xl font-bold leading-1 text-center sm:text-left">Welcome Back!</h2>
+                    <p class="leading-2 text-xl mb-4 my-1 text-gray-400 text-center sm:text-left">
                         Please povide your email or username
                     </p>
                     <form action="">
                         <div class="mt-8">
                             <label
                                 for="email-or-username"
-                                class="text-gray-400 font-medium text-xl mb-2 block"
+                                class="text-gray-400 mb-2 block"
                             >
 
                                 Email or Username

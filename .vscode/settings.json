@@ -16,23 +16,6 @@
       // optional:
       // "component",
       "server"
-    ],
-    "emmet.includeLanguages": {
-      "rust": "html",
-      "*.rs": "html"
-    },
-    "tailwindCSS.includeLanguages": {
-      "rust": "html",
-      "*.rs": "html"
-    },
-    "files.associations": {
-      "*.rs": "rust"
-    },
-    "editor.quickSuggestions": {
-      "other": "on",
-      "comments": "on",
-      "strings": true
-    },
-    "css.validate": false
+    ]
   }
 }
