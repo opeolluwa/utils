@@ -2,7 +2,7 @@ use leptos::{component, view, IntoView};
 
 #[component]
 pub fn Logo(
-       /// additional tailwind or custom css classes
+    /// additional tailwind or custom css classes
     #[prop(default = "")]
     class: &'static str,
 ) -> impl IntoView {

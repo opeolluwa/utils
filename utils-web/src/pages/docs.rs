@@ -1,9 +1,5 @@
-use crate::components::button::Button;
-use crate::components::card::Card;
-use crate::components::icon::Icon;
 use crate::layouts::default::Layout;
 use leptos::{component, view, IntoView};
-use serde::{Deserialize, Serialize};
 
 #[component]
 pub fn Docs() -> impl IntoView {

@@ -2,7 +2,6 @@ use crate::components::button::Button;
 use crate::components::input::Input as UserInput;
 use crate::layouts::default::Layout;
 use leptos::{component, view, IntoView};
-use serde::{Deserialize, Serialize};
 
 #[component]
 pub fn Login() -> impl IntoView {
