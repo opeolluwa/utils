@@ -26,7 +26,7 @@ pub fn AppNavigation() -> impl IntoView {
     ];
 
     view! {
-        <nav class="container flex justify-between items-center mt-8">
+        <nav class="container flex justify-between items-center pt-8">
             <Logo/>
             <Icon icon="menu-5-line" class="text-2xl block sm:hidden"/>
             <ul class="hidden sm:flex gap-4 items-center">

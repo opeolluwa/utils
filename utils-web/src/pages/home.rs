@@ -113,7 +113,7 @@ pub fn Home() -> impl IntoView {
 
             <section class="flex items-center gap-12">
                 <div
-                    class=" rounded-lg w-1/2 bg-blend-multiply bg-[#FCB900]"
+                    class=" rounded-lg sm:w-1/2 bg-blend-multiply bg-[#FCB900]"
                     data-aos="fade-in"
                     data-aos-offset="200"
                     data-aos-delay="50"
@@ -127,7 +127,7 @@ pub fn Home() -> impl IntoView {
                         <source src="public/demo-amber.mp4" type="video/mp4"/>
                     </video>
                 </div>
-                <div class="flex flex-col gap-8">
+                <div class="flex flex-col gap-8 hidden sm:flex">
                     {features
                         .clone()
                         .into_iter()

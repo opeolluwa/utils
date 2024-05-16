@@ -943,8 +943,8 @@ select {
   height: 75vh;
 }
 
-.w-1\/2 {
-  width: 50%;
+.min-h-screen {
+  min-height: 100vh;
 }
 
 .w-2\/3 {
@@ -1183,6 +1183,10 @@ select {
   padding-left: 0.5rem;
 }
 
+.pt-8 {
+  padding-top: 2rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1355,6 +1359,10 @@ select {
 
   .sm\:hidden {
     display: none;
+  }
+
+  .sm\:w-1\/2 {
+    width: 50%;
   }
 
   .sm\:grid-cols-3 {
