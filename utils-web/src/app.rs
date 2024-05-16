@@ -1,4 +1,4 @@
-use crate::pages::authorize::{MultiFactorAuth, ResetAccount, SecurityQuestion};
+use crate::pages::authorize::{ResetAccount, SecurityQuestion};
 use crate::pages::dashboard::Dashboard;
 use crate::pages::docs::Docs;
 use crate::pages::home::Home;

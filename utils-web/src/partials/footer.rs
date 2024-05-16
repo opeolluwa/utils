@@ -9,9 +9,10 @@ pub fn AppFooter() -> impl IntoView {
             <footer>
                 <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                     <div class="md:flex md:justify-between">
+                        <Logo class="hidden sm:block"/>
                         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                             <div>
-                                <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase ">
+                                <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase text-violet-400 ">
                                     Account
                                 </h2>
                                 <ul class="text-gray-400 font-medium">
@@ -28,7 +29,7 @@ pub fn AppFooter() -> impl IntoView {
                                 </ul>
                             </div>
                             <div>
-                                <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase ">
+                                <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase text-violet-400 ">
                                     Follow us
                                 </h2>
                                 <ul class="text-gray-400  font-medium">
@@ -51,7 +52,7 @@ pub fn AppFooter() -> impl IntoView {
                                 </ul>
                             </div>
                             <div>
-                                <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase ">
+                                <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase text-violet-400 ">
                                     Legal
                                 </h2>
                                 <ul class="text-gray-400  font-medium">
