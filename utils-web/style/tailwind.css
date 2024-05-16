@@ -6,5 +6,23 @@
 
 
 section {
-    @apply py-[40px] sm:py-[120px] ;
+    @apply py-[60px] sm:py-[150px];
+}
+
+
+video::-webkit-media-controls {
+    display: none;
+}
+
+
+video::-webkit-media-controls,
+video::-moz-media-controls,
+video::-o-media-controls,
+video::-ms-media-controls {
+    display: none !important;
+}
+
+
+video {
+    pointer-events: none;
 }

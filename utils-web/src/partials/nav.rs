@@ -3,7 +3,7 @@ use crate::components::logo::Logo;
 use leptos::{component, view, IntoView};
 use serde::{Deserialize, Serialize};
 
-/// the nav otems is going ot be an array of these
+/// the nav items is going ot be an array of these
 #[derive(Debug, Serialize, Deserialize, Default)]
 struct NavItem {
     path: &'static str,
@@ -22,19 +22,19 @@ pub fn AppNavigation() -> impl IntoView {
         NavItem::from("home", "/"),
         NavItem::from("docs", "/docs"),
         NavItem::from("download", "/download"),
-        // NavItem::from("sign up", "/signup"),
+        NavItem::from("login", "/login"),
     ];
 
     view! {
         <nav class="container flex justify-between items-center mt-8">
             <Logo/>
             <Icon icon="menu-5-line" class="text-2xl block sm:hidden"/>
-            <ul class="hidden sm:flex gap-4 items-center ">
+            <ul class="hidden sm:flex gap-4 items-center">
                 {routes
                     .into_iter()
                     .map(|route| {
                         view! {
-                            <li class="capitalize text-gray-500 :active:text-black :hover:text-black font-medium :first:text-white">
+                            <li class="capitalize text-gray-300 :active:text-black :hover:text-black font-medium :first:text-white">
                                 <a href=route.path>{route.name}</a>
                             </li>
                         }
@@ -42,12 +42,15 @@ pub fn AppNavigation() -> impl IntoView {
                     .collect::<Vec<_>>()}
 
             </ul>
-            <a
-                class=" hidden sm:block px-4 py-2 rounded bg-white rounded-lg text-black font-medium"
-                href="/login"
-            >
-                Login
-            </a>
+            <div class="flex gap-2 hidden sm:block">
+                <a href="https://github.com/opeolluwa/utils">
+                    <Icon icon="github-fill" class="text-2xl"/>
+                </a>
+                <a href="https://github.com/opeolluwa/utils" class="hidden">
+                    <Icon icon="discord-fill" class="text-2xl"/>
+
+                </a>
+            </div>
         </nav>
     }
 }
