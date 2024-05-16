@@ -1,5 +1,7 @@
 use crate::pages::authorize::{ResetAccount, SecurityQuestion};
-use crate::pages::dashboard::Dashboard;
+use crate::pages::dashboard::{
+    Home as Dashboard, ViewRecord, UpdateRecord, StoreData
+};
 use crate::pages::docs::Docs;
 use crate::pages::home::Home;
 use crate::pages::login::Login;
