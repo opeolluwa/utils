@@ -10,11 +10,9 @@ pub fn Login() -> impl IntoView {
         <Layout>
             <section class="flex items-center justify-center ">
                 <div class="bg-[#101010] rounded-lg">
-                    <h2 class="text-4xl font-bold leading-1 sm:text-left">
-                        Welcome Back!
-                    </h2>
+                    <h2 class="text-4xl font-bold leading-1 sm:text-left">Welcome Back!</h2>
 
-                    <form action="" >
+                    <form action="">
                         <div class="mt-8">
                             <label for="email-or-username" class="text-gray-400 mb-2 block">
 
