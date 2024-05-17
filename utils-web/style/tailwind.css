@@ -26,3 +26,12 @@ video::-ms-media-controls {
 video {
     pointer-events: none;
 }
+
+
+.bottom-nav-item:hover .icon-line {
+    display: hidden;
+}
+
+.bottom-nav-item:hover .icon-fill {
+    display: inline-block;
+}

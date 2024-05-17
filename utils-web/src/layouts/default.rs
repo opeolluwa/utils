@@ -12,8 +12,10 @@ pub fn Layout(
     class: &'static str,
 ) -> impl IntoView {
     view! {
-        <AppNavigation/>
-        <main class=format!("container my-8 px-4  {class}")>{children()}</main>
-        <AppFooter/>
+        <div class="layout__default">
+            <AppNavigation/>
+            <main class=format!("container my-8 px-4  min-h-screen {class}")>{children()}</main>
+            <AppFooter/>
+        </div>
     }
 }

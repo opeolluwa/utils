@@ -1,8 +1,8 @@
 use crate::components::button::Button;
 use crate::components::card::Card;
-use crate::components::icon::Icon;
 use crate::layouts::default::Layout;
 use leptos::{component, view, IntoView};
+use leptos_remix_icon::Icon;
 use serde::{Deserialize, Serialize};
 
 /// the application features section
@@ -26,7 +26,7 @@ impl Feature {
 //  https://dribbble.com/shots/17411928-Account-Creation
 // https://dribbble.com/shots/18976667-Website-Sign-In-Page//\\
 // dashboard https://dribbble.com/shots/24040560-Command-K-Search
-
+// mobile https://dribbble.com/shots/16271758-Mobile-dashboard-Aviko-Grower-Connect-App
 #[component]
 pub fn Home() -> impl IntoView {
     let features: Vec<Feature> = vec![
@@ -113,7 +113,7 @@ pub fn Home() -> impl IntoView {
 
             <section class="flex items-center gap-12">
                 <div
-                    class=" rounded-lg w-1/2 bg-blend-multiply bg-[#FCB900]"
+                    class=" rounded-lg sm:w-1/2 bg-blend-multiply bg-[#FCB900]"
                     data-aos="fade-in"
                     data-aos-offset="200"
                     data-aos-delay="50"
@@ -127,7 +127,7 @@ pub fn Home() -> impl IntoView {
                         <source src="public/demo-amber.mp4" type="video/mp4"/>
                     </video>
                 </div>
-                <div class="flex flex-col gap-8">
+                <div class="flex flex-col gap-8 hidden sm:flex">
                     {features
                         .clone()
                         .into_iter()
