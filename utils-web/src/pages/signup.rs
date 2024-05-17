@@ -1,8 +1,8 @@
 use crate::components::button::Button;
-use crate::components::icon::Icon;
 use crate::components::input::Input as UserInput;
 use crate::layouts::default::Layout;
 use leptos::{component, view, IntoView};
+use leptos_remix_icon::Icon;
 
 use crate::lib;
 

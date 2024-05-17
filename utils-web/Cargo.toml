@@ -16,6 +16,7 @@ gloo-net = { version = "0.2", features = ["http"] }
 log = "0.4.21"
 serde = { version = "1.0.201", features = ["derive"] }
 leptos_image = { version = "0.2.0", optional = true }
+leptos-remix-icon = "1.0.0"
 
 [features]
 leptos_image = ["dep:leptos_image"]
