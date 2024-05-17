@@ -43,7 +43,7 @@ pub fn AppFooter() -> impl IntoView {
                                     </li>
                                     <li>
                                         <a
-                                            href="https://discord.gg/4eeurUVvTy"
+                                            href="/dashboard"
                                             class="hover:underline"
                                         >
                                             Discord
