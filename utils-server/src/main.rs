@@ -1,19 +1,25 @@
-use sea_orm::{ConnectOptions, Database};
-use std::time::Duration;
-use tonic::transport::Server;
-use utils_auth::utils_auth_server::UtilsAuthServer;
-use utils_storage::utils_data_back_up_server::UtilsDataBackUpServer;
-use migration::{Migrator, MigratorTrait};
 use self::multiplex::MultiplexService;
 use crate::grpc::{auth as auth_grpc_service, storage as storage_grpc_service};
+use migration::{Migrator, MigratorTrait};
+use sea_orm::DatabaseConnection;
+use sea_orm::{ConnectOptions, Database};
 use std::env;
 use std::net::SocketAddr;
+use std::time::Duration;
+use tonic::transport::Server;
+use tower_http::cors::Any;
+use tower_http::cors::CorsLayer;
+use utils_auth::utils_auth_server::UtilsAuthServer;
+use utils_storage::utils_data_back_up_server::UtilsDataBackUpServer;
+
 
 mod grpc;
 mod http;
 mod multiplex;
+mod pkg;
 mod utils_auth;
 mod utils_storage;
+mod controllers;
 
 const SERVER_PORT: u16 = 10785;
 const DB_URL: &str = "postgres://drizzles:raindrops@localhost/utils-server-db";
@@ -49,12 +55,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .add_service(UtilsDataBackUpServer::new(storage_service))
         .into_service();
 
-    let http = crate::http::router::endpoints();
+    let cors = CorsLayer::new()
+        // .allow_credentials(Any)
+        .allow_methods(Any)
+        .allow_headers(Any)
+        .allow_origin(Any);
 
-    tracing::debug!("Utils server listening on {0}", server_address);
-    
+    let state = pkg::AppState {
+        db_client: db.clone(),
+    };
 
-     // run the migration programmatically during app startup
+    let http = crate::http::router::endpoints(state).layer(cors);
+
+    tracing::debug!("Utils server listening on http://{0}", server_address);
+
+    // run the migration programmatically during app startup
     // this would create the necessary tables
     let connection = db;
     Migrator::up(&connection, None).await?;
@@ -66,7 +81,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("{} pending migrations", migrations.len());
         println!("databse live at  {}", DB_URL);
     }
-
 
     // combine them into one service
     let service = MultiplexService::new(http, grpc);

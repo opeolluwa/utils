@@ -987,10 +987,6 @@ select {
   max-height: 100vh;
 }
 
-.min-h-screen {
-  min-height: 100vh;
-}
-
 .w-2 {
   width: 0.5rem;
 }
