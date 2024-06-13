@@ -73,13 +73,12 @@ async fn main() -> Result<()> {
     if env == "development" {
         let migrations = Migrator::get_pending_migrations(&connection).await?;
         println!("{} pending migrations", migrations.len());
-        println!("databse live at  {}", DB_URL.as_str());
+        println!("database live at  {}", DB_URL.as_str());
     }
 
-    // init the config file
-    config::Config::init()?;
+
     // run the cli parser
     parser::Utils::run().await;
-    
+
     Ok(())
 }

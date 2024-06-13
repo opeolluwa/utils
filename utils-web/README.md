@@ -1,74 +1,36 @@
- # Utils Web Client
-
-- [Description](#description)
-- [Getting Started](#getting-started)
-  - [Dependencies](#dependencies)
-  - [Installing](#installing)
-  - [Executing program](#executing-program)
-- [Documentation](#documentation)
-- [Help](#help)
-- [Authors](#authors)
-- [Version History](#version-history)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-
-## Description
-
-Single Page Application Client for Utils
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-### Dependencies
+First, run the development server:
 
-- Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-- ex. Windows 10
-
-### Installing
-
-- How/where to download your program
-- Any modifications needed to be made to files/folders
-
-### Executing program
-
-- How to run the program
-- Step-by-step bullets
-
-```
-code blocks for commands
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Documentation
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Describe any special instructions that are necessary to install a software package on your computer (if applicable).
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Help
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-Any advise for common problems or issues.
+## Learn More
 
-```
-command to run if program contains helper info
-```
+To learn more about Next.js, take a look at the following resources:
 
-## Authors
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-Contributors names and contact info
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+## Deploy on Vercel
 
-## Version History
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-- 0.2
-  - Various bug fixes and optimizations
-  - See [commit change]() or See [release history]()
-- 0.1
-  - Initial Release
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-        
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

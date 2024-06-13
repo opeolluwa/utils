@@ -27,14 +27,8 @@ impl Utils {
             Commands::Sync => CliCommands::sync().await,
             Commands::Auth(auth) => AuthCommands::parser(auth),
             Commands::Config => {
-                // tell us the config path
-                let config_path = config::Config::path().ok();
-                if config_path.is_some() {
-                    LogMessage::neutral(&format!(
-                        "Modify the config file available at {}",
-                        config_path.unwrap()
-                    ));
-                }
+           todo!()
+
             }
         }
     }

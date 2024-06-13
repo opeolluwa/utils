@@ -1,11 +1,11 @@
+use crate::style::LogMessage;
+use dialoguer::theme::ColorfulTheme;
 use dialoguer::Confirm;
+use dialoguer::Input;
 use serde::Serialize;
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
-use dialoguer::Input;
-    use dialoguer::theme::ColorfulTheme;
-use crate::style::LogMessage;
 /// the readme utils is used to for generating project readme
 /// # Example
 /// the basic examples are listed thus:
@@ -88,24 +88,24 @@ impl ReadmeCommands {
 
     ///  create a  new readme
     fn create_new(read_me_path: &Path) {
-        // prompt for project name, description and confirm the path, 
-        let project_title : String = Input::with_theme(&ColorfulTheme::default())
-        .with_prompt("Project Title")
-        .validate_with({
-            let mut force = None;
-            move |input: &String| -> Result<(), &str> {
-                if input.len() >= 3 || force.as_ref().map_or(false, |old| old == input) {
-                    Ok(())
-                } else {
-                    force = Some(input.clone());
-                    Err("Please provide a project title, at least 3 characters long")
+        // prompt for project name, description and confirm the path,
+        let project_title: String = Input::with_theme(&ColorfulTheme::default())
+            .with_prompt("Project Title")
+            .validate_with({
+                let mut force = None;
+                move |input: &String| -> Result<(), &str> {
+                    if input.len() >= 3 || force.as_ref().map_or(false, |old| old == input) {
+                        Ok(())
+                    } else {
+                        force = Some(input.clone());
+                        Err("Please provide a project title, at least 3 characters long")
+                    }
                 }
-            }
-        })
-        .interact_text()
-        .unwrap();
+            })
+            .interact_text()
+            .unwrap();
 
-      let project_description : String = Input::with_theme(&ColorfulTheme::default())
+        let project_description : String = Input::with_theme(&ColorfulTheme::default())
         .with_prompt("Project description")
         .validate_with({
             let mut force = None;
@@ -121,17 +121,20 @@ impl ReadmeCommands {
         .interact_text()
         .unwrap();
 
-    // // the file path 
-    //     let read_me_path: String = Input::with_theme(&ColorfulTheme::default())
-    //     .with_prompt("Your planet")
-    //     .default(".".to_string())
-    //     .interact_text()
-    //     .unwrap();
+        // // the file path
+        //     let read_me_path: String = Input::with_theme(&ColorfulTheme::default())
+        //     .with_prompt("Your planet")
+        //     .default(".".to_string())
+        //     .interact_text()
+        //     .unwrap();
 
-        // write the provided data to the file 
+        // write the provided data to the file
         let mut file = File::create(read_me_path).unwrap();
-        file.write_all(ReadmeCommands::get_template(project_title.trim(), project_description.trim()).as_bytes())
-            .unwrap();
+        file.write_all(
+            ReadmeCommands::get_template(project_title.trim(), project_description.trim())
+                .as_bytes(),
+        )
+        .unwrap();
     }
 
     /// return the template as string
