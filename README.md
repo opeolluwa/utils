@@ -1,48 +1,10 @@
-# Utils
+# Utility Suite 
 
-<div style="display:flex; justify-content:center; align-items:center">
-  <img alt=app-icon src=app-icon.png/>
-</div>
+An efficient tool to transform the developer experience with a comprehensive suite of Utilities designed to streamline workflows, boost productivity, and elevate the quality of projects.
 
-Compilation of utility scripts for everyday use
 
-- [Description](#description)
-- [Getting Started](#getting-started)
-  - [Dependencies](#dependencies)
-  - [Installing](#installing)
-  - [Executing program](#executing-program)
-- [Documentation](#documentation)
-- [License](#license)
-
-## Demo
-
-![Demo](./utils-demo.gif)
-
-## Description
-
-This repository contains a collection of useful scripts that can be used in any software project and in a desktop environment. The main purpose is to provide abstracts on some common tasks such as adding readme to a project, sending email and SMS, etc.
-
-## Getting Started
-
-### Dependencies
-
-- [Rust](https://rust-lang.org) >= v1.70.0
-
-### Installing
-
-- Install from the [Cargo](https://crates.io) repository
-
-  ```sh
-  cargo install utils-cli
-  ```
-
-  - Install from [npm](https://npmjs.com)
-
-  ```sh
-  npm install -g @opeolluwa/utils
-  ```
-
-- Clone the repository and build the application
+##  Installation 
+As of this time, Utils is still experimental and can only be built ffrom source 
 
   ```sh
   git clone https://github.com/opeolluwa/utils.git
@@ -50,8 +12,6 @@ This repository contains a collection of useful scripts that can be used in any 
   cargo build --release
   cargo install --path .
   ```
-
-
 
 ### Executing program
 
