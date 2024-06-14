@@ -1,10 +1,7 @@
-<script setup lang="ts">
-import VueWriter from 'vue-writer'
-const writer = ['Productivity', 'Integration', 'Exprience', 'Speed']
-</script>
+
 
 <template>
-  <div class="mx-auto max-w-2xl py-12 sm:py-48 lg:py-56 flex flex-col items-center justify-center">
+  <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 flex flex-col items-center justify-center">
     <div class="hidden sm:mb-8 sm:flex sm:justify-center">
       <div
         class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20"
@@ -13,7 +10,7 @@ const writer = ['Productivity', 'Integration', 'Exprience', 'Speed']
         <i class="ri-star-fill text-l text-yellow-500"></i>
       </div>
     </div>
-    <div class="text-center">
+    <div class="text-center px-8">
       <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
         Utils to enrich your Developer Exprience
       </h1>
