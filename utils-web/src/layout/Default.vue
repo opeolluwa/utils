@@ -63,12 +63,12 @@ const routes: Array<Route> = [
     name: 'home'
   },
   {
-    path: '/signup',
-    name: 'signup'
+    path: '/login',
+    name: 'login'
   },
   {
-    path: '/user',
-    name: 'Dashboard'
+    path: '/docs',
+    name: 'docs'
   }
 ]
 </script>

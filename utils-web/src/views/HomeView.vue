@@ -1,14 +1,13 @@
-
-
 <template>
   <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 flex flex-col items-center justify-center">
     <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-      <div
+      <a
+        href="https://github.com/opeolluwa/utils"
         class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20"
       >
         Star on GitHub
         <i class="ri-star-fill text-l text-yellow-500"></i>
-      </div>
+      </a>
     </div>
     <div class="text-center px-8">
       <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -20,9 +19,9 @@
       </p>
       <div class="mt-10 flex items-center justify-center gap-x-6">
         <a
-          href="#"
+          href="https://github.com/opeolluwa/utils/releases"
           class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >Get started</a
+          >Download</a
         >
         <a href="#" class="text-sm font-semibold leading-6 text-gray-900"
           >Read the docs <span aria-hidden="true">→</span></a
@@ -38,35 +37,39 @@
       >
         <div class="lg:pr-8 lg:pt-4">
           <div class="lg:max-w-lg">
-            <h2 class="text-base font-semibold leading-7 text-indigo-600">Deploy faster</h2>
             <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               A better workflow
             </p>
             <p class="mt-6 text-lg leading-8 text-gray-600">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis
-              suscipit eaque, iste dolor cupiditate blanditiis ratione.
+              Superchage your workflow with files generator, distributed storage for important
+              information and lots more
             </p>
             <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
               <div class="relative pl-9">
                 <dt class="inline font-semibold text-gray-900">
                   <svg
-                    class="absolute left-1 top-1 h-5 w-5 text-indigo-600"
-                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
-                    aria-hidden="true"
+                    class="absolute left-1 top-1 h-5 w-5 text-indigo-600"
                   >
                     <path
-                      fill-rule="evenodd"
-                      d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4.5 4.5 0 018.302-3.046 3.5 3.5 0 014.504 4.272A4 4 0 0115 17H5.5zm3.75-2.75a.75.75 0 001.5 0V9.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0l-3.25 3.5a.75.75 0 101.1 1.02l1.95-2.1v4.59z"
-                      clip-rule="evenodd"
+                      d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875Z"
+                    />
+                    <path
+                      d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 0 0 1.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 0 0 1.897 1.384C6.809 12.164 9.315 12.75 12 12.75Z"
+                    />
+                    <path
+                      d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 0 0 1.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 0 0 1.897 1.384C6.809 15.914 9.315 16.5 12 16.5Z"
+                    />
+                    <path
+                      d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 0 0 1.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 0 0 1.897 1.384C6.809 19.664 9.315 20.25 12 20.25Z"
                     />
                   </svg>
-                  Push to deploy.
+
+                  Distributed Storage
                 </dt>
-                <dd class="inline">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit
-                  perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.
-                </dd>
+                <dd class="inline">Distributed storage for important information</dd>
               </div>
               <div class="relative pl-9">
                 <dt class="inline font-semibold text-gray-900">
@@ -82,36 +85,28 @@
                       clip-rule="evenodd"
                     />
                   </svg>
-                  SSL certificates.
+                  Secure by default
                 </dt>
-                <dd class="inline">
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
-                  commodo.
-                </dd>
+                <dd class="inline">Built with only memory-safe and fault tollerant APIs</dd>
               </div>
               <div class="relative pl-9">
                 <dt class="inline font-semibold text-gray-900">
                   <svg
-                    class="absolute left-1 top-1 h-5 w-5 text-indigo-600"
-                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
-                    aria-hidden="true"
+                    class="absolute left-1 top-1 h-5 w-5 text-indigo-600"
                   >
                     <path
-                      d="M4.632 3.533A2 2 0 016.577 2h6.846a2 2 0 011.945 1.533l1.976 8.234A3.489 3.489 0 0016 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234z"
-                    />
-                    <path
                       fill-rule="evenodd"
-                      d="M4 13a2 2 0 100 4h12a2 2 0 100-4H4zm11.24 2a.75.75 0 01.75-.75H16a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75h-.01a.75.75 0 01-.75-.75V15zm-2.25-.75a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-.01z"
+                      d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z"
                       clip-rule="evenodd"
                     />
                   </svg>
-                  Database backups.
+
+                  Lightening Fast
                 </dt>
-                <dd class="inline">
-                  Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi
-                  lobortis.
-                </dd>
+                <dd class="inline">Built from ground up with Rust and Web assembly for speed</dd>
               </div>
             </dl>
           </div>
@@ -130,9 +125,8 @@
   <div class="overflow-hidde py-12 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-base font-semibold leading-7 text-indigo-600">Deploy faster</h2>
         <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Everything you need to deploy your app
+          Everything you need to develop your app
         </p>
         <p class="mt-6 text-lg leading-8 text-gray-600">
           Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas
@@ -256,7 +250,7 @@
     </div>
   </div>
 
-  <div class="mt-12 flex justify-center ">
+  <div class="mt-12 flex justify-center">
     <button
       type="button"
       class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
