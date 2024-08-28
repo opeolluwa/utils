@@ -20,33 +20,27 @@ exclude = ["sandbox"]
 
 
 [dependencies]
-assert_cmd = "2.0.12"
+assert_cmd = "2.0.16"
 bcrypt = "0.15.1"
-chrono = "0.4.26"
-clap = {version = "4.3.23", features = ["derive"] }
-console = "0.15.7"
+chrono = "0.4.38"
+clap = {version = "4.5.16", features = ["derive"] }
+console = "0.15.8"
 dialoguer = {version = "0.10.4", features = ["fuzzy-select", "completion"] }
 dirs = "5.0.1"
-include_dir = "0.7.3"
-indicatif = "0.17.6"
-lazy_static = "1.4.0"
-serde = { version = "1.0.185", features = ["derive"] }
-serde_json = "1.0.105"
-tokio = {version = "1.20.0", features = ["macros", "rt-multi-thread"] }
-uuid = {version = "1.4.1", features = ["v4", "fast-rng", "macro-diagnostics"] }
+include_dir = "0.7.4"
+indicatif = "0.17.8"
+lazy_static = "1.5.0"
+serde = { version = "1.0.209", features = ["derive"] }
+serde_json = "1.0.127"
+tokio = {version = "1.39.3", features = ["macros", "rt-multi-thread"] }
+uuid = {version = "1.10.0", features = ["v4", "fast-rng", "macro-diagnostics"] }
 sea-orm = { version = "0.12", features = [ "sqlx-sqlite",  "runtime-tokio-native-tls", "macros" , "with-uuid", "with-time"] }
-anyhow = "1.0.81"
+anyhow = "1.0.86"
 utils-cli-entity = { path = "entity", version = "1.0.5"}
-utils-cli-migration = { path = "migration", version = "1.0.0"} # depends on your needs
+utils-cli-migration = { path = "migration", version = "1.0.0"}
 online = "4.0.2"
-configparser = "3.0.4"
-reqwest = "0.12.2"
-tonic = "0.11.0"
-prost = "0.12.3"
-regex = "1.10.4"
+configparser = "3.1.0"
+regex = "1.10.6"
 confy = "0.6.1"
-
-[build-dependencies]
-tonic-build = "0.11.0"
 
 

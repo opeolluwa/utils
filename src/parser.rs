@@ -4,7 +4,7 @@ use commands::{
     store::StoreCommands,
 };
 
-use crate::{commands, config, style::LogMessage};
+use crate::{commands};
 
 //acf
 #[derive(Parser)]
