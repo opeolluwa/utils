@@ -1,6 +1,6 @@
 use include_dir::{include_dir, Dir};
 
-pub const SOURCE_DIR: Dir = include_dir!("templates");
+pub const SOURCE_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/templates");
 
 lazy_static::lazy_static! {
     pub static ref DB_URL: std::string::String = {
