@@ -4,7 +4,7 @@ use commands::{
     store::StoreCommands,
 };
 
-use crate::{commands};
+use crate::commands;
 
 //acf
 #[derive(Parser)]
@@ -27,8 +27,7 @@ impl Utils {
             Commands::Sync => CliCommands::sync().await,
             Commands::Auth(auth) => AuthCommands::parser(auth),
             Commands::Config => {
-           todo!()
-
+                todo!()
             }
         }
     }

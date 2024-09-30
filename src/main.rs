@@ -75,7 +75,6 @@ async fn main() -> Result<()> {
         println!("database live at  {}", DB_URL.as_str());
     }
 
-
     // run the cli parser
     parser::Utils::run().await;
 
