@@ -3,18 +3,14 @@ use std::{
     io::Write,
     path::Path,
 };
-
 use console::Style;
-
+use crate::pkg::{WriteContent, FileExists}; 
 use serde::Serialize;
-
-use crate::{
-    style::LogMessage,
-    utils::{FileExists, WriteContent},
-    SOURCE_DIR,
-};
+use utils_style::style::LogMessage;
+use crate::constants::SOURCE_DIR;
 use console::Term;
 use dialoguer::{theme::ColorfulTheme, FuzzySelect};
+
 
 #[derive(clap::Args, Debug, Serialize)]
 pub struct GitIgnoreCommands {

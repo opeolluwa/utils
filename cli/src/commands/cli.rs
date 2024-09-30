@@ -1,4 +1,4 @@
-use crate::style::LogMessage;
+use utils_style::style::LogMessage;
 use ::std::io::BufRead;
 use anyhow::Result;
 use online::check;

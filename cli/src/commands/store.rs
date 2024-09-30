@@ -1,17 +1,17 @@
 use crate::security_questions::{self, security_questions};
 use dialoguer::{theme::ColorfulTheme, Input, Select};
-use entity::password;
+use utils_entity::password;
 use password::Entity as Password;
 use std::time::Duration;
-use utils_cli_entity as entity;
 
-use crate::{style::LogMessage, DB_URL};
+// use crate::{, DB_URL};
+use utils_style::style::LogMessage;
 use anyhow::{Ok, Result};
 use bcrypt::{hash, verify, DEFAULT_COST};
 use chrono::Local;
 use clap::{Args, Subcommand};
 use dialoguer::{Confirm, Password as PassPhrase};
-use entity::store::{self, Entity as Store};
+use utils_entity::store::{self, Entity as Store};
 use sea_orm::{
     ActiveModelTrait, ColumnTrait, ConnectionTrait, DatabaseBackend, DbBackend, ExecResult,
     Statement,
@@ -66,7 +66,7 @@ impl StoreCommands {
             };
             let date_added = Local::now().to_rfc2822();
             let last_updated = Local::now().to_rfc2822();
-            let record = entity::store::ActiveModel {
+            let record = store::ActiveModel {
                 key: Set(key.to_string()),
                 value: Set(value.to_string()),
                 last_updated: Set(date_added),
@@ -85,7 +85,7 @@ impl StoreCommands {
     }
     /// find all
     async fn list() -> Result<()> {
-        let data: Vec<entity::store::Model> =
+        let data: Vec<store::Model> =
             Store::find().all(&Self::db_connection().await?).await?;
 
         if data.is_empty() {
@@ -110,10 +110,10 @@ impl StoreCommands {
 
     /// update recoird n the store
     async fn update(key: &str, value: &str) -> Result<()> {
-        let mut record: entity::store::ActiveModel = Self::find_one(key).await?.into();
+        let mut record: store::ActiveModel = Self::find_one(key).await?.into();
         record.value = Set(value.to_owned());
 
-        let _: entity::store::Model = record.update(&Self::db_connection().await?).await?;
+        let _: store::Model = record.update(&Self::db_connection().await?).await?;
 
         let message = format!("{key} successfully updated");
         LogMessage::success(&message);
@@ -124,7 +124,7 @@ impl StoreCommands {
     /// delte all record in the database
     async fn clear() -> Result<()> {
         // fetch the password
-        let saved_password = entity::password::Entity::find()
+        let saved_password = password::Entity::find()
             .from_raw_sql(Statement::from_sql_and_values(
                 DbBackend::Sqlite,
                 r#"SELECT * FROM password WHERE id = $1"#,
@@ -218,10 +218,10 @@ impl StoreCommands {
         Ok(())
     }
 
-    /// the databse connections
+    /// the database connections
     async fn db_connection() -> Result<DatabaseConnection> {
         // the databse connection options/configuration
-        let mut opt = ConnectOptions::new(DB_URL.as_str());
+        let mut opt = ConnectOptions::new(crate::constants::DB_URL.as_str());
         opt.max_connections(100)
             .min_connections(5)
             .connect_timeout(Duration::from_secs(8))
@@ -236,12 +236,12 @@ impl StoreCommands {
     }
 
     /// find a record by key
-    async fn find_one(key: &str) -> Result<entity::store::Model> {
-        let record = entity::store::Entity::find()
+    async fn find_one(key: &str) -> Result<store::Model> {
+        let record = store::Entity::find()
             .filter(
-                Condition::all().add(entity::store::Column::Key.like(format!("%{}%", key.trim()))),
+                Condition::all().add(store::Column::Key.like(format!("%{}%", key.trim()))),
             )
-            .order_by_asc(entity::store::Column::DateAdded)
+            .order_by_asc(store::Column::DateAdded)
             .all(&Self::db_connection().await?)
             .await?;
 
@@ -260,12 +260,12 @@ impl StoreCommands {
     // udate authorization
     async fn update_security_question() -> Result<()> {
         // fetch the auth creds
-        let authorization_creds: Option<entity::password::Model> = Password::find_by_id(1)
+        let authorization_creds: Option<password::Model> = Password::find_by_id(1)
             .one(&Self::db_connection().await?)
             .await?;
 
         //coerce into the active model type
-        let mut authorization_creds: entity::password::ActiveModel =
+        let mut authorization_creds: password::ActiveModel =
             authorization_creds.unwrap().into();
 
         // get the updated security question
@@ -290,7 +290,7 @@ impl StoreCommands {
             authorization_creds.answer_hash = Set(hashed_answer);
 
             // execute the update
-            let _: entity::password::Model = authorization_creds
+            let _: password::Model = authorization_creds
                 .update(&Self::db_connection().await?)
                 .await?;
 
@@ -317,7 +317,7 @@ impl StoreCommands {
 
             let hashed_answer = hash(answer.trim().to_lowercase(), DEFAULT_COST)?;
 
-            let record = entity::password::ActiveModel {
+            let record = password::ActiveModel {
                 id: Set(1),
                 sequrity_question: Set(selected_question.to_owned()),
                 answer_hash: Set(hashed_answer),
@@ -331,7 +331,7 @@ impl StoreCommands {
     }
 
     async fn _require_authorization(raw_password: &str) -> Result<bool> {
-        let saved_password = entity::password::Entity::find()
+        let saved_password = password::Entity::find()
             .from_raw_sql(Statement::from_sql_and_values(
                 DbBackend::Sqlite,
                 r#"SELECT * FROM password WHERE id = $1"#,
