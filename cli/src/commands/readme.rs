@@ -1,11 +1,9 @@
-use crate::style::LogMessage;
-use dialoguer::theme::ColorfulTheme;
-use dialoguer::Confirm;
-use dialoguer::Input;
+use dialoguer::{theme::ColorfulTheme, Confirm, Input};
 use serde::Serialize;
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
+use utils_style::style::LogMessage;
 /// the readme utils is used to for generating project readme
 /// # Example
 /// the basic examples are listed thus:
