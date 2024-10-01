@@ -2,8 +2,8 @@
 pub mod utils;
 
 #[path = "commands/mod.rs"]
- mod commands;
- 
+mod commands;
+
 mod constants;
 
 mod pkg;

@@ -42,7 +42,7 @@ utils store --key=<KEY> --value=<Value> --secure
 - **ignore**: Generate a .gitignore file for your project tooling.
 
 ```sh
-utils ignore <tool-name>
+utils ignore --lang=<tool-name>
 ```
 
 - **readme**: Add a README.md to your project.

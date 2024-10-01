@@ -1,3 +1,2 @@
-#[path="style.rs"]
-
+#[path = "style.rs"]
 pub mod style;
