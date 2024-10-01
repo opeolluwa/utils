@@ -10,7 +10,7 @@ use crate::commands::{
 };
 
 #[derive(Parser)]
-#[command(author, version, about ="Supercharge your productivity with utilities", long_about = None)]
+#[command(author, version, about ="Supercharge your productivity with utils", long_about = None)]
 #[command(propagate_version = true)]
 
 pub struct Utils {
@@ -20,7 +20,7 @@ pub struct Utils {
 
 impl Utils {
     pub async fn run() -> anyhow::Result<()> {
-        // the databse connection options/configuration
+        // the database connection options/configuration
         let mut opt = ConnectOptions::new(DB_URL.as_str());
         opt.max_connections(100)
             .min_connections(5)

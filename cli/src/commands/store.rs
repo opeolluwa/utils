@@ -1,17 +1,15 @@
 use crate::security_questions::{self, security_questions};
 use dialoguer::{theme::ColorfulTheme, Input, Select};
-use utils_entity::password;
 use password::Entity as Password;
 use std::time::Duration;
+use utils_entity::password;
 
 // use crate::{, DB_URL};
-use utils_style::style::LogMessage;
 use anyhow::{Ok, Result};
 use bcrypt::{hash, verify, DEFAULT_COST};
 use chrono::Local;
 use clap::{Args, Subcommand};
 use dialoguer::{Confirm, Password as PassPhrase};
-use utils_entity::store::{self, Entity as Store};
 use sea_orm::{
     ActiveModelTrait, ColumnTrait, ConnectionTrait, DatabaseBackend, DbBackend, ExecResult,
     Statement,
@@ -21,6 +19,8 @@ use sea_orm::{
     ModelTrait, QueryFilter, QueryOrder,
 };
 use serde::{Deserialize, Serialize};
+use utils_entity::store::{self, Entity as Store};
+use utils_style::style::LogMessage;
 #[derive(Args, Debug, Serialize, Deserialize)]
 pub struct StoreCommands {
     #[clap(short, long, value_parser)]
@@ -85,8 +85,7 @@ impl StoreCommands {
     }
     /// find all
     async fn list() -> Result<()> {
-        let data: Vec<store::Model> =
-            Store::find().all(&Self::db_connection().await?).await?;
+        let data: Vec<store::Model> = Store::find().all(&Self::db_connection().await?).await?;
 
         if data.is_empty() {
             LogMessage::error("no data found");
@@ -238,9 +237,7 @@ impl StoreCommands {
     /// find a record by key
     async fn find_one(key: &str) -> Result<store::Model> {
         let record = store::Entity::find()
-            .filter(
-                Condition::all().add(store::Column::Key.like(format!("%{}%", key.trim()))),
-            )
+            .filter(Condition::all().add(store::Column::Key.like(format!("%{}%", key.trim()))))
             .order_by_asc(store::Column::DateAdded)
             .all(&Self::db_connection().await?)
             .await?;
@@ -265,8 +262,7 @@ impl StoreCommands {
             .await?;
 
         //coerce into the active model type
-        let mut authorization_creds: password::ActiveModel =
-            authorization_creds.unwrap().into();
+        let mut authorization_creds: password::ActiveModel = authorization_creds.unwrap().into();
 
         // get the updated security question
         let question_index = Select::with_theme(&ColorfulTheme::default())
