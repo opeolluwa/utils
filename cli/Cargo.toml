@@ -1,0 +1,28 @@
+[package]
+name = "utils_cli"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.86"
+bcrypt = "0.15.1"
+chrono = "0.4.38"
+clap = { version = "4.5.16", features = ["derive"] }
+console = "0.15.8"
+dialoguer = { version = "0.10.4", features = ["fuzzy-select", "completion"] }
+dirs = "5.0.1"
+include_dir = "0.7.4"
+lazy_static = "1.5.0"
+online = "4.0.2"
+sea-orm = { version = "1.0.1", features = [
+    "sqlx-sqlite",
+    "runtime-tokio-rustls",
+    "macros",
+    "with-uuid",
+    "with-time",
+    "debug-print",
+] }
+serde = { version = "1.0.209", features = ["derive"] }
+utils_entity = { path = "../entity" }
+utils_style = { path = "../style" }
+utils_migration = { path = "../migration" }

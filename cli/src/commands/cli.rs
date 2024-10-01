@@ -1,4 +1,3 @@
-use crate::style::LogMessage;
 use ::std::io::BufRead;
 use anyhow::Result;
 use online::check;
@@ -8,6 +7,7 @@ use std::io::BufReader;
 use std::process::Command;
 use std::process::Stdio;
 use std::str;
+use utils_style::style::LogMessage;
 pub struct CliCommands;
 
 impl CliCommands {
