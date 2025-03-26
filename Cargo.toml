@@ -15,7 +15,10 @@ members = ["cli", "migration", "entity", "config", "style"]
 [dependencies]
 anyhow = "1.0.86"
 tokio = { version = "1.39.3", features = ["full"] }
-utils_entity = { path = "entity", version = "1.0.5" }
-utils_migration = { path = "migration", version = "1.0.0" }
-utils_cli = { path = "cli" }
-
+# utils_entity = { path = "entity", version = "1.0.5" }
+# utils_migration = { path = "migration", version = "1.0.0" }
+# utils_cli = { path = "cli" }
+ratatui = "0.29.0"
+clap = { version = "4.5.32", features = ["cargo"] }
+crossterm = "0.28.1"
+# rusqlite = { version = "0.34.0", features = ["bundled"] }

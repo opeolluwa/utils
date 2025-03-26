@@ -1,4 +1,4 @@
-use clap::{Parser, Subcommand};
+use clap::{Arg, Parser, Subcommand};
 
 use crate::constants::DB_URL;
 use migration::{Migrator, MigratorTrait};
@@ -20,7 +20,6 @@ pub struct Utils {
 
 impl Utils {
     pub async fn run() -> anyhow::Result<()> {
-        // the database connection options/configuration
         let mut opt = ConnectOptions::new(DB_URL.as_str());
         opt.max_connections(100)
             .min_connections(5)
@@ -30,15 +29,11 @@ impl Utils {
             .max_lifetime(Duration::from_secs(8))
             .sqlx_logging(true);
 
-        // the database instance
         let db = Database::connect(opt).await?;
 
-        // run the migration programmatically during app startup
-        // this would create the necessary tables
         let connection = db;
         Migrator::up(&connection, None).await?;
 
-        // check for pending migrations
         let execution_environment = env::var("ENV").unwrap_or("production".to_string());
         if execution_environment == "development" {
             let migrations = Migrator::get_pending_migrations(&connection).await?;
@@ -82,6 +77,12 @@ pub enum Commands {
     Config,
 }
 
+// #[derive(Debug, Arg)]
+// pub enum GenerateOptions {
+//     Readme,
+//     IgnoreFile,
+//     License,
+// }
 pub trait WriteContent {
     fn write_content(&self, content: &str) -> std::io::Result<()>;
 }
