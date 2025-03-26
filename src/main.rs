@@ -25,9 +25,24 @@ fn main() {
                 .subcommand(
                     Command::new("readme")
                         .about("create readme for a project")
-                        .arg(arg!( -f --force "Overwrite existing ")), // .arg(arg!( -b -back "backup existing")),
+                        .arg(arg!( -f --force "Overwrite existing "))
+                        .arg(arg!( -b --back "backup existing"))
+                        .arg(arg!( -p --path "desired path")),
                 )
-                .subcommand(Command::new("git-ignore")),
+                .subcommand(
+                    Command::new("git-ignore")
+                        .about("create readme for a project")
+                        .arg(arg!( -f --force "Overwrite existing "))
+                        .arg(arg!( -b --back "backup existing"))
+                        .arg(arg!( -p --path "desired path")),
+                )
+                 .subcommand(
+                    Command::new("service")
+                        .about("create readme for a project")
+                        .arg(arg!( -f --force "Overwrite existing "))
+                        .arg(arg!( -b --back "backup existing"))
+                        .arg(arg!( -p --path "desired path")),
+                ),
         )
         .arg(arg!( -n --name "project of file name ").action(ArgAction::SetTrue))
         .get_matches();
