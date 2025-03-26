@@ -8,12 +8,11 @@ version = "1.1.1"
 license = "Apache-2.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[workspace]
-exclude = ["sandbox"]
-members = ["cli", "migration", "entity", "config", "style"]
+# [workspace]
+# exclude = ["sandbox"]
+# members = ["cli", "migration", "entity", "config", "style"]
 
 [dependencies]
-anyhow = "1.0.86"
 tokio = { version = "1.39.3", features = ["full"] }
 # utils_entity = { path = "entity", version = "1.0.5" }
 # utils_migration = { path = "migration", version = "1.0.0" }
@@ -21,4 +20,11 @@ tokio = { version = "1.39.3", features = ["full"] }
 ratatui = "0.29.0"
 clap = { version = "4.5.32", features = ["cargo"] }
 crossterm = "0.28.1"
+thiserror = "2.0.12"
+console = "0.15.11"
+serde = { version = "1.0.219", features = ["derive"] }
 # rusqlite = { version = "0.34.0", features = ["bundled"] }
+dialoguer = { version = "0.10.4", features = ["fuzzy-select", "completion"] }
+dirs = "5.0.1"
+include_dir = "0.7.4"
+lazy_static = "1.5.0"
