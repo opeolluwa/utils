@@ -1,9 +1,11 @@
-use dialoguer::{theme::ColorfulTheme, Confirm, Input};
-use serde::Serialize;
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
+
+use dialoguer::{theme::ColorfulTheme, Confirm, Input};
+use serde::Serialize;
 use utils_style::style::LogMessage;
+
 /// the readme utils is used to for generating project readme
 /// # Example
 /// the basic examples are listed thus:

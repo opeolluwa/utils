@@ -1,15 +1,17 @@
-use crate::constants::SOURCE_DIR;
-use crate::pkg::{FileExists, WriteContent};
-use console::Style;
-use console::Term;
-use dialoguer::{theme::ColorfulTheme, FuzzySelect};
-use serde::Serialize;
 use std::{
     fs::{self, File},
     io::Write,
     path::Path,
 };
+
+use console::Style;
+use console::Term;
+use dialoguer::{theme::ColorfulTheme, FuzzySelect};
+use serde::Serialize;
 use utils_style::style::LogMessage;
+
+use crate::constants::SOURCE_DIR;
+use crate::pkg::{FileExists, WriteContent};
 
 #[derive(clap::Args, Debug, Serialize, Clone)]
 pub struct GitIgnoreCommands {

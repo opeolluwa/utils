@@ -1,6 +1,6 @@
+use crate::constants::SOURCE_DIR;
 use crate::errors::file_system::FsError;
 use crate::utils::{console::LogMessage, file_system::file_exists_in_path};
-use crate::SOURCE_DIR;
 use console::Term;
 use dialoguer::theme::ColorfulTheme;
 use dialoguer::Confirm;
