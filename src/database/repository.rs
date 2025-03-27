@@ -1,12 +1,8 @@
-use std::sync::Arc;
-
 use crate::errors::database::DatabaseError;
 
 use super::store::KvStore;
-use async_trait::async_trait;
 use rusqlite::Connection;
 
-#[async_trait]
 pub trait KvRepositoryTrait {
     fn new(connection: Connection) -> Self;
 
@@ -24,7 +20,6 @@ pub struct KvRepository {
     pub connection: Connection,
 }
 
-#[async_trait]
 impl KvRepositoryTrait for KvRepository {
     fn new(connection: Connection) -> Self {
         Self { connection }

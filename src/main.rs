@@ -68,8 +68,8 @@ fn main() -> Result<(), AppError> {
     key TEXT NOT NULL,
     value TEXT NOT NULL,
     sensitive INTEGER NOT NULL,
-    added_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
     )
     "#,
             (),

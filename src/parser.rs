@@ -1,12 +1,9 @@
-use std::path::Path;
+use std::{path::Path, process};
 
 use clap::ArgMatches;
 use rusqlite::Connection;
 
-use crate::{
-    commands::{generator::GeneratorConfig, store::StoreConfig},
-    database::store::run_store_tui,
-};
+use crate::commands::{generator::GeneratorConfig, store::StoreConfig};
 
 pub fn parse_commands(matches: ArgMatches, database_connection: Connection) {
     match matches.subcommand() {
@@ -20,9 +17,16 @@ pub fn parse_commands(matches: ArgMatches, database_connection: Connection) {
 
 fn parse_uinstall_options(_sub_matches: &ArgMatches) {}
 fn parse_upgrade_options(_sub_matches: &ArgMatches) {}
-fn parse_store_options(_sub_matches: &ArgMatches, database_connection: Connection) {
+fn parse_store_options(sub_matches: &ArgMatches, database_connection: Connection) {
     let store_engine = StoreConfig::new(database_connection);
-    let _ = run_store_tui();
+    match sub_matches.subcommand() {
+        Some(("list", _)) => store_engine.list(),
+        Some(("save", _)) => store_engine.list(),
+        Some(("remove", _)) => store_engine.list(),
+        Some(("export", _)) => store_engine.list(),
+        Some(("sync", _)) => store_engine.list(),
+        _ => process::exit(1),
+    }
 }
 fn parse_generator_options(sub_matches: &ArgMatches) {
     match sub_matches.subcommand() {
