@@ -2,7 +2,7 @@ use std::path::Path;
 
 use clap::ArgMatches;
 
-use crate::commands::generator::GeneratorConfig;
+use crate::{commands::generator::GeneratorConfig, database::store::run_store_tui};
 
 pub fn parse_commands(matches: ArgMatches) {
     match matches.subcommand() {
@@ -14,9 +14,11 @@ pub fn parse_commands(matches: ArgMatches) {
     }
 }
 
-fn parse_uinstall_options(sub_matches: &ArgMatches) {}
-fn parse_upgrade_options(sub_matches: &ArgMatches) {}
-fn parse_store_options(sub_matches: &ArgMatches) {}
+fn parse_uinstall_options(_sub_matches: &ArgMatches) {}
+fn parse_upgrade_options(_sub_matches: &ArgMatches) {}
+fn parse_store_options(_sub_matches: &ArgMatches) {
+    let _ = run_store_tui();
+}
 fn parse_generator_options(sub_matches: &ArgMatches) {
     match sub_matches.subcommand() {
         Some(("readme", command_arguments)) => {

@@ -12,7 +12,7 @@ license = "Apache-2.0"
 clap = { version = "4.5.32", features = ["cargo"] }
 console = "0.15.11"
 crossterm = "0.28.1"
-rusqlite = { version = "0.34.0", features = ["bundled"] }
+rusqlite = { version = "0.34.0", features = ["backup", "bundled", "chrono", "serde_json"] }
 dialoguer = { version = "0.10.4", features = ["fuzzy-select", "completion"] }
 dirs = "5.0.1"
 include_dir = "0.7.4"
@@ -21,3 +21,6 @@ ratatui = "0.29.0"
 serde = { version = "1.0.219", features = ["derive"] }
 thiserror = "2.0.12"
 tokio = { version = "1.39.3", features = ["full"] }
+uuid = { version = "1.16.0", features = ["v4"] }
+async-trait = "0.1.88"
+chrono = "0.4.40"

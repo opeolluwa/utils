@@ -4,7 +4,7 @@ mod database;
 mod errors;
 mod parser;
 
-use clap::{arg, command, ArgAction, Command};
+use clap::{arg, command, Command};
 
 mod utils;
 
@@ -13,8 +13,21 @@ fn main() {
         .subcommand(
             Command::new("store")
                 .about("store data as a key value pair")
-                .arg(arg!(-l --list "lists test values").action(ArgAction::SetTrue))
-                .arg(arg!(-s --sync "backup to a remote database").action(ArgAction::SetTrue)),
+                .subcommand(
+                    Command::new("save")
+                        .about("Save a new key value pair")
+                        .arg(arg!(-k --key "key"))
+                        .arg(arg!(-v --value "value")),
+                )
+                .subcommand(
+                    Command::new("list")
+                        .about("see stored entries")
+                        .arg(arg!( -s --sort <SORT> "sort by Acending(ASC)  decending(DSC), sort by key (KEY)")),
+                )
+                .subcommand(Command::new("find").about("find one or more entries").arg(arg!(-e --exact "find exact keyword, againt the stored keys")))
+                .subcommand(Command::new("remove"))
+                .subcommand(Command::new("export").about("export to HTML or PDF "))
+                .arg(arg!(-s --sync <REMOTE_SERVER> "backup to a remote database SQL")),
         )
         .subcommand(
             Command::new("generate")
