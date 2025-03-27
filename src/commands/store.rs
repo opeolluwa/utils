@@ -1,15 +1,6 @@
 use std::io;
 
-use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
-use ratatui::{
-    buffer::Buffer,
-    layout::Rect,
-    style::Stylize,
-    symbols::border,
-    text::{Line, Text},
-    widgets::{Block, Paragraph, Widget},
-    DefaultTerminal, Frame,
-};
+use ratatui::{DefaultTerminal, Frame};
 
 fn run_store_tui() -> io::Result<()> {
     let mut terminal = ratatui::init();

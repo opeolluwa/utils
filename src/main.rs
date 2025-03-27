@@ -5,7 +5,6 @@ mod errors;
 mod parser;
 
 use clap::{arg, command, ArgAction, Command};
-use include_dir::{include_dir, Dir};
 
 mod utils;
 
@@ -17,8 +16,6 @@ fn main() {
                 .arg(arg!(-l --list "lists test values").action(ArgAction::SetTrue))
                 .arg(arg!(-s --sync "backup to a remote database").action(ArgAction::SetTrue)),
         )
-        .subcommand(Command::new("update").about("self update the CLI"))
-        .subcommand(Command::new("uninstall").about("Uninstall the CLI"))
         .subcommand(
             Command::new("generate")
                 .about("generate a new project or project files")
@@ -26,25 +23,24 @@ fn main() {
                     Command::new("readme")
                         .about("create readme for a project")
                         .arg(arg!( -f --force "Overwrite existing "))
-                        .arg(arg!( -b --back "backup existing"))
-                        .arg(arg!( -p --path "desired path")),
+                        .arg(arg!( -b --backup "backup existing"))
+                        .arg(arg!( -p --path <PATH> "desired path")),
                 )
                 .subcommand(
                     Command::new("git-ignore")
                         .about("create readme for a project")
                         .arg(arg!( -f --force "Overwrite existing "))
-                        .arg(arg!( -b --back "backup existing"))
-                        .arg(arg!( -p --path "desired path")),
+                        .arg(arg!( -b --backup "backup existing"))
+                        .arg(arg!( -p --path <PATH> "desired path")),
                 )
-                 .subcommand(
+                .subcommand(
                     Command::new("service")
-                        .about("create readme for a project")
-                        .arg(arg!( -f --force "Overwrite existing "))
-                        .arg(arg!( -b --back "backup existing"))
-                        .arg(arg!( -p --path "desired path")),
+                        .about("create a new service")
+                        .arg(arg!( -p --path <PATH> "desired path").required(true)),
                 ),
         )
-        .arg(arg!( -n --name "project of file name ").action(ArgAction::SetTrue))
+        .subcommand(Command::new("update").about("self update the CLI"))
+        .subcommand(Command::new("uninstall").about("Uninstall the CLI"))
         .get_matches();
 
     parser::parse_commands(matches);

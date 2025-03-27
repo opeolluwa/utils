@@ -1,25 +1,27 @@
-use crate::constants::SOURCE_DIR;
-use crate::errors::file_system::FsError;
-use crate::utils::{console::LogMessage, file_system::file_exists_in_path};
+use std::fs;
+use std::fs::File;
+use std::io::Write;
+use std::path::{Path, PathBuf};
+
+use clap::ArgMatches;
 use console::Term;
 use dialoguer::theme::ColorfulTheme;
 use dialoguer::Confirm;
 use dialoguer::FuzzySelect;
 use serde::Deserialize;
 use serde::Serialize;
-use std::fs::File;
-use std::io::Write;
-use std::path::{Path, PathBuf};
 
-use std::fs;
+use crate::constants::SOURCE_DIR;
+use crate::errors::file_system::FsError;
+use crate::utils::{console::LogMessage, file_system::file_exists_in_path};
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct Generator {
-    force: bool,
-    base_path: PathBuf,
-    back_up: bool,
+pub struct GeneratorConfig {
+    pub force: bool,
+    pub base_path: PathBuf,
+    pub back_up: bool,
 }
-impl Generator {
+impl GeneratorConfig {
     pub fn new(force: bool, base_path: PathBuf, back_up: bool) -> Self {
         Self {
             force,
@@ -27,10 +29,33 @@ impl Generator {
             back_up,
         }
     }
+    pub fn parse_options(command_arguments: &ArgMatches) -> Self {
+        let mut base_path = ".".into();
+        let mut force: bool = false;
+        let mut back_up: bool = false;
+
+        if let Some(force_flag) = command_arguments.get_one::<bool>("force") {
+            force = *force_flag;
+        };
+
+        if let Some(base_path_flag) = command_arguments.get_one::<String>("path") {
+            base_path = base_path_flag.to_owned();
+        };
+
+        if let Some(back_up_flag) = command_arguments.get_one::<bool>("backup") {
+            back_up = *back_up_flag;
+        };
+
+        Self {
+            force,
+            base_path: Path::new(&base_path).to_path_buf(),
+            back_up,
+        }
+    }
     pub fn generate_readme(&self) -> Result<(), FsError> {
         let file_exists = file_exists_in_path(self.base_path.as_path(), "README.md");
-        let allow_over_write = self.force == true;
-        let backup_existing_file = self.back_up == true;
+        let allow_over_write = self.force;
+        let backup_existing_file = self.back_up;
 
         let desired_path = Path::new(&self.base_path).join("README.md");
         let file_path = desired_path.as_path();
@@ -62,30 +87,48 @@ impl Generator {
 
         Ok(())
     }
-
-    pub fn generate_ignore_file(&self, language: &str) -> Result<(), FsError> {
+    pub fn generate_ignore_file(&self) -> Result<(), FsError> {
         let file_exists = file_exists_in_path(self.base_path.as_path(), ".gitignore");
-        let allow_over_write = self.force == true;
-        let backup_existing_file = self.back_up == true;
+        let allow_over_write = self.force;
+        let backup_existing_file = self.back_up;
 
         let desired_path = Path::new(&self.base_path).join(".gitignore");
         let file_path = desired_path.as_path();
         let backup_path = Path::new(&self.base_path).join(".gitignore").join(".bak");
 
         if file_exists && !allow_over_write {
-            FsError::GenerationError("a .gitignorefile already exist on the selectd path, use the --force flag to overwrite it".to_string());
+            "a .gitignorefile already exist on the selectd path, use the --force flag to overwrite it".to_string();
             std::process::exit(1);
         } else if file_exists && allow_over_write {
             fs::remove_file(file_path).map_err(|err| FsError::GenerationError(err.to_string()))?
         } else if file_exists && allow_over_write && backup_existing_file {
-            fs::remove_file(file_path).map_err(|err| FsError::GenerationError(err.to_string()))?;
             fs::copy(file_path, backup_path)
                 .map_err(|err| FsError::GenerationError(err.to_string()))?;
+            fs::remove_file(file_path).map_err(|err| FsError::GenerationError(err.to_string()))?;
+
             Self::create_git_ignore_template(file_path)?
         }
         Self::create_git_ignore_template(file_path)
     }
+    pub fn generate_service(base_path: &PathBuf) {
+        let folders = ["config", "controllers", "services", "entities"];
 
+        // create the base path if not exist
+        if !Path::new(base_path).exists() {
+            let _ = fs::create_dir(base_path);
+        }
+        LogMessage::success(&format!(
+            "creating new service to path {:?}",
+            base_path.canonicalize()
+        ));
+        let _ = folders
+            .into_iter()
+            .map(|dir| {
+                let path = Path::new(base_path).join(dir);
+                let _ = fs::create_dir(path);
+            })
+            .collect::<Vec<_>>();
+    }
     fn create_git_ignore_template(full_path: &Path) -> Result<(), FsError> {
         let supported_technologies = vec![
             "AL",

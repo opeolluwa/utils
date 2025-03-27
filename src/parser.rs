@@ -1,11 +1,12 @@
+use std::path::Path;
+
 use clap::ArgMatches;
 
-use crate::commands::generator::Generator;
+use crate::commands::generator::GeneratorConfig;
 
 pub fn parse_commands(matches: ArgMatches) {
     match matches.subcommand() {
         Some(("store", _sub_matches)) => {
-            // let _ = run_store_tui();
             println!("store")
         }
         Some(("uninstall", _)) => {
@@ -14,21 +15,38 @@ pub fn parse_commands(matches: ArgMatches) {
         Some(("upgrade", _)) => {
             println!("upgrade")
         }
-        Some(("generate", sub_matches)) => {
-            match sub_matches.subcommand() {
-                Some(("readme", _)) => {
-                    let base_path = "";
-                    let force = false;
-                    let back_up = false;
+        Some(("generate", sub_matches)) => parse_generator_options(sub_matches),
+        _ => std::process::exit(1),
+    }
+}
 
-                    let _ = Generator::new(force, base_path.into(), back_up).generate_readme();
-                }
-                Some(("git-ignore", _)) => println!("git-ignore"),
-                Some(("service", _)) => println!("service"),
-                _ => std::process::exit(1),
-            }
-            // println!("generate {:#?}", sub_matches.)
+fn parse_generator_options(sub_matches: &ArgMatches) {
+    match sub_matches.subcommand() {
+        Some(("readme", command_arguments)) => {
+            let GeneratorConfig {
+                force,
+                base_path,
+                back_up,
+            } = GeneratorConfig::parse_options(command_arguments);
+            let _ = GeneratorConfig::new(force, base_path, back_up).generate_readme();
         }
-        _ => unreachable!("Exhausted list of subcommands and subcommand_required prevents `None`"),
+        Some(("git-ignore", command_arguments)) => {
+            let GeneratorConfig {
+                force,
+                base_path,
+                back_up,
+            } = GeneratorConfig::parse_options(command_arguments);
+            let _ = GeneratorConfig::new(force, base_path, back_up).generate_ignore_file();
+        }
+        Some(("service", command_arguments)) => {
+            let mut base_path = String::from(".");
+
+            if let Some(base_path_flag) = command_arguments.get_one::<String>("path") {
+                base_path = base_path_flag.trim().to_string();
+            };
+
+            GeneratorConfig::generate_service(&Path::new(&base_path).to_path_buf());
+        }
+        _ => std::process::exit(1),
     }
 }
