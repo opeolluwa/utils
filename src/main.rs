@@ -5,10 +5,12 @@ mod errors;
 mod parser;
 
 use clap::{arg, command, Command};
+use errors::app::AppError;
+use rusqlite::Connection;
 
 mod utils;
 
-fn main() {
+fn main() -> Result<(), AppError> {
     let matches = command!()
         .subcommand(
             Command::new("store")
@@ -56,5 +58,25 @@ fn main() {
         .subcommand(Command::new("uninstall").about("Uninstall the CLI"))
         .get_matches();
 
-    parser::parse_commands(matches);
+    let connection = Connection::open("./test.sqlite")
+        .map_err(|err| AppError::OperationFailed(err.to_string()))?;
+    connection
+        .execute(
+            r#"
+    CREATE TABLE data_store (
+    id TEXT NOT NULL,
+    key TEXT NOT NULL,
+    value TEXT NOT NULL,
+    sensitive INTEGER NOT NULL,
+    added_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    )
+    "#,
+            (),
+        )
+        .map_err(|err| AppError::OperationFailed(err.to_string()))?;
+
+    parser::parse_commands(matches, connection);
+
+    Ok(())
 }

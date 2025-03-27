@@ -1,7 +1,8 @@
 use thiserror::Error;
 
 #[derive(Error, Debug)]
-pub enum FsError {
+
+pub enum AppError {
     #[error("{0}")]
-    OperationError(String),
+    OperationFailed(String),
 }
