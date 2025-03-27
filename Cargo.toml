@@ -4,18 +4,23 @@ authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
 description = "a compilation of utility scripts for every day use in building applications and using certain features on my laptop"
 edition = "2021"
 name = "utils"
-version = "1.1.1"
+version = "1.1.2"
 license = "Apache-2.0"
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[workspace]
-exclude = ["sandbox"]
-members = ["cli", "migration", "entity", "config", "style"]
 
 [dependencies]
-anyhow = "1.0.86"
+clap = { version = "4.5.32", features = ["cargo"] }
+console = "0.15.11"
+crossterm = "0.28.1"
+rusqlite = { version = "0.34.0", features = ["backup", "bundled", "chrono", "serde_json"] }
+dialoguer = { version = "0.10.4", features = ["fuzzy-select", "completion"] }
+dirs = "5.0.1"
+include_dir = "0.7.4"
+lazy_static = "1.5.0"
+ratatui = "0.29.0"
+serde = { version = "1.0.219", features = ["derive"] }
+thiserror = "2.0.12"
 tokio = { version = "1.39.3", features = ["full"] }
-utils_entity = { path = "entity", version = "1.0.5" }
-utils_migration = { path = "migration", version = "1.0.0" }
-utils_cli = { path = "cli" }
-
+uuid = { version = "1.16.0", features = ["v4"] }
+async-trait = "0.1.88"
+chrono = "0.4.40"
