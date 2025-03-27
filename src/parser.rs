@@ -6,20 +6,17 @@ use crate::commands::generator::GeneratorConfig;
 
 pub fn parse_commands(matches: ArgMatches) {
     match matches.subcommand() {
-        Some(("store", _sub_matches)) => {
-            println!("store")
-        }
-        Some(("uninstall", _)) => {
-            println!("uninstall")
-        }
-        Some(("upgrade", _)) => {
-            println!("upgrade")
-        }
+        Some(("store", sub_matches)) => parse_store_options(sub_matches),
+        Some(("uninstall", sub_matches)) => parse_uinstall_options(sub_matches),
+        Some(("upgrade", sub_matches)) => parse_upgrade_options(sub_matches),
         Some(("generate", sub_matches)) => parse_generator_options(sub_matches),
         _ => std::process::exit(1),
     }
 }
 
+fn parse_uinstall_options(sub_matches: &ArgMatches) {}
+fn parse_upgrade_options(sub_matches: &ArgMatches) {}
+fn parse_store_options(sub_matches: &ArgMatches) {}
 fn parse_generator_options(sub_matches: &ArgMatches) {
     match sub_matches.subcommand() {
         Some(("readme", command_arguments)) => {
