@@ -5,7 +5,7 @@ use rusqlite::Connection;
 
 use crate::{
     commands::{generator::GeneratorConfig, store::StoreConfig},
-    utils::{console::LogMessage, parser::extract_command_argument},
+    helpers::{console::LogMessage, parser::extract_command_argument},
 };
 
 pub fn parse_commands(matches: ArgMatches, database_connection: Connection) {
@@ -18,8 +18,12 @@ pub fn parse_commands(matches: ArgMatches, database_connection: Connection) {
     }
 }
 
-fn parse_uinstall_options(_sub_matches: &ArgMatches) {}
-fn parse_upgrade_options(_sub_matches: &ArgMatches) {}
+fn parse_uinstall_options(_sub_matches: &ArgMatches) {
+    unimplemented!("the feature has not been implemented")
+}
+fn parse_upgrade_options(_sub_matches: &ArgMatches) {
+    unimplemented!("the feature has not been implemented")
+}
 fn parse_store_options(sub_matches: &ArgMatches, database_connection: Connection) {
     let store_engine = StoreConfig::new(database_connection);
     match sub_matches.subcommand() {
