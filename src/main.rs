@@ -18,8 +18,10 @@ fn main() -> Result<(), AppError> {
                 .subcommand(
                     Command::new("save")
                         .about("Save a new key value pair")
-                        .arg(arg!(-k --key "key"))
-                        .arg(arg!(-v --value "value")),
+                        .arg(arg!(-k --key  <KEY> "key"))
+                        .arg(arg!(-v --value <VALUE> "value"))
+                        .arg(arg!(-s --sensitive  "sensitive data")),
+
                 )
                 .subcommand(
                     Command::new("list")
@@ -63,7 +65,7 @@ fn main() -> Result<(), AppError> {
     connection
         .execute(
             r#"
-    CREATE TABLE data_store (
+    CREATE TABLE IF NOT EXISTS data_store (
     id TEXT NOT NULL,
     key TEXT NOT NULL,
     value TEXT NOT NULL,
