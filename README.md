@@ -23,63 +23,23 @@ To run the application locally
 
 ```sh
 cargo run -- --help
+
+A set of extensible tools to accelerate software development
+
+Usage: toolbox [COMMAND]
+
+Commands:
+  store      store and manage a key value pair
+  generate   generate a new project or project files
+  update     self update the CLI
+  uninstall  Uninstall the CLI
+  help       Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+
 ```
-
-## Usage
-
-```sh
-utils <COMMAND>
-```
-
-### Commands
-
-- **store**: Store and retrieve data as key-value pairs.
-
-```sh
-utils store --key=<KEY> --value=<Value> --secure
-```
-
-- **ignore**: Generate a .gitignore file for your project tooling.
-
-```sh
-utils ignore --lang=<tool-name>
-```
-
-- **readme**: Add a README.md to your project.
-
-```sh
-utils readme <project-name>
-```
-
-- **upgrade**: Upgrade the CLI tool to the latest version.
-
-```sh
-utils upgrade
-```
-
-- **sync**: Synchronize the data with a remote database.
-
-```sh
-utils sync --database-url=<REMOTE_DATABASE_CONNECTION>
-```
-
-- **config**: Configure CLI behavior using a config file at
-  `$HOME/.utils/utils.conf`
-
-```sh
-utils config | vi
-```
-
-- **help**: Display the help message for available commands.
-
-```sh
-utils help
-```
-
-### Options
-
-The basic usage of Utils CLI involves passing a command followed by optional
-arguments.
 
 ## License
 

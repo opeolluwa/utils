@@ -7,6 +7,7 @@ mod parser;
 mod ui;
 
 use clap::{arg, command, Command};
+use constants::DATABASE_PATH;
 use errors::app::AppError;
 use rusqlite::Connection;
 
@@ -60,7 +61,7 @@ fn main() -> Result<(), AppError> {
         .subcommand(Command::new("uninstall").about("Uninstall the CLI"))
         .get_matches();
 
-    let connection = Connection::open("./test.sqlite")
+    let connection = Connection::open(&DATABASE_PATH.to_string())
         .map_err(|err| AppError::OperationFailed(err.to_string()))?;
     connection
         .execute(
