@@ -10,6 +10,8 @@ pub trait KvRepositoryTrait {
 
     fn find(&self, key: &String) -> Vec<KvStore>;
 
+    fn retrieve_all(&self) -> Vec<KvStore>;
+
     fn create_new(&self, key: &str, value: &str, sensitive: bool)
         -> Result<KvStore, DatabaseError>;
 
@@ -46,16 +48,23 @@ impl KvRepositoryTrait for KvRepository {
                 r#"
             INSERT INTO data_store (id, key, value, sensitive, created_at, updated_at) VALUES (?1, ?2, ?3, ?4, ?5, ?6)
             "#,
-                (id, key, value, sensitive, created_at, updated_at),
+                (id, &key, value, sensitive, created_at, updated_at),
             )
             .map_err(|err| DatabaseError::OperationFailed(err.to_string()))?;
 
-        todo!()
+        Ok(KvStore {
+            id: "dd".to_string(),
+            key: "dd".to_string(),
+            value: "dd".to_string(),
+            created_at: "dd".to_string(),
+            updated_at: "dd".to_string(),
+            sensitive: true,
+        })
     }
     fn find(&self, key: &String) -> Vec<KvStore> {
         let  stmt = self
             .connection
-            .prepare("SELECT id, key, value, sensitive, created_at, updated_at FROM data_store WHERE key = ?")
+            .prepare("SELECT id, key, value, sensitive, created_at, updated_at FROM data_store")
             .ok();
 
         let Some(mut stmt) = stmt else {
@@ -64,11 +73,36 @@ impl KvRepositoryTrait for KvRepository {
         stmt.query_map([key], |row| {
             Ok(KvStore {
                 id: row.get(0).unwrap_or_default(),
-                key: row.get(0).unwrap_or_default(),
-                value: row.get(0).unwrap_or_default(),
-                created_at: row.get(0).unwrap_or_default(),
-                updated_at: row.get(0).unwrap_or_default(),
-                sensitive: row.get(0).unwrap_or_default(),
+                key: row.get(1).unwrap_or_default(),
+                value: row.get(2).unwrap_or_default(),
+                created_at: row.get(3).unwrap_or_default(),
+                updated_at: row.get(4).unwrap_or_default(),
+                sensitive: row.get(5).unwrap_or_default(),
+            })
+        })
+        .unwrap()
+        .into_iter()
+        .map(|matched_row| matched_row.unwrap())
+        .collect::<Vec<_>>()
+    }
+
+    fn retrieve_all(&self) -> Vec<KvStore> {
+        let stmt = self
+            .connection
+            .prepare("SELECT id, key, value, sensitive, created_at, updated_at FROM data_store")
+            .ok();
+
+        let Some(mut stmt) = stmt else {
+            return vec![];
+        };
+        stmt.query_map([], |row| {
+            Ok(KvStore {
+                id: row.get(0).unwrap_or_default(),
+                key: row.get(1).unwrap_or_default(),
+                value: row.get(2).unwrap_or_default(),
+                created_at: row.get(3).unwrap_or_default(),
+                updated_at: row.get(4).unwrap_or_default(),
+                sensitive: row.get(5).unwrap_or_default(),
             })
         })
         .unwrap()

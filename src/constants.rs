@@ -8,10 +8,10 @@ lazy_static::lazy_static! {
         let db_path = format!(
             "{home_dir}/{upload_dir}",
             home_dir = os_default_home_dir.display(),
-            upload_dir = ".utils"
+            upload_dir = ".toolbox"
         );
         let _ = std::fs::create_dir_all(&db_path);
-    format!("sqlite://{db_path}/utils.db")
+    format!("sqlite://{db_path}/toolbox.db")
     };
 
     // the path to the config file
@@ -20,12 +20,12 @@ lazy_static::lazy_static! {
         let config_path = format!(
             "{home_dir}/{upload_dir}",
             home_dir = os_default_home_dir.display(),
-            upload_dir = ".utils"
+            upload_dir = ".toolbox"
         );
 
         //TODO: create the path if not exist path if not exist
         let _ = std::fs::create_dir_all(&config_path);
-        format!("{config_path}/utils.conf")
+        format!("{config_path}/toolbox.toml")
     };
 
 

@@ -1,10 +1,10 @@
 
 [package]
 authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
-description = "a compilation of utility scripts for every day use in building applications and using certain features on my laptop"
+description = "A set of extensible tools to accelerate software development"
 edition = "2021"
-name = "utils"
-version = "1.1.2"
+name = "toolbox"
+version = "1.0.4"
 license = "Apache-2.0"
 
 
@@ -12,7 +12,12 @@ license = "Apache-2.0"
 clap = { version = "4.5.32", features = ["cargo"] }
 console = "0.15.11"
 crossterm = "0.28.1"
-rusqlite = { version = "0.34.0", features = ["backup", "bundled", "chrono", "serde_json"] }
+rusqlite = { version = "0.34.0", features = [
+    "backup",
+    "bundled",
+    "chrono",
+    "serde_json",
+] }
 dialoguer = { version = "0.10.4", features = ["fuzzy-select", "completion"] }
 dirs = "5.0.1"
 include_dir = "0.7.4"
@@ -24,3 +29,4 @@ tokio = { version = "1.39.3", features = ["full"] }
 uuid = { version = "1.16.0", features = ["v4"] }
 async-trait = "0.1.88"
 chrono = "0.4.40"
+color-eyre = "0.6.3"

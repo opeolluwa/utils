@@ -13,7 +13,7 @@ use serde::Serialize;
 
 use crate::constants::SOURCE_DIR;
 use crate::errors::file_system::FsError;
-use crate::utils::{console::LogMessage, file_system::file_exists_in_path};
+use crate::helpers::{console::LogMessage, file_system::file_exists_in_path};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct GeneratorConfig {
@@ -111,7 +111,14 @@ impl GeneratorConfig {
         Self::create_git_ignore_template(file_path)
     }
     pub fn generate_service(base_path: &PathBuf) {
-        let folders = ["config", "controllers", "services", "entities"];
+        let folders = [
+            "config",
+            "controllers",
+            "services",
+            "entities",
+            "dto",
+            "src",
+        ];
 
         // create the base path if not exist
         if !Path::new(base_path).exists() {
