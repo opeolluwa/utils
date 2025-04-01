@@ -8,7 +8,7 @@ developer workflow
 As of this time, Utils CLI only be built from source
 
 ```sh
-git clone https://github.com/opeolluwa/utils.git
+git clone https://github.com/opeolluwa/toolbox.git
 cd utils
 cargo build --release
 cargo install --path .
