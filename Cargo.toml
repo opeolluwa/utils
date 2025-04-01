@@ -4,7 +4,7 @@ authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
 description = "A set of extensible tools to accelerate software development"
 edition = "2021"
 name = "toolbox"
-version = "1.0.3"
+version = "1.0.4"
 license = "Apache-2.0"
 
 

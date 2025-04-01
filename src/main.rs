@@ -7,7 +7,6 @@ mod parser;
 mod ui;
 
 use clap::{arg, command, Command};
-use constants::DATABASE_PATH;
 use errors::app::AppError;
 use rusqlite::Connection;
 
@@ -61,8 +60,17 @@ fn main() -> Result<(), AppError> {
         .subcommand(Command::new("uninstall").about("Uninstall the CLI"))
         .get_matches();
 
-    let connection = Connection::open(&DATABASE_PATH.to_string())
-        .map_err(|err| AppError::OperationFailed(err.to_string()))?;
+    let os_default_home_dir = dirs::home_dir().unwrap();
+    let db_path = format!(
+        "{home_dir}/{upload_dir}",
+        home_dir = os_default_home_dir.display(),
+        upload_dir = ".toolbox"
+    );
+    let _ = std::fs::create_dir_all(&db_path);
+    let database_path = format!("{db_path}/toolbox.db");
+
+    let connection =
+        Connection::open(&database_path).map_err(|err| AppError::OperationFailed(err.to_string()))?;
     connection
         .execute(
             r#"

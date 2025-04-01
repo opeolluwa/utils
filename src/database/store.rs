@@ -3,17 +3,14 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct KvStore{
+pub struct KvStore {
     pub id: String,
     pub key: String,
     pub value: String,
-    pub created_at : String,
+    pub created_at: String,
     pub updated_at: String,
-    pub sensitive: bool
+    pub sensitive: bool,
 }
-
-
-
 
 impl KvStore {
     pub fn new(key: &str, value: &str, sensitive: bool) -> Self {
@@ -33,7 +30,7 @@ impl KvStore {
 pub fn stored_data_handler() {}
 use rusqlite::Connection;
 
-use crate::{constants::DATABASE_PATH, errors::database::DatabaseError};
+use crate::errors::database::DatabaseError;
 
 pub fn run_store_tui() -> Result<(), DatabaseError> {
     let _security_questions = vec![
@@ -51,7 +48,7 @@ pub fn run_store_tui() -> Result<(), DatabaseError> {
     // let connection = Connection::open(&Path::new(DATABASE_PATH.as_str()))
     //     .map_err(|err| DatabaseError::OperationFailed(err.to_string()))?;
 
-     let connection = Connection::open("./test.sqlite")
+    let connection = Connection::open("./test.sqlite")
         .map_err(|err| DatabaseError::OperationFailed(err.to_string()))?;
     connection
         .execute(

@@ -1,10 +1,7 @@
-# Utils CLI
+# Toolbox
 
-Utils CLI is a powerful command-line interface (CLI) tool designed to
-supercharge your productivity by providing essential utilities for software
-projects. This tool supports storing key-value pairs, generating `.gitignore`
-files, managing README files, and more. Utils CLI is lightweight, easy to use,
-and integrates seamlessly with your projects.
+Toolbox is a lightweight extensible, command line toolchain to streamline a
+developer workflow
 
 ## Installation
 
@@ -38,7 +35,6 @@ Commands:
 Options:
   -h, --help     Print help
   -V, --version  Print version
-
 ```
 
 ## License
