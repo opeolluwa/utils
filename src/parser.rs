@@ -11,14 +11,14 @@ use crate::{
 pub fn parse_commands(matches: ArgMatches, database_connection: Connection) {
     match matches.subcommand() {
         Some(("store", sub_matches)) => parse_store_options(sub_matches, database_connection),
-        Some(("uninstall", sub_matches)) => parse_uinstall_options(sub_matches),
+        Some(("uninstall", sub_matches)) => parse_uninstall_options(sub_matches),
         Some(("upgrade", sub_matches)) => parse_upgrade_options(sub_matches),
         Some(("generate", sub_matches)) => parse_generator_options(sub_matches),
         _ => std::process::exit(1),
     }
 }
 
-fn parse_uinstall_options(_sub_matches: &ArgMatches) {
+fn parse_uninstall_options(_sub_matches: &ArgMatches) {
     unimplemented!("the feature has not been implemented")
 }
 fn parse_upgrade_options(_sub_matches: &ArgMatches) {
