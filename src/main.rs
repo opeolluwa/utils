@@ -26,9 +26,9 @@ fn main() -> Result<(), AppError> {
                 .subcommand(
                     Command::new("list")
                         .about("retrieve the stored entries")
-                        .arg(arg!( -s --sort <SORT> "sort by Acending(ASC)  decending(DSC), sort by key (KEY)")),
+                        .arg(arg!( -s --sort <SORT> "sort by Ascending(ASC)  descending(DSC), sort by key (KEY)")),
                 )
-                .subcommand(Command::new("find").about("find one or more entries").arg(arg!(-e --exact "find exact keyword, againt the stored keys")))
+                .subcommand(Command::new("find").about("find one or more entries").arg(arg!(-e --exact "find exact keyword, against the stored keys")))
                 .subcommand(Command::new("remove"))
                 .subcommand(Command::new("export").about("export to HTML or PDF "))
                 .arg(arg!(-s --sync <REMOTE_SERVER> "backup to a remote database SQL")),

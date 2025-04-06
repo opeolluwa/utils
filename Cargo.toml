@@ -4,14 +4,13 @@ authors = ["adeoye adefemi <adefemiadeoye@yahoo.com>"]
 description = "A set of extensible tools to accelerate software development"
 edition = "2021"
 name = "toolbox"
-version = "1.0.4"
+version = "1.1.4"
 license = "Apache-2.0"
 
 
 [dependencies]
 clap = { version = "4.5.32", features = ["cargo"] }
 console = "0.15.11"
-crossterm = "0.28.1"
 rusqlite = { version = "0.34.0", features = [
     "backup",
     "bundled",
@@ -25,8 +24,5 @@ lazy_static = "1.5.0"
 ratatui = "0.29.0"
 serde = { version = "1.0.219", features = ["derive"] }
 thiserror = "2.0.12"
-tokio = { version = "1.39.3", features = ["full"] }
 uuid = { version = "1.16.0", features = ["v4"] }
-async-trait = "0.1.88"
 chrono = "0.4.40"
-color-eyre = "0.6.3"
