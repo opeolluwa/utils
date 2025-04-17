@@ -1,7 +1,7 @@
-use crate::errors::database::DatabaseError;
+use rusqlite::Connection;
 
 use super::store::KvStore;
-use rusqlite::Connection;
+use crate::errors::database::DatabaseError;
 
 pub trait KvRepositoryTrait {
     fn new(connection: Connection) -> Self;
@@ -62,7 +62,7 @@ impl KvRepositoryTrait for KvRepository {
         })
     }
     fn find(&self, key: &String) -> Vec<KvStore> {
-        let  stmt = self
+        let stmt = self
             .connection
             .prepare("SELECT id, key, value, sensitive, created_at, updated_at FROM data_store")
             .ok();

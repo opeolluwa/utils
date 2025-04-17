@@ -1,6 +1,9 @@
 use chrono::Local;
+use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
+
+use crate::errors::database::DatabaseError;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct KvStore {
@@ -28,10 +31,6 @@ impl KvStore {
 }
 
 pub fn stored_data_handler() {}
-use rusqlite::Connection;
-
-use crate::errors::database::DatabaseError;
-
 pub fn run_store_tui() -> Result<(), DatabaseError> {
     let _security_questions = vec![
         "What is your mother's maiden name?",

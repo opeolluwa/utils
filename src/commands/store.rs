@@ -1,6 +1,7 @@
+use rusqlite::Connection;
+
 use crate::database::repository::KvRepository;
 use crate::database::repository::KvRepositoryTrait;
-use rusqlite::Connection;
 
 pub struct StoreConfig {
     kv_store_repository: KvRepository,
