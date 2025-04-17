@@ -5,9 +5,9 @@ mod errors;
 mod helpers;
 mod parser;
 mod ui;
+use errors::app::AppError;
 
 use clap::{arg, command, Command};
-use errors::app::AppError;
 use rusqlite::Connection;
 
 fn main() -> Result<(), AppError> {
@@ -69,8 +69,8 @@ fn main() -> Result<(), AppError> {
     let _ = std::fs::create_dir_all(&db_path);
     let database_path = format!("{db_path}/toolbox.db");
 
-    let connection =
-        Connection::open(&database_path).map_err(|err| AppError::OperationFailed(err.to_string()))?;
+    let connection = Connection::open(&database_path)
+        .map_err(|err| AppError::OperationFailed(err.to_string()))?;
     connection
         .execute(
             r#"
