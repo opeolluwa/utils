@@ -4,6 +4,7 @@ mod database;
 mod errors;
 mod helpers;
 mod parser;
+mod parsers;
 mod ui;
 use errors::app::AppError;
 
@@ -13,7 +14,7 @@ use rusqlite::Connection;
 fn main() -> Result<(), AppError> {
     let matches = command!()
         .subcommand(
-            Command::new("store")
+            Command::new("store").visible_aliases(["s", "-s"])
                 .about("store and manage a key value pair")
                 .subcommand(
                     Command::new("save")
@@ -34,7 +35,7 @@ fn main() -> Result<(), AppError> {
                 .arg(arg!(-s --sync <REMOTE_SERVER> "backup to a remote database SQL")),
         )
         .subcommand(
-            Command::new("generate")
+            Command::new("generate").visible_aliases(["g", "-g"])
                 .about("generate a new project or project files")
                 .subcommand(
                     Command::new("readme")
